@@ -7,13 +7,13 @@ let mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost:db');
 
-let apiRouter = express.Router();
-require('./routes/friend-route')(apiRouter);
-require('./routes/ghost-route')(apiRouter);
+let router = express.Router();
+require('./routes/friend-route')(router);
+require('./routes/ghost-route')(router);
 
 app.use(bodyParser.json());
 
-app.use('/', apiRouter);
+app.use('/', router);
 app.listen(3000, () => {
   console.log('live 3000');
 });

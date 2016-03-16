@@ -1,13 +1,13 @@
 'use strict';
 
-module.exports = (apiRouter) => {
+module.exports = (router) => {
 
   let Ghost = require(__dirname + '/../models/ghost-model');
 
-  apiRouter.route('/ghosts')
+  router.route('/ghosts')
     .get((req, res) => {
       Ghost.find({}, (err, ghosts) => {
-        res.json({data: ghosts});
+        res.json(ghosts);
         res.end();
       });
     })
@@ -19,7 +19,7 @@ module.exports = (apiRouter) => {
         });
       });
 
-  apiRouter.route('/ghosts/:id')
+  router.route('/ghosts/:id')
   .get((req, res) => {
     Ghost.findById(req.params.id, (err, ghost) => {
       res.json(ghost);
@@ -39,4 +39,16 @@ module.exports = (apiRouter) => {
           });
         });
       });
+
+  router.route('/meetcoolghosts')
+    .get((req, res) => {
+      var stream = Ghost.where('isEvil').ne(true).stream();
+      var ghosts = [];
+      stream.on('data', (doc) => {
+         ghosts.push(doc.name);
+      }).on('end', ()=> {
+        res.send('This ghosts are guaranteed to be pretty good ghosts: '+ghosts);
+        res.end();
+      })
+    })
 };

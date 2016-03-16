@@ -1,9 +1,9 @@
 'use strict';
 
-module.exports = (apiRouter) => {
+module.exports = (router) => {
   let Friend = require(__dirname + '/../models/friend-model');
 
-  apiRouter.route('/friends')
+  router.route('/friends')
     .get((req, res) => {
       Friend.find({}, (err, friends) => {
         res.json({data: friends});
@@ -18,7 +18,7 @@ module.exports = (apiRouter) => {
       });
     });
 
-  apiRouter.route('/friends/:id')
+  router.route('/friends/:id')
   .get((req, res) => {
     Friend.findById(req.params.id, (err, friend) => {
       res.json(friend);
@@ -40,7 +40,7 @@ module.exports = (apiRouter) => {
         });
       });
 
-  apiRouter.route('/howmanyteethdomyfriendshavecollectively')
+  router.route('/howmanyteethdomyfriendshavecollectively')
     .get((req, res) => {
       Friend.find({}, (err, friends) =>{
         var teeth = 0;
@@ -55,4 +55,23 @@ module.exports = (apiRouter) => {
         });
       });
     });
+
+  router.route('/howmanyofmyfriendsarecool')
+  .get((req,res) => {
+    Friend.find({}, (err, friends) =>{
+      var cool = 0;
+      var counter = 0;
+      friends.forEach((friend) => {
+        if(friend.isCool) {
+          cool++
+        }
+        counter++;
+        if(counter === friends.length){
+          var avg = cool / counter
+          res.send(cool+' of your '+counter+' friends are cool, which means altogether your group of friends is ' +avg.toFixed(2) * 100 + '% cool');
+          res.end();
+        }
+      });
+    });
+  })
 };
