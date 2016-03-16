@@ -8,12 +8,12 @@ let mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:db');
 
 let router = express.Router();
-require('./routes/friend-route')(router);
+require('./routes/human-route')(router);
 require('./routes/ghost-route')(router);
 
 app.use(bodyParser.json());
 
-app.use('/', router);
+app.use('/meetghosts', router);
 app.listen(3000, () => {
   console.log('live 3000');
 });

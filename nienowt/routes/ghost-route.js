@@ -40,7 +40,7 @@ module.exports = (router) => {
         });
       });
 
-  router.route('/meetcoolghosts')
+  router.route('/coolghosts')
     .get((req, res) => {
       var stream = Ghost.where('isEvil').ne(true).stream();
       var ghosts = [];
