@@ -45,10 +45,20 @@ module.exports = (router) => {
       var stream = Ghost.where('isEvil').ne(true).stream();
       var ghosts = [];
       stream.on('data', (doc) => {
-         ghosts.push(doc.name);
+        ghosts.push(doc.name);
       }).on('end', ()=> {
         res.send('This ghosts are guaranteed to be pretty good ghosts: '+ghosts);
         res.end();
-      })
-    })
+      });
+    });
+
+  router.route('/ghosteyes')
+    .get((req, res) => {
+      Ghost.aggregate([
+          {$group: {_id: '$isEvil', average: {$avg: "$numEyes"}}}
+        ],(err, result) => {
+          res.send('Our ghosts, on average, have '+(result[0].average + result[1].average) / 2 + ' eyes')
+          res.end();
+        })
+    });
 };

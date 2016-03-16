@@ -8,4 +8,4 @@ const humanSchema = mongoose.Schema({
   isCool: {type: Boolean, default: false}
 });
 
-module.exports = mongoose.model('human', humanSchema);
+module.exports = mongoose.model('humans', humanSchema);
