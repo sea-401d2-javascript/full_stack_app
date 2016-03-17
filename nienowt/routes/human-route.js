@@ -58,21 +58,6 @@ module.exports = (router) => {
 
   router.route('/howmanyofthesehumansarecool')
   .get((req,res) => {
-    // Human.find({}, (err, humans) =>{
-    //   var cool = 0;
-    //   var counter = 0;
-    //   humans.forEach((human) => {
-    //     if(human.isCool) {
-    //       cool++;
-    //     }
-    //     counter++;
-    //     if(counter === humans.length){
-    //       var avg = cool / counter;
-    //       res.send(cool+' out of '+counter+' humans are cool, which means altogether humans are ' +avg.toFixed(2) * 100 + '% cool');
-    //       res.end();
-    //     }
-    //   });
-    // });
     Human.count({isCool: true}, (err, count) => {
       console.log('There are %d cool humans in our database', count)
       res.send('There are ' + count + ' cool humans in our database')

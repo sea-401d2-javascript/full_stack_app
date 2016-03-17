@@ -8,4 +8,4 @@ const powersSchema = mongoose.Schema({
   weakness: {type: String, default: 'teen detectives'}
 });
 
-module.exports = mongoose.model('Powers', powersSchema);
+module.exports = mongoose.model('powers', powersSchema);

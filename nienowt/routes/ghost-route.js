@@ -22,13 +22,11 @@ module.exports = (router) => {
             numEyes: req.body.numEyes,
             powers: newPowers._id
           });
-
           newGhost.save((err, ghost) => {
             res.json(ghost);
             res.end();
           });
-
-        })
+        });
       });
 
   router.route('/ghosts/:id')
@@ -50,7 +48,7 @@ module.exports = (router) => {
       .delete((req, res) => {
         Ghost.findById(req.params.id, (err, ghost) => {
           ghost.remove(() => {
-            res.send('GHOST ELIMINATED');
+            res.send('GHOST BUSTED');
           });
         });
       });
@@ -72,7 +70,7 @@ module.exports = (router) => {
       Ghost.aggregate([
           {$group: {_id: '$isEvil', average: {$avg: "$numEyes"}}}
         ],(err, result) => {
-          res.send('Our ghosts, on average, have '+((result[0].average + result[1].average) / 2).toFixed(0) + ' eyes')
+          res.send('Our Evil ghosts, on average, have '+ result[0].average + ' eyes, while our non-evil ghosts average '+ result[1].average + ' eyes')
           res.end();
         })
     });

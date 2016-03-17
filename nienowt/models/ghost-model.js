@@ -9,7 +9,7 @@ const ghostSchema = mongoose.Schema({
   powers: [
     {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Powers'
+    ref: 'powers'
     }
   ]
 });
