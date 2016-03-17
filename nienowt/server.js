@@ -11,6 +11,7 @@ let router = express.Router();
 require('./routes/human-route')(router);
 require('./routes/ghost-route')(router);
 
+
 app.use(bodyParser.json());
 
 app.use('/meetghosts', router);

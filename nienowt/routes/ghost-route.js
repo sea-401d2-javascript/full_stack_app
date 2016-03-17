@@ -3,6 +3,7 @@
 module.exports = (router) => {
 
   let Ghost = require(__dirname + '/../models/ghost-model');
+  let Powers = require(__dirname + '/../models/powers-model');
 
   router.route('/ghosts')
     .get((req, res) => {
@@ -12,16 +13,30 @@ module.exports = (router) => {
       });
     })
       .post((req, res) => {
-        var newGhost = new Ghost(req.body);
-        newGhost.save((err, ghost) => {
-          res.json(ghost);
-          res.end();
-        });
+        var newPowers = new Powers(req.body.powers)
+        newPowers.save((err) => {
+          if (err) res.send('powers not recieved yo')
+          var newGhost = new Ghost({
+            name: req.body.name,
+            isEvil: req.body.isEvil,
+            numEyes: req.body.numEyes,
+            powers: newPowers._id
+          });
+
+          newGhost.save((err, ghost) => {
+            res.json(ghost);
+            res.end();
+          });
+
+        })
       });
 
   router.route('/ghosts/:id')
   .get((req, res) => {
-    Ghost.findById(req.params.id, (err, ghost) => {
+    Ghost
+    .findOne({_id: req.params.id})
+    .populate('powers')
+    .exec((err, ghost) => {
       res.json(ghost);
       res.end();
     });
@@ -43,11 +58,11 @@ module.exports = (router) => {
   router.route('/coolghosts')
     .get((req, res) => {
       var stream = Ghost.where('isEvil').ne(true).stream();
-      var ghosts = [];
+      var ghosts = '';
       stream.on('data', (doc) => {
-        ghosts.push(doc.name);
+        ghosts += doc.name + ' ';
       }).on('end', ()=> {
-        res.send('This ghosts are guaranteed to be pretty good ghosts: '+ghosts);
+        res.send('These ghosts are guaranteed to be pretty good ghosts: '+ghosts);
         res.end();
       });
     });
@@ -57,7 +72,7 @@ module.exports = (router) => {
       Ghost.aggregate([
           {$group: {_id: '$isEvil', average: {$avg: "$numEyes"}}}
         ],(err, result) => {
-          res.send('Our ghosts, on average, have '+(result[0].average + result[1].average) / 2 + ' eyes')
+          res.send('Our ghosts, on average, have '+((result[0].average + result[1].average) / 2).toFixed(0) + ' eyes')
           res.end();
         })
     });
