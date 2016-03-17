@@ -10,14 +10,14 @@ module.exports = (router) => {
       Ghost.find({})
         .populate('powers')
         .exec((err, ghosts) => {
-        res.json(ghosts);
-        res.end();
-      });
+          res.json(ghosts);
+          res.end();
+        });
     })
       .post((req, res) => {
-        var newPowers = new Powers(req.body.powers)
+        var newPowers = new Powers(req.body.powers);
         newPowers.save((err) => {
-          if (err) res.send('powers not recieved yo')
+          if (err) res.send('powers not recieved yo');
           var newGhost = new Ghost({
             name: req.body.name,
             isEvil: req.body.isEvil,
@@ -44,10 +44,10 @@ module.exports = (router) => {
     .put((req, res) => {
       Ghost.findByIdAndUpdate(req.params.id,{ $set: req.body.ghost }, (err, ghost) => {
         if (err) res.end(err);
-        Powers.findByIdAndUpdate(ghost.powers, { $set: req.body.powers}, (err, powers) =>{
+        Powers.findByIdAndUpdate(ghost.powers, { $set: req.body.powers}, (err) =>{
           if (err) res.send(err);
-          console.log('powers stored')
-        })
+          console.log('powers stored');
+        });
         res.write('Ghost updated!');
         res.end();
       });
@@ -55,11 +55,11 @@ module.exports = (router) => {
       .delete((req, res) => {
         Ghost.findById(req.params.id, (err, ghost) => {
           Powers.findById(ghost.powers, (err, power) =>{
-            if (err) res.send('oh no')
+            if (err) res.send('oh no');
             power.remove(() =>{
               console.log('Powers gone');
+            });
           });
-        });
           ghost.remove(() => {
             res.send('GHOST BUSTED');
           });
@@ -81,10 +81,10 @@ module.exports = (router) => {
   router.route('/ghosteyes')
     .get((req, res) => {
       Ghost.aggregate([
-          {$group: {_id: '$isEvil', average: {$avg: "$numEyes"}}}
-        ],(err, result) => {
-          res.write('Our Evil ghosts, on average, have '+ result[0].average + ' eyes, while our non-evil ghosts average '+ result[1].average + ' eyes')
-          res.end();
-        })
+          {$group: {_id: '$isEvil', average: {$avg: '$numEyes'}}}
+      ],(err, result) => {
+        res.write('Our Evil ghosts, on average, have '+ result[0].average + ' eyes, while our non-evil ghosts average '+ result[1].average + ' eyes');
+        res.end();
+      });
     });
 };

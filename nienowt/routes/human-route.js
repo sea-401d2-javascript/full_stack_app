@@ -6,17 +6,17 @@ module.exports = (router) => {
   router.route('/humans')
     .get((req, res) => {
       Human.find({}, (err, humans) => {
-        res.json({data: humans});
+        res.json({humans});
         res.end();
       });
     })
-    .post((req, res) => {
-      var newHuman = new Human(req.body);
-      newHuman.save((err, human) => {
-        res.json(human);
-        res.end();
+      .post((req, res) => {
+        var newHuman = new Human(req.body);
+        newHuman.save((err, human) => {
+          res.json(human);
+          res.end();
+        });
       });
-    });
 
   router.route('/humans/:id')
   .get((req, res) => {
@@ -26,15 +26,16 @@ module.exports = (router) => {
     });
   })
     .put((req, res) => {
-      Human.findByIdAndUpdate(req.params.id,{ $set: req.body }, (err, human) => {
+      Human.findByIdAndUpdate(req.params.id,{ $set: req.body }, (err) => {
         if (err) res.end(err);
-        res.json(human);
+        res.write('HUMAN ALTERED');
+        res.end();
       });
     })
       .delete((req, res) => {
         Human.findById(req.params.id, (err, human) => {
           human.remove(() => {
-            res.send('HUMAN ELIMINATED');
+            res.write('HUMAN ELIMINATED');
             res.end();
           });
         });
@@ -42,26 +43,22 @@ module.exports = (router) => {
 
   router.route('/howmanyteethdothehumanshavecollectively')
     .get((req, res) => {
-      Human.find({}, (err, humans) =>{
-        var teeth = 0;
-        var counter = 0;
-        humans.forEach((human) => {
-          teeth+=human.numTeeth;
-          counter++;
-          if(counter === humans.length){
-            res.send('Altogether the '+counter+' humans have '+teeth+' teeth');
-            res.end();
-          }
-        });
+      Human.aggregate([
+          {$group: {_id: 'null', sum: {$sum: '$numTeeth'}}}
+      ],(err, result) => {
+        console.log(result);
+        res.write('Altogether the humans have ' + result[0].sum + ' teeth');
+        res.end();
       });
     });
+
 
   router.route('/howmanyofthesehumansarecool')
   .get((req,res) => {
     Human.count({isCool: true}, (err, count) => {
-      console.log('There are %d cool humans in our database', count)
-      res.send('There are ' + count + ' cool humans in our database')
-      res.end()
-    })
+      console.log('There are %d cool humans in our database', count);
+      res.send('There are ' + count + ' cool humans in our database');
+      res.end();
+    });
   });
 };

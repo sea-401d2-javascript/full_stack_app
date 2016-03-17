@@ -18,7 +18,7 @@ describe('rest with mongo', () => {
       done();
     })
   })
-  it('should store new user', (done) => {
+  it('should store new ghost', (done) => {
     request('localhost:3000')
     .post('/ghosts')
     .send({"name":"BORTET","isEvil":"true","numEyes":"164", "powers":{"primary":"murder"}})

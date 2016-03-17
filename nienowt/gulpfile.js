@@ -56,6 +56,6 @@ gulp.task('lint', function(){
 });
 
 gulp.task('mocha', function() {
-  return gulp.src('test/test.js', {read: false})
+  return gulp.src('test/', {read: false})
   .pipe(mocha({reporter: 'progress'}));
 });

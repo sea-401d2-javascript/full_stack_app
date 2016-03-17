@@ -8,8 +8,8 @@ const ghostSchema = mongoose.Schema({
   numEyes: {type: Number, default: 3},
   powers: [
     {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'powers'
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'powers'
     }
   ]
 });
