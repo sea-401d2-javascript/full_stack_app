@@ -14,7 +14,7 @@ require('./routes/ghost-route')(router);
 
 app.use(bodyParser.json());
 
-app.use('/meetghosts', router);
+app.use('/', router);
 app.listen(3000, () => {
   console.log('live 3000');
 });

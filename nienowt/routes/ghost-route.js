@@ -7,7 +7,9 @@ module.exports = (router) => {
 
   router.route('/ghosts')
     .get((req, res) => {
-      Ghost.find({}, (err, ghosts) => {
+      Ghost.find({})
+        .populate('powers')
+        .exec((err, ghosts) => {
         res.json(ghosts);
         res.end();
       });
@@ -44,9 +46,9 @@ module.exports = (router) => {
         if (err) res.end(err);
         Powers.findByIdAndUpdate(ghost.powers, { $set: req.body.powers}, (err, powers) =>{
           if (err) res.send(err);
-          console.log(powers)
+          console.log('powers stored')
         })
-        res.json(ghost);
+        res.write('Ghost updated!');
         res.end();
       });
     })
@@ -71,7 +73,7 @@ module.exports = (router) => {
       stream.on('data', (doc) => {
         ghosts += doc.name + ' ';
       }).on('end', ()=> {
-        res.send('These ghosts are guaranteed to be pretty good ghosts: '+ghosts);
+        res.write('These ghosts are guaranteed to be pretty good ghosts: '+ghosts);
         res.end();
       });
     });
@@ -81,7 +83,7 @@ module.exports = (router) => {
       Ghost.aggregate([
           {$group: {_id: '$isEvil', average: {$avg: "$numEyes"}}}
         ],(err, result) => {
-          res.send('Our Evil ghosts, on average, have '+ result[0].average + ' eyes, while our non-evil ghosts average '+ result[1].average + ' eyes')
+          res.write('Our Evil ghosts, on average, have '+ result[0].average + ' eyes, while our non-evil ghosts average '+ result[1].average + ' eyes')
           res.end();
         })
     });
