@@ -40,13 +40,24 @@ module.exports = (router) => {
     });
   })
     .put((req, res) => {
-      Ghost.findByIdAndUpdate(req.params.id,{ $set: req.body }, (err, ghost) => {
+      Ghost.findByIdAndUpdate(req.params.id,{ $set: req.body.ghost }, (err, ghost) => {
         if (err) res.end(err);
+        Powers.findByIdAndUpdate(ghost.powers, { $set: req.body.powers}, (err, powers) =>{
+          if (err) res.send(err);
+          console.log(powers)
+        })
         res.json(ghost);
+        res.end();
       });
     })
       .delete((req, res) => {
         Ghost.findById(req.params.id, (err, ghost) => {
+          Powers.findById(ghost.powers, (err, power) =>{
+            if (err) res.send('oh no')
+            power.remove(() =>{
+              console.log('Powers gone');
+          });
+        });
           ghost.remove(() => {
             res.send('GHOST BUSTED');
           });
