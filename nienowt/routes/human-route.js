@@ -46,7 +46,6 @@ module.exports = (router) => {
       Human.aggregate([
           {$group: {_id: 'null', sum: {$sum: '$numTeeth'}}}
       ],(err, result) => {
-        console.log(result);
         res.write('Altogether the humans have ' + result[0].sum + ' teeth');
         res.end();
       });
@@ -56,8 +55,7 @@ module.exports = (router) => {
   router.route('/howmanyofthesehumansarecool')
   .get((req,res) => {
     Human.count({isCool: true}, (err, count) => {
-      console.log('There are %d cool humans in our database', count);
-      res.send('There are ' + count + ' cool humans in our database');
+      res.write(count + ' of the humans in our database can be considered reliably cool');
       res.end();
     });
   });

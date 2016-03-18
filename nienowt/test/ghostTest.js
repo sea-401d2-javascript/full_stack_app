@@ -46,6 +46,16 @@ describe('rest with mongo', () => {
       done();
     })
   })
+  it('should get one ghost', (done) => {
+    request('localhost:3000')
+    .get('/ghosts/' + ghostId)
+    .end((err, res) => {
+      expect(err).to.eql(null);
+      expect(res.body.name).to.eql('BORTET');
+      expect(res.body.numEyes).to.eql(164);
+      done();
+    })
+  })
   it('should respond to "put" with updated ghost stats', (done) => {
     request('localhost:3000')
     .put('/ghosts/' + ghostId)
