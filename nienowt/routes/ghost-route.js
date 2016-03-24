@@ -40,7 +40,7 @@ module.exports = (router) => {
       console.log(Object.keys(req.body.ghost));
       Ghost.findByIdAndUpdate(req.params.id,{ $set: req.body.ghost }, (err, ghost) => {
         if (err) {
-          console.log(err)
+          console.log(err);
           return res.end();
         }
         Powers.findByIdAndUpdate(ghost.powers, { $set: req.body.powers}, (err) =>{

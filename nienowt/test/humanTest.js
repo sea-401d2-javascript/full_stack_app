@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var chai = require('chai');
 var chaiHttp = require('chai-http');
@@ -33,7 +33,7 @@ describe('human routes', () => {
     request('localhost:3000')
     .post('/api/humans')
     .set('Authorization','token ' + ghostToken)
-    .send({"name":"pelt", "isCool":"false","numTeeth":"15"})
+    .send({'name':'pelt', 'isCool':'false','numTeeth':'15'})
     .end((err, res) => {
       expect(err).to.eql(null);
       expect(res.body.name).to.eql('pelt');
@@ -47,18 +47,18 @@ describe('human routes', () => {
     .set('Authorization','token ' + ghostToken)
     .end((err, res) => {
       expect(err).to.eql(null);
-      console.log(res.body)
-      expect(res.body[0].name).to.eql('pelt')
+      console.log(res.body);
+      expect(res.body[0].name).to.eql('pelt');
       done();
-    })
-  })
+    });
+  });
   it('should return human on GET/id', (done) => {
     request('localhost:3000')
     .get('/api/humans/' + humanId)
     .set('Authorization','token ' + ghostToken)
     .end((err, res) => {
       expect(err).to.eql(null);
-      expect(res.body.name).to.eql('pelt')
+      expect(res.body.name).to.eql('pelt');
       done();
     });
   });
@@ -66,24 +66,24 @@ describe('human routes', () => {
     request('localhost:3000')
     .put('/api/humans/' + humanId)
     .set('Authorization','token ' + ghostToken)
-    .send({"name":"pelted", "isCool":"true","numTeeth":"14"})
+    .send({'name':'pelted', 'isCool':'true','numTeeth':'14'})
     .end((err, res) => {
       expect(err).to.eql(null);
-      expect(res.text).to.eql('HUMAN ALTERED')
+      expect(res.text).to.eql('HUMAN ALTERED');
       done();
-    })
-  })
+    });
+  });
   it('should delete human', (done) => {
     request('localhost:3000')
     .del('/api/humans/' + humanId)
     .set('Authorization','token ' + ghostToken)
     .end((err, res) => {
       expect(err).to.eql(null);
-      expect(res.text).to.eql('HUMAN ELIMINATED')
+      expect(res.text).to.eql('HUMAN ELIMINATED');
       done();
-    })
-  })
-})
+    });
+  });
+});
 
 describe('human non crud endpoints', () => {
   var ghostToken;
@@ -100,7 +100,7 @@ describe('human non crud endpoints', () => {
     request('localhost:3000')
     .post('/api/humans')
     .set('Authorization','token ' + ghostToken)
-    .send({"name":"pelt", "isCool":"false","numTeeth":"15"})
+    .send({'name':'pelt', 'isCool':'false','numTeeth':'15'})
     .end(() => {
       done();
     });
@@ -111,18 +111,18 @@ describe('human non crud endpoints', () => {
     .set('Authorization','token ' + ghostToken)
     .end((err, res) => {
       expect(err).to.eql(null);
-      expect(res.text).to.eql('Altogether the humans have 15 teeth')
+      expect(res.text).to.eql('Altogether the humans have 15 teeth');
       done();
-    })
-  })
+    });
+  });
   it('should respond with the number of cool humans', (done) => {
     request('localhost:3000')
     .get('/api/howmanyofthesehumansarecool')
     .set('Authorization','token ' + ghostToken)
     .end((err, res) => {
       expect(err).to.eql(null);
-      expect(res.text).to.eql('0 of the humans in our database can be considered reliably cool')
+      expect(res.text).to.eql('0 of the humans in our database can be considered reliably cool');
       done();
-    })
-  })
-})
+    });
+  });
+});
