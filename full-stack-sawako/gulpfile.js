@@ -1,9 +1,22 @@
 'use strict';
-var gulp = require('gulp');
-var lint = require('gulp-eslint');
-var mocha = require('gulp-mocha');
-var paths = ['*.js', 'test/*.js'];
+const gulp = require('gulp');
+const lint = require('gulp-eslint');
+const mocha = require('gulp-mocha');
+const paths = ['*.js', 'test/*.js'];
+const webpack = require('gulp-webpack');
 
+gulp.task('webpack', function(){
+  return gulp.src(__dirname + '/app/index.js')
+  .pipe(webpack({
+    watch: true,
+    module: {
+      loaders: [
+        {test: /\.css$/, loader: 'style!css'},
+      ],
+    },
+  }))
+  .pipe(gulp.dest('build/'));
+})
 
 gulp.task('lint', function(){
   return gulp.src(paths)
@@ -17,5 +30,5 @@ gulp.task('test', function(){
 });
 
 gulp.task('watcher', function(){
-  gulp.watch( __dirname + '/**/*.js', ['lint', 'test']);
+  gulp.watch( __dirname + '/**/*.js', ['lint', 'test', 'webpack']);
 });

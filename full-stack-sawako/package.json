@@ -19,6 +19,11 @@
     "mongoose": "^4.4.11"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^2.7.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
     "gulp-webpack": "^1.5.0"
   }
 }
