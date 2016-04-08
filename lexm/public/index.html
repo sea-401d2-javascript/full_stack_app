@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body data-ng-app="MovieApp">
+  <main data-ng-init="moviectrl.getMovies()" data-ng-controller="MovieController as moviectrl">
+    {{moviectrl.fnord}}
+    <ul>
+      <li data-ng-repeat="movie in moviectrl.movies">
+        <p>{{movie.name}} {{movie.release_date}}
+          <button ng-data-click="moviectrl.removeMovie(movie)">Delete</button>
+        </p>
+      </li>
+    </ul>
+    <form data-ng-submit="moviectrl.createMovie(newMovie)">
+      <input type="text" data-ng-model="newMovie.name">
+      <input type="date" data-ng-model="newMovie.release_date">
+      <button type="submit">New Movie</button>
+    </form>
+  </main>
+  <script src="./bundle.js" type="text/javascript"></script>
+</body>
+</html>
