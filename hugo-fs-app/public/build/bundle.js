@@ -46,7 +46,7 @@
 
 	__webpack_require__(1);
 	__webpack_require__(2);
-
+	//needs put routes!!!!
 	const app = angular.module('CustomerApp', []);
 	app.controller('CustomerController', ['$http', function($http) {
 	  const customersRoute = 'http://localhost:3000/customers';

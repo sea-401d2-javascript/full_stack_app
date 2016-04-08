@@ -13,6 +13,7 @@
   "author": "Hugo A Guerra <guerrahugoa@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "del": "^2.2.0",
     "express": "^4.13.4",
     "mongoose": "^4.4.11"
   },
