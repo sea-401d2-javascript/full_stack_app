@@ -19,16 +19,19 @@ gulp.task('test', () => {
 });
 
 gulp.task('webpack', () => {
-  return gulp.src('/public/js/app.js')
+  return gulp.src(__dirname + '/public/js/app.js')
   .pipe(webpack({
     watch: true,
     module: {
       loaders: [
         { test: /\.css$/, loader: 'style!css'}
       ]
+    },
+    output: {
+      filename: 'bundle.js'
     }
   }))
-  .pipe(gulp.dest('/public/bundle.js'));
+  .pipe(gulp.dest(__dirname + '/public/'));
 })
 
 gulp.task('watch', () => {
