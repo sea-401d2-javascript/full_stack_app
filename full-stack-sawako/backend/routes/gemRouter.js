@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (GemRouter ,Gem ,User )=>{
+module.exports = (GemRouter, Gem)=>{
 
   GemRouter.use((err, req, res, next)=>{
     console.error(err.stack);

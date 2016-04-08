@@ -14,10 +14,9 @@ mongoose.connect(DB_PORT);
 app.use(bodyParser.json());
 app.use(router);
 
-require('./routes/contRouter')(router,Continent,User);
-require('./routes/gemRouter')(router,Gem ,User);
-require('./routes/register')(router, User);
-require('./routes/login')(router, User);
+require('./routes/contRouter')(router,Continent);
+require('./routes/gemRouter')(router,Gem);
+
 
 
 app.listen(3000, ()=>{
