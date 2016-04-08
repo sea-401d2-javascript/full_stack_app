@@ -8,10 +8,15 @@
     <main  data-ng-init="ghostctrl.getGhosts()" data-ng-controller='GhostController as ghostctrl'>
       {{ghostctrl.angTest}}
       <ul>
-        <li data-ng-repeat="ghost in ghostctrl.ghosts">{{ghost[0].name}}
+        <li data-ng-repeat="ghost in ghostctrl.ghosts">{{ghost}}
         </li>
       </ul>
+      <form data-ng-submit="ghostctrl.createGhost(newGhost)">
+        Name: <input type="text" data-ng-model="newGhost.name" value=""/>
+        <p>Primary Power: <input type="text" data-ng-model="newGhost.powers.primary" value=""/></p>
+        <button type="submit">Submit</button>
+      </form>
     </main>
-    <!-- <script src="./bundle.js"></script> -->
+    <script src="./bundle.js"></script>
   </body>
 </html>

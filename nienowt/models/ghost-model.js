@@ -23,17 +23,17 @@ const ghostSchema = mongoose.Schema({
   ]
 });
 
-ghostSchema.pre('save', function(next) {
-  this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10));
-  next();
-});
-
-ghostSchema.methods.compareHash = function(password){
-  return bcrypt.compareSync(password, this.password);
-};
-
-ghostSchema.methods.genToken = function() {
-  return jwt.sign({id: this._id}, 'arbitrary');
-};
+// ghostSchema.pre('save', function(next) {
+//   this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10));
+//   next();
+// });
+//
+// ghostSchema.methods.compareHash = function(password){
+//   return bcrypt.compareSync(password, this.password);
+// };
+//
+// ghostSchema.methods.genToken = function() {
+//   return jwt.sign({id: this._id}, 'arbitrary');
+// };
 
 module.exports = mongoose.model('ghosts', ghostSchema);
