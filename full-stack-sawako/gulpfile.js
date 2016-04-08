@@ -9,6 +9,9 @@ gulp.task('webpack', function(){
   return gulp.src(__dirname + '/app/index.js')
   .pipe(webpack({
     watch: true,
+    output: {
+      filename: 'bundle.js'
+    },
     module: {
       loaders: [
         {test: /\.css$/, loader: 'style!css'},
