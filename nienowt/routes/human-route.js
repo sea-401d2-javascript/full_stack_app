@@ -3,9 +3,9 @@
 module.exports = (router) => {
   let Human = require(__dirname + '/../models/human-model');
   let Ghost = require(__dirname + '/../models/ghost-model');
-  let decode = require('../lib/auth');
-
-  router.use(decode);
+  // let decode = require('../lib/auth');
+  //
+  // router.use(decode);
   router.route('/humans')
     .get((req, res) => {
       Human.find({})

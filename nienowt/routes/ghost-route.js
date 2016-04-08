@@ -3,16 +3,16 @@ let Ghost = require(__dirname + '/../models/ghost-model');
 let Powers = require(__dirname + '/../models/powers-model');
 
 module.exports = (router) => {
-  let decode = require('../lib/auth');
+  // let decode = require('../lib/auth');
 
-  router.use(decode);
-  router.use('/ghosts/:id', (req, res, next) => {
-    if (req.decodedToken.id !== req.params.id) {
-      res.write('DENIED');
-      return res.end();
-    }
-    next();
-  });
+  // router.use(decode);
+  // router.use('/ghosts/:id', (req, res, next) => {
+  //   if (req.decodedToken.id !== req.params.id) {
+  //     res.write('DENIED');
+  //     return res.end();
+  //   }
+  //   next();
+  // });
 
   router.route('/ghosts')
     .get((req, res) => {

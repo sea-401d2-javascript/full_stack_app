@@ -3,12 +3,13 @@
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
-var paths = ['*.js', 'test/*.js', 'routes/*.js', 'models/*.js'];
+var webpack = require('gulp-webpack');
+var paths = ['*.js', 'test/*.js', 'routes/*.js', 'models/*.js','build/*', 'controllers/*'];
 
 gulp.task('default', ['watch']);
 
 gulp.task('watch', function() {
-  gulp.watch(paths,['lint', 'mocha']);
+  gulp.watch(paths,['webpack']);
 });
 
 gulp.task('lint', function(){
@@ -58,4 +59,15 @@ gulp.task('lint', function(){
 gulp.task('mocha', function() {
   return gulp.src('test/', {read: false})
   .pipe(mocha({reporter: 'progress'}));
+});
+
+
+gulp.task('webpack', function() {
+  return gulp.src('./entry.js')
+  .pipe(webpack({
+    output: {
+      filename: 'bundle.js'
+    }
+  }))
+  .pipe(gulp.dest('./build/'))
 });

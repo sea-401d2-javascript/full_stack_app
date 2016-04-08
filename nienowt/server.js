@@ -12,7 +12,7 @@ let publicRouter = express.Router();
 
 require('./routes/human-route')(router);
 require('./routes/ghost-route')(router);
-require('./routes/login-route')(publicRouter);
+// require('./routes/login-route')(publicRouter);
 
 
 app.use(bodyParser.json());
