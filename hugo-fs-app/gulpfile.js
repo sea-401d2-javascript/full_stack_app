@@ -18,8 +18,21 @@ gulp.task('test', () => {
   .pipe(mocha({reporter: 'nyan'}));
 });
 
+gulp.task('webpack', () => {
+  return gulp.src('/public/js/app.js')
+  .pipe(webpack({
+    watch: true,
+    module: {
+      loaders: [
+        { test: /\.css$/, loader: 'style!css'}
+      ]
+    }
+  }))
+  .pipe(gulp.dest('/public/bundle.js'));
+})
+
 gulp.task('watch', () => {
   gulp.watch(paths);
 });
 
-gulp.task('default', ['eslint', 'test']);
+gulp.task('default', ['eslint', 'test', 'webpack']);
