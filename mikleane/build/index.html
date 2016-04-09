@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>The Joy of Beer</title>
+  </head>
+  <body data-ng-app="app">
+    <main data-ng-controller="BeersController as beersctrl" data-ng-init="beersctrl.getBeers()">
+      <h2>{{beersctrl.beers}}</h2>
+      <ul>
+        <li data-ng-repeat="beer in beersctrl.beers">{{beer.name}}
+          <button ng-click="beersctrl.removeBeer(beer)">Delete Beer</button>
+        </li>
+      </ul>
+      <form data-ng-submit="beersctrl.createBeer(newBeer)">
+        <input type="text" data-ng-model="newBeer.name"/>
+        <button type="submit">New Beer</button>
+      </form>
+    </main>
+    <script src="./bundle.js"></script>
+  </body>
+</html>
