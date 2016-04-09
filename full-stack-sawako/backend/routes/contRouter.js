@@ -4,7 +4,7 @@ module.exports = (ContRouter, Continent)=>{
 
   ContRouter.get('/continents', (req, res)=>{
     Continent.find({}, (err, continent)=>{
-      res.json({id: continent});
+      res.json(continent);
     });
   });
 

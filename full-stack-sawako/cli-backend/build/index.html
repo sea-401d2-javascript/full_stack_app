@@ -6,10 +6,11 @@
   </head>
   <body data-ng-app="myApp">
     <section data-ng-controller="ContinentCtrl as conts">
-      <form data-ng-submit="conts.createContinents(conts.continents)">
+      <form>
         <p data-ng-bind="conts.continents"></p>
+        <p data-ng-bind="conts.continentsFromDb"></p>
         <input data-ng-model="conts.continents" type="text"/>
-        <button type="submit">Create New Continents!</button>
+        <button type="submit" data-ng-click="conts.createContinents(conts.continents)">Create New Continents!</button>
       </form>
     </section>
 
