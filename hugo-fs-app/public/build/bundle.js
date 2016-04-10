@@ -86,8 +86,8 @@
 	  this.updateCustomer = function(customer) {
 	    $http.put(customersRoute + '/' + customer._id, customer)
 	    .then(res => console.log(res.data))
-	    .catch(err => console.log(err))
-	  }
+	    .catch(err => console.log(err));
+	  };
 	  this.updateCustomer.rendered = null;
 	  //delete customers route
 	  this.removeCustomer = function(customer) {
@@ -119,10 +119,10 @@
 	  this.resetProduct = function(product) {
 	    $http.get(productsRoute + '/' + product._id)
 	    .then((res) => {
-	      this.products[this.products.indexOf(product)] = res.data
+	      this.products[this.products.indexOf(product)] = res.data;
 	    })
-	    .catch((err) => console.log(err))
-	  }
+	    .catch((err) => console.log(err));
+	  };
 	    //post product route
 	  this.createProduct = function(product) {
 	    $http.post(productsRoute, product)
@@ -132,20 +132,20 @@
 	      });
 	  };
 
-	    this.updateProduct = function(product) {
-	      $http.put(productsRoute + '/' + product._id, product)
+	  this.updateProduct = function(product) {
+	    $http.put(productsRoute + '/' + product._id, product)
 	      .then(res => console.log(res.data))
 	      .catch(err => console.log(err));
-	    };
+	  };
 
-	    this.updateProduct.rendered = null;
+	  this.updateProduct.rendered = null;
 	    //delete product route
-	    this.deleteProduct = function(product) {
-	      $http.delete(productsRoute + '/' + product._id)
-	      .then((res) => {
-	        this.products = this.products.filter((p) => p._id != product._id)
-	      })
-	    }
+	  this.deleteProduct = function(product) {
+	    $http.delete(productsRoute + '/' + product._id)
+	    .then((res) => {
+	      this.products = this.products.filter((p) => p._id != product._id);
+	    });
+	  };
 	}]);
 
 
