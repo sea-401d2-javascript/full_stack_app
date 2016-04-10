@@ -3,15 +3,40 @@
   <head>
     <meta charset="utf-8">
     <title>Full Stack App</title>
+    <!-- <link rel="stylesheet" href="./../css/layout.css" charset="utf-8"> -->
   </head>
   <body data-ng-app="myApp">
     <section data-ng-controller="ContinentCtrl as conts">
-      <form data-ng-submit="conts.createContinents(conts.newConts.country)">
-        <p data-ng-bind="conts.continents"></p>
-        <p data-ng-bind="conts.newConts.country"></p>
-        <input data-ng-model="conts.newConts.country" type="text"/>
+      <form data-ng-submit="conts.createContinents(conts.newConts)">
+        <label class="initial">Country:</label>
+          <p data-ng-bind="conts.newConts.country"></p>
+          <input data-ng-model="conts.newConts.country" type="text"/><br>
+        <label class="initial">Region:</label>
+          <p data-ng-bind="conts.newConts.region"></p>
+          <input data-ng-model="conts.newConts.region" type="text"/><br>
+        <label class="initial">Mineral:</label>
+          <p data-ng-bind="conts.newConts.mineral"></p>
+          <input data-ng-model="conts.newConts.mineral" type="text"/><br>
         <button type="submit">Create New Continents!</button>
       </form>
+      <form data-ng-submit="conts.getContinents()">
+        <div data-ng-repeat="contData in conts.continentsList"><br>
+          <label class="initial">id:</label>
+          <p class="p-repeat" data-ng-bind="contData._id"></p>
+          <label id="space-region">Country:</label>
+          <p class="p-repeat" data-ng-bind="contData.country"></p>
+          <label id="space-region">Region:</label>
+          <p class="p-repeat" data-ng-bind="contData.region"></p>
+          <label id="space-region">Mineral:</label>
+          <p class="p-repeat" data-ng-bind="contData.mineral"></p>
+        </div>
+        <button type="submit">Get All Data</button>
+      </form>
+      <!-- <form >
+        Gem Id:<p data-ng-bind="conts.continents.gems"></p>
+        <input data-ng-model="conts.newConts.gems" type="text"/><br><br>
+        <button type="submit" ></button>
+      </form> -->
     </section>
 
     <script src="./bundle.js" type="text/javascript"></script>

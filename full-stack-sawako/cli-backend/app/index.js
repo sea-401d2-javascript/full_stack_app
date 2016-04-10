@@ -1,36 +1,38 @@
 'use strict';
 var angular = require('angular');
+require('./layout.css');
+
+
 
 var app = angular.module('myApp', []);
 
 app.controller('ContinentCtrl',['$http', function($http){
   var mainRoute = 'http://localhost:3000/continents';
   var self = this;
-  this.test = [];
+  this.continentsList = [];
   this.continents = [];
   this.newConts = {
-    country: ''
+    country: '',
+    region: '',
+    mineral: ''
   }
   this.getContinents = function(){
     $http.get(mainRoute)
     .then((result)=>{
       console.log('Here is result ' + result);
-      // this.continents = result.data
+      this.continentsList = result.data;
     }, function(err){
-
+      console.log(err);
     })
   }
   this.createContinents = function(){
-    // console.log('This is incoming data : ' + incomingContData);
-    console.dir('Here is conts array : ' + angular.toJson(this.newConts));
     $http.post(mainRoute, this.newConts)
     .then((res)=>{
-      this.continentsFromDb = angular.toJson(res.data);
-      console.log('Here is fromDB : ' + this.continentsFromDb);
-
-      this.newContinent = {};
+      this.continents = angular.toJson(res.data);
+      console.log('Here is fromDB : ' + this.continents);
     },function(err){
       console.log('err : ' + err);
     })
   }
+
 }]);

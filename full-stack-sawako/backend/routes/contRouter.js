@@ -26,11 +26,14 @@ module.exports = (ContRouter, Continent)=>{
   });
 
   ContRouter.post('/continents', (req, res)=>{
-    console.dir('REQ.BODY : ' + req.body);
+    console.dir('REQ.BODY : ' + JSON.stringify(req.body));
     var newContinent = new Continent(req.body);
     newContinent.save((err, continent)=>{
+      if(err){
+        res.json({msg: err});
+        return;
+      }
       res.json(continent);
-      res.end();
     });
   });
 

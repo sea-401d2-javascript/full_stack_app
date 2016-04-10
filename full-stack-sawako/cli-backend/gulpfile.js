@@ -14,7 +14,7 @@ gulp.task('webpack', function(){
     },
     module: {
       loaders: [
-        {test: /\.css$/, loader: 'style!css'},
+        {test:  /\.css$/, loader: 'style!css'},
       ],
     },
   }))
