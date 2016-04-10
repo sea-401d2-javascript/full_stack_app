@@ -5,18 +5,42 @@
     <title></title>
   </head>
   <body data-ng-app='app'>
-    <main  data-ng-init="ghostctrl.getGhosts()" data-ng-controller='GhostController as ghostctrl'>
+    <header>
+      <nav>
+        <a href="">Ghosts</a>
+        <a href="">Humans</a>
+        <a href="">Cool ghosts</a>
+      </nav>ConfirmedConfirmedConfirmed
+    </header>
+    <div data-ng-init="ghostctrl.getGhosts()" data-ng-controller='GhostController as ghostctrl'>
       {{ghostctrl.angTest}}
       <ul>
-        <li data-ng-repeat="ghost in ghostctrl.ghosts">{{ghost}}
+        <li data-ng-repeat="ghost in ghostctrl.ghosts">
+          <p>{{ghost}}
+          <button data-ng-click="editShow = !editShow">Edit</button></p>
+
+          <form ng-show="editShow">
+            Name: <input type="text" data-ng-model="changedGhost.ghost.name" value=""/>
+            <p>Primary Power: <input type="text" data-ng-model="changedGhost.powers.primary" value=""/></p>
+            <p>Secondary Power: <input type="text" data-ng-model="changedGhost.powers.secondary" value=""/></p>
+            <p>Weakness: <input type="text" data-ng-model="changedGhost.powers.weakness" value=""/></p>
+            <p data-ng-show="editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted"</p>
+            <button data-ng-click="ghostctrl.confirmChange(changedGhost, 'edit', ghost)">Submit</button>
+            <button data-ng-click="ghostctrl.reset()" data-ng-show="editConfirmation">Cancel Edit</button>
+            <p>Or:</p>
+            <button data-ng-click="ghostctrl.confirmChange(ghost,'delete')">Delete Ghost</button>
+          </form>
+
         </li>
       </ul>
-      <form data-ng-submit="ghostctrl.createGhost(newGhost)">
+
+      <form name="newForm" data-ng-submit="ghostctrl.createGhost(newGhost)" ng-show="!editShow">
         Name: <input type="text" data-ng-model="newGhost.name" value=""/>
         <p>Primary Power: <input type="text" data-ng-model="newGhost.powers.primary" value=""/></p>
         <button type="submit">Submit</button>
       </form>
-    </main>
+
+    </div>
     <script src="./bundle.js"></script>
   </body>
 </html>

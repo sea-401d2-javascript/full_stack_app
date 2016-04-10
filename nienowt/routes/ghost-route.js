@@ -37,19 +37,19 @@ module.exports = (router) => {
     });
   })
     .put((req, res) => {
-      console.log(Object.keys(req.body.ghost));
       Ghost.findByIdAndUpdate(req.params.id,{ $set: req.body.ghost }, (err, ghost) => {
         if (err) {
-          console.log(err);
+          console.log('ghost error: ' + err);
           return res.end();
         }
         Powers.findByIdAndUpdate(ghost.powers, { $set: req.body.powers}, (err) =>{
           if (err) {
-            console.log(err);
+            console.log('powers error: ' + err);
             return res.end();
           }
           console.log('powers stored');
         });
+        console.log('ghost updated');
         res.write('Ghost updated!');
         res.end();
       });
