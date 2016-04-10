@@ -11,7 +11,7 @@ module.exports = (ContRouter, Continent)=>{
   ContRouter.get('/continents/:id', (req, res)=>{
     var query = {_id: req.params.id};
     Continent.findOne(query, (err, continent)=>{
-      res.json({id: continent});
+      res.json(continent);
     });
   });
 

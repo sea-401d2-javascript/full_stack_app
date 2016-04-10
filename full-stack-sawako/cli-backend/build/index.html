@@ -7,7 +7,7 @@
   </head>
   <body data-ng-app="myApp">
     <section data-ng-controller="ContinentCtrl as conts">
-      <form data-ng-submit="conts.createContinents(conts.newConts)">
+      <form id="create-form" data-ng-submit="conts.createContinents(conts.newConts)">
         <label class="initial">Country:</label>
           <p data-ng-bind="conts.newConts.country"></p>
           <input data-ng-model="conts.newConts.country" type="text"/><br>
@@ -20,11 +20,23 @@
         <button type="submit">Create New Continents!</button>
       </form>
       <!-- Editing one data set selected by ID -->
-      <form data-ng-submit="conts.getByIdContinents()">
+      <form id="edit-form" data-ng-submit="conts.getByIdContinents()">
         <label>*****Search by ID *****</label>
-        <p data-ng-bind="conts.id"></p>
         <input data-ng-model="conts.id" type="text">
-        <button type="submit">Edit One By Id</button>
+        <p data-ng-model="conts.getCont" data-ng-bind="conts.getCont._id"></p>
+        <input data-ng-show="conts.editing" data-ng-model="conts.getCont._id" type="text">
+        <p data-ng-model="conts.getCont" data-ng-bind="conts.getCont.country"></p>
+        <input data-ng-show="conts.editing" data-ng-model="conts.getCont.country" type="text">
+        <p data-ng-model="conts.getCont" data-ng-bind="conts.getCont.region"></p>
+        <input data-ng-show="conts.editing" data-ng-model="conts.getCont.region" type="text">
+        <p data-ng-model="conts.getCont" data-ng-bind="conts.getCont.mineral"></p>
+        <input data-ng-show="conts.editing" data-ng-model="conts.getCont.mineral" type="text">
+        <button type="submit">Search by Id</button>
+        <label data-ng-hide="!conts.editing" data-ng-bind="conts.getCont" data-ng-click=""></label>
+        <input data-ng-show="conts.editing" data-ng-model="conts.getCont" type="text">
+        <input id="space-region" data-ng-click="conts.editing = !conts.editing" type="button" value="Edit">
+        <input id="space-region" type="button" value="Delete">
+        <input id="space-region" type="submit" data-ng-click="conts.editContinents()" value="Save Edit">
       </form>
       <!-- Getting all data via GET route -->
       <form data-ng-submit="conts.getContinents()">

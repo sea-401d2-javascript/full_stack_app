@@ -13,14 +13,21 @@ body {
 
 }
 
+#create-form {
+  display: inline-block;
+  width: 100%;
+  height: 10em;
+}
+
 p {
-  width: 10em;
+  width: 12em;
+  height: 1em;
   display: inline-block;
   padding-left: 1em;
   padding-right: 1em;
   margin-right: 1em;
   margin-left: 1em;
-
+  border: 2px green solid;
 }
 
 .p-repeat {
@@ -37,8 +44,17 @@ p {
   clear: both;
 }
 
+#edit-form {
+  display: inline-block;
+  border: 3px solid red;
+  width: 100%;
+  height: 20em;
+}
+
 input {
   display: inline-block;
+  width: 12em;
+  height: 1em;
   margin-right: 2em;
   margin-left: 2em;
 }

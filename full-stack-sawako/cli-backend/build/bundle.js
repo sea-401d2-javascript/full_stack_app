@@ -65,6 +65,7 @@
 	  }
 	  this.getCont = {};
 	  this.id = ''
+	  this.editing = false;
 	  this.getContinents = function(){
 	    $http.get(mainRoute)
 	    .then((result)=>{
@@ -76,12 +77,9 @@
 	  }
 	  this.getByIdContinents = function(){
 	    var test = angular.toJson(this.id);
-	    console.dir('NEW ID : ' + angular.toJson(this.id));
-	    console.dir('NEW URL : ' + mainRoute + '/'+ this.id);
-	    console.dir('GETCONT : ' + angular.toJson(this.getCont));
 	      $http.get(mainRoute + '/'+ this.id)
 	      .then((result)=>{
-	        console.log('Here is result by id : ' + angular.toJson(result));
+	        this.getCont = result.data;
 	      }, function(err){
 	        console.log(err);
 	      })
@@ -89,16 +87,21 @@
 
 	  this.createContinents = function(){
 	    $http.post(mainRoute, this.newConts)
-	    .then((res)=>{
-	      this.continents = angular.toJson(res.data);
+	    .then((result)=>{
+	      this.continents = angular.toJson(result.data);
 	      console.log('Here is fromDB : ' + this.continents);
 	    },function(err){
 	      console.log('err : ' + err);
 	    })
 	  }
-	  // this.editContinents = function(){
-	  //   $http.put(mainRoute, this.)
-	  // }
+	  this.editContinents = function(){
+	    $http.put(mainRoute +'/'+ this.id, this.getCont)
+	    .then((result)=>{
+	      console.log('Here is result of PUT : ' + angular.toJson(result));
+	    }, function(err){
+	      console.log('err : ' + err);
+	    })
+	  }
 	}]);
 
 
@@ -30864,7 +30867,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  background-color: pink;\n}\n\n.initial {\n  display: inline-block;\n  float: left;\n  padding-left: 1em;\n  padding-right: 1em;\n  margin-top: 1em;\n  margin-right: 1em;\n  margin-left: 1em;\n\n}\n\np {\n  width: 10em;\n  display: inline-block;\n  padding-left: 1em;\n  padding-right: 1em;\n  margin-right: 1em;\n  margin-left: 1em;\n\n}\n\n.p-repeat {\n    display: inline-block;\n}\n\n.space {\n    display: inline-block;\n    /*margin-left: 5em;*/\n}\n\n#space-region {\n  display: inline-block;\n  clear: both;\n}\n\ninput {\n  display: inline-block;\n  margin-right: 2em;\n  margin-left: 2em;\n}\n", ""]);
+	exports.push([module.id, "body {\n  background-color: pink;\n}\n\n.initial {\n  display: inline-block;\n  float: left;\n  padding-left: 1em;\n  padding-right: 1em;\n  margin-top: 1em;\n  margin-right: 1em;\n  margin-left: 1em;\n\n}\n\n#create-form {\n  display: inline-block;\n  width: 100%;\n  height: 10em;\n}\n\np {\n  width: 12em;\n  height: 1em;\n  display: inline-block;\n  padding-left: 1em;\n  padding-right: 1em;\n  margin-right: 1em;\n  margin-left: 1em;\n  border: 2px green solid;\n}\n\n.p-repeat {\n    display: inline-block;\n}\n\n.space {\n    display: inline-block;\n    /*margin-left: 5em;*/\n}\n\n#space-region {\n  display: inline-block;\n  clear: both;\n}\n\n#edit-form {\n  display: inline-block;\n  border: 3px solid red;\n  width: 100%;\n  height: 20em;\n}\n\ninput {\n  display: inline-block;\n  width: 12em;\n  height: 1em;\n  margin-right: 2em;\n  margin-left: 2em;\n}\n", ""]);
 
 	// exports
 

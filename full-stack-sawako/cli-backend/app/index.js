@@ -19,6 +19,7 @@ app.controller('ContinentCtrl',['$http', function($http){
   }
   this.getCont = {};
   this.id = ''
+  this.editing = false;
   this.getContinents = function(){
     $http.get(mainRoute)
     .then((result)=>{
@@ -30,12 +31,9 @@ app.controller('ContinentCtrl',['$http', function($http){
   }
   this.getByIdContinents = function(){
     var test = angular.toJson(this.id);
-    console.dir('NEW ID : ' + angular.toJson(this.id));
-    console.dir('NEW URL : ' + mainRoute + '/'+ this.id);
-    console.dir('GETCONT : ' + angular.toJson(this.getCont));
       $http.get(mainRoute + '/'+ this.id)
       .then((result)=>{
-        console.log('Here is result by id : ' + angular.toJson(result));
+        this.getCont = result.data;
       }, function(err){
         console.log(err);
       })
@@ -43,14 +41,19 @@ app.controller('ContinentCtrl',['$http', function($http){
 
   this.createContinents = function(){
     $http.post(mainRoute, this.newConts)
-    .then((res)=>{
-      this.continents = angular.toJson(res.data);
+    .then((result)=>{
+      this.continents = angular.toJson(result.data);
       console.log('Here is fromDB : ' + this.continents);
     },function(err){
       console.log('err : ' + err);
     })
   }
-  // this.editContinents = function(){
-  //   $http.put(mainRoute, this.)
-  // }
+  this.editContinents = function(){
+    $http.put(mainRoute +'/'+ this.id, this.getCont)
+    .then((result)=>{
+      console.log('Here is result of PUT : ' + angular.toJson(result));
+    }, function(err){
+      console.log('err : ' + err);
+    })
+  }
 }]);
