@@ -49,7 +49,7 @@
 	const angularMoment = __webpack_require__(103);
 
 	const app = angular.module('MovieApp', ['angularMoment']);
-	app.controller('MovieController', ['$scope', '$http', function($scope, $http, moment) {
+	app.controller('MovieController', ['$scope', '$http', function($scope, $http) {
 	  const movieRoute = 'http://localhost:3000/movies';
 	  $scope.fnord = 'FNORD FNORD FNORD';
 	  this.movies = ['movie'];

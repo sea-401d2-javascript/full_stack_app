@@ -3,7 +3,7 @@ const moment = require('moment');
 const angularMoment = require('angular-moment');
 
 const app = angular.module('MovieApp', ['angularMoment']);
-app.controller('MovieController', ['$scope', '$http', function($scope, $http, moment) {
+app.controller('MovieController', ['$scope', '$http', function($scope, $http) {
   const movieRoute = 'http://localhost:3000/movies';
   $scope.fnord = 'FNORD FNORD FNORD';
   this.movies = ['movie'];
