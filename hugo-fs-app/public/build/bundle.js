@@ -50,9 +50,7 @@
 	const app = angular.module('CustomerApp', []);
 	app.controller('CustomerController', ['$http', function($http) {
 	  const customersRoute = 'http://localhost:3000/customers';
-	  const productsRoute = 'http://localhost:3000/products';
 	  const customerOneRoute = 'http://localhost:3000/customers/:id';
-	  const productOneRoute = 'http://localhost:3000/products/:id';
 	  this.customers = [];
 	  this.products = [];
 	//customer routes
@@ -101,6 +99,7 @@
 	    this.getProducts = function() {
 	      $http.get(productsRoute)
 	      .then((result) => {
+	        console.log(result.data);
 	        this.products = result.data;
 	      }, function(error) {
 	        console.log('error getting products');

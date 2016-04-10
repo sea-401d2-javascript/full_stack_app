@@ -5,26 +5,26 @@
     <title>2 Resource with Angular</title>
   </head>
   <body ng-app="CustomerApp">
+    <!-- move script tag below to top of body!!!! -->
+    <script type="text/javascript" src="/build/bundle.js"></script>
     <h1>Welcome!</h1>
     <main ng-init="custctrl.getCustomers()"ng-controller="CustomerController as custctrl" ng-cloak>
       <h3>customers!</h3>
-      <section ng-repeat="customer in custctrl.customers">
+      <section ng-repeat="customer in custctrl.customers" ng-cloak>
         {{customer.name}}
         {{customer.age}}
-        {{customer}}
+        {{customer.email}}
         <!-- <div click-to-edit="location.region"></div> -->
       </section>
     </main>
     <main ng-init="prodctrl.getProducts()"ng-controller="ProductController as prodctrl" ng-cloak>
       <h3>products!</h3>
-      <section ng-repeat="product in prodctrl.products">
+      <section ng-repeat="product in prodctrl.products" ng-cloak>
         {{product.name}}
-        {{product.age}}
-        {{product}}
+        {{product.upc}}
+        {{product.stock}}
         <!-- <div click-to-edit="location.region"></div> -->
       </section>
     </main>
-    <!-- move script tag below to top of body!!!! -->
-    <script type="text/javascript" src="/build/bundle.js"></script>
   </body>
 </html>

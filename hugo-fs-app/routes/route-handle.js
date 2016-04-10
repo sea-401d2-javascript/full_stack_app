@@ -7,7 +7,7 @@ module.exports = (middleRouter) => {
   .get((req, res) => {
     console.log('GET route hit for /customers');
     Customer.find({}).populate('products').exec((err, customers) => {
-      res.json({data: customers});
+      res.json(customers);
     });
   })
   .post((req, res) => {
@@ -47,7 +47,7 @@ module.exports = (middleRouter) => {
   .get((req, res) => {
     console.log('GET route hit for /products');
     Product.find({}, (err, products) => {
-      res.json({data: products});
+      res.json(products);
     });
   })
   .post((req, res) => {
