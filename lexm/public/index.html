@@ -6,11 +6,13 @@
 </head>
 <body data-ng-app="MovieApp">
   <main data-ng-init="moviectrl.getMovies()" data-ng-controller="MovieController as moviectrl">
-    {{moviectrl.fnord}}
+    {{fnord}}
     <ul>
       <li data-ng-repeat="movie in moviectrl.movies">
-        <p>{{movie.name}} {{movie.release_date}}
-          <button ng-data-click="moviectrl.removeMovie(movie)">Delete</button>
+        <p>Movie Title: {{movie.name}}</p>
+        <p>Release Date: {{movie.release_date | amDateFormat:'MMMM Do YYYY'}}</p>
+        <p>
+          <button data-ng-click="moviectrl.removeMovie(movie)">Delete</button>
         </p>
       </li>
     </ul>

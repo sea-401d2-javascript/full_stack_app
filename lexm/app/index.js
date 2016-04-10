@@ -1,19 +1,21 @@
 const angular = require('angular');
+const moment = require('moment');
+const angularMoment = require('angular-moment');
 
-const app = angular.module(MovieApp, []);
-app.controller('MovieController', ['$http', function($http) {
+const app = angular.module('MovieApp', ['angularMoment']);
+app.controller('MovieController', ['$scope', '$http', function($scope, $http, moment) {
   const movieRoute = 'http://localhost:3000/movies';
-  this.fnord = 'FNORD FNORD FNORD';
-  this.movies = ['a movie'];
+  $scope.fnord = 'FNORD FNORD FNORD';
+  this.movies = ['movie'];
   this.getMovies = function() {
     $http.get(movieRoute)
     .then((res) => {
-      this.movies = res.data.movies;
-    }, {
+      this.movies = res.data.data;
+    },
       function(error) {
         console.error(error);
       }
-    })
+    )
   }
   this.createMovie = function(movie) {
     $http.post(movieRoute, movie)
@@ -23,9 +25,12 @@ app.controller('MovieController', ['$http', function($http) {
     })
   }
   this.removeMovie = function(movie) {
+    console.log(movie._id);
     $http.delete(movieRoute + '/' + movie._id)
     .then((res) => {
-      this.this.movies = this.movies.filter((mov) => mov._id != movie._id);
+      console.log('hello!');
+      console.log(res.data);
+      this.movies = this.movies.filter((mov) => mov._id != movie._id);
     })
   }
 }])
