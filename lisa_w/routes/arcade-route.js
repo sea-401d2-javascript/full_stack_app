@@ -18,8 +18,8 @@ module.exports = (router, models)=>{
      console.log('get was hit');
      Arcade.find({}, (err, arcades)=>{
        if(err)  res.send(err);
+       console.log('hit ' + arcades);
        res.json({data: arcades});
-       console.log('hit' + arcades);
      });
    });
   router.route('/arcades/:id')
@@ -28,7 +28,7 @@ module.exports = (router, models)=>{
      Arcade.findById(req.params.id, (err, arcade)=>{
        if (err) res.send(err);
        res.json(arcade);
-       console.log(arcade);
+      //  console.log(arcade);
      });
    })
    .put((req, res)=>{

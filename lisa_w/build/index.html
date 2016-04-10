@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <title>App</title>
@@ -9,14 +9,14 @@
     <main data-ng-init="arcadectrl.getArcade()" data-ng-controller="ArcadeController as arcadectrl">
 
       <ul>
-        <li data-ng-repeat="arcade in arcadectrl.arcades">{{arcade.data}}  </li>
+        <li data-ng-repeat="arcade in arcadectrl.arcade">{{arcade.name}}  </li>
         <button data-ng-click="arcadectrl.removeArcade(arcade)">Delete</button>
 
 
       </ul>
-      <h1>{{arcadectrl.arcade}}</h1>
+      <h1>{{dance}}</h1>
       <form data-ng-submit="arcadectrl.createArcade(newArcade)">
-        <input type="text" data-ng-model="newArcade.name"/>
+        <input type="text" data-ng-model="newArcade.name">
         <button type="submit">New Arcade</button>
 
       </form>
@@ -24,5 +24,6 @@
     </main>
 
 <script src='bundle.js'></script>
+<!-- <script src='../angular-resource.js'></script> -->
   </body>
 </html>

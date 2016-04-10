@@ -3,16 +3,19 @@
 const angular = require('angular');
 
 const app = angular.module('ArcadeApp', []);
-app.controller('ArcadeController', ['$http', function($http){
+app.controller('ArcadeController', ['$scope','$http', function($scope, $http){
+  console.log('marker1');
+
   const arcadeRoute = 'http://localhost:5000/arcades';
+  $scope.dance = 'DANCE, DANCE';
   // this.test = 'TEST';
-  this.arcades = ['arcade'];
+  this.arcade = [];
   // this.arcades = result.data.name;
-  this.getArcades = function(){
-    $http.get(arcadeRoute + '/arcades')
+  this.getArcade = function(){
+    $http.get(arcadeRoute)
     .then((result)=>{
-      // console.log('ARCADE NAME: ' + result.data.data);
-      this.arcades = result.data.data;
+      console.log('ARCADE NAME: ' + result);
+      this.arcade = result.name;
     }, function(error){
       console.log(error);
     });
@@ -20,8 +23,8 @@ app.controller('ArcadeController', ['$http', function($http){
   this.createArcade = function(arcade){
     $http.post(arcadeRoute, arcade)
       .then((res)=>{
-        // console.log(res);
-        this.arcades.push(arcade);
+        console.log(res.data);
+        this.arcade.push(res.data);
         this.newArcade = {};
       });
 
@@ -32,7 +35,7 @@ app.controller('ArcadeController', ['$http', function($http){
       console.log('removing')
       console.log(res.data);
       ;
-      this.arcades = this.arcades.filter((a)=> a._id !=arcade._id);
+      this.arcade = this.arcade.filter((a)=> a._id !=arcade._id);
     });
   };
 }]);

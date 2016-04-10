@@ -2,9 +2,7 @@
 
 module.exports = (router, models) => {
   let Game = models.Game;
-  let Arcade = models.Arcade;
-  // var bodyParser = require('body-parser');
-  // router.use(bodyParser.json());
+
 
   router.route('/games')
        .post((req, res)=>{
