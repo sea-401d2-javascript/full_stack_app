@@ -57,4 +57,4 @@ gulp.task('watch', () => {
   gulp.watch(paths);
 });
 
-gulp.task('default', ['eslint', 'test', 'del-build', 'webpack', 'copy-html', 'copy-css']);
+gulp.task('default', ['eslint', 'del-build', 'webpack', 'copy-html', 'copy-css']);

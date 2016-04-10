@@ -4,9 +4,7 @@ require(__dirname + '/../css/main.css');
 const app = angular.module('CustomerApp', []);
 app.controller('CustomerController', ['$http', function($http) {
   const customersRoute = 'http://localhost:3000/customers';
-  const productsRoute = 'http://localhost:3000/products';
   const customerOneRoute = 'http://localhost:3000/customers/:id';
-  const productOneRoute = 'http://localhost:3000/products/:id';
   this.customers = [];
   this.products = [];
 //customer routes
@@ -14,7 +12,8 @@ app.controller('CustomerController', ['$http', function($http) {
   this.getCustomers = function() {
     $http.get(customersRoute)
     .then((result) => {
-      this.customers = result.data.customers;
+      console.log(result.data);
+      this.customers = result.data;
     }, function(error) {
       console.log('error in getting customers');;
     })
@@ -27,6 +26,13 @@ app.controller('CustomerController', ['$http', function($http) {
       this.newCustomer = {};
     })
   }
+
+  //put route
+  this.updateCustomer = function(customer) {
+    $http.put(customersRoute + '/' + customer._id, customer)
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err))
+  }
   //delete customers route
   this.removeCustomer = function(customer) {
     $http.delete(customersRoute + '/' + customer._id)
@@ -34,12 +40,21 @@ app.controller('CustomerController', ['$http', function($http) {
       this.customers = this.customers.filter((c) => c._id != customer._id)
     })
   }
+}]);
+
+
+
+app.controller('ProductController', ['$http', function($http) {
+  const productsRoute = 'http://localhost:3000/products';
+  const productOneRoute = 'http://localhost:3000/products/:id';
+  this.products = [];
   //product routes
     //get products route
     this.getProducts = function() {
       $http.get(productsRoute)
       .then((result) => {
-        this.products = result.data.products;
+        console.log(result.data);
+        this.products = result.data;
       }, function(error) {
         console.log('error getting products');
       })
@@ -50,14 +65,19 @@ app.controller('CustomerController', ['$http', function($http) {
       .then((res) => {
         this.products.push(product);
         this.newProduct = {};
+      });
+    }
+
+    this.updateProduct = function(product) {
+      $http.put(productsRoute + '/' + product._id, product)
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err));
+    };
+    //delete product route
+    this.deleteProduct = function(product) {
+      $http.delete(productsRoute + '/' + product._id)
+      .then((res) => {
+        this.products = this.products.filter((p) => p._id != product._id)
       })
     }
-    //delete product route
-    $http.delete(productsRoute + '/' + product._id)
-    .then((res) => {
-      this.products = this.products.filter((p) => p._id != product._id)
-    })
-
-
-
 }]);
