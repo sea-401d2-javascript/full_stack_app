@@ -2,7 +2,7 @@
 
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
-var webpack = require('gulp-webpack')
+var webpack = require('webpack-stream')
 
 var paths = ['*.js', 'test/*.js', 'routes/*.js', 'models/*.js'];
 
