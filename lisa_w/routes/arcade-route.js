@@ -1,9 +1,8 @@
 'use strict';
-var Arcade = require('../models/Arcade');
-var bodyParser = require('body-parser');
+// var bodyParser = require('body-parser');
 
-module.exports = function(router){
-  router.use(bodyParser.json());
+module.exports = (router, models)=>{
+  let Arcade = models.Arcade;
 
   router.route('/arcades')
    .post((req, res)=>{
@@ -17,9 +16,9 @@ module.exports = function(router){
    })
    .get((req, res) =>{
      console.log('get was hit');
-     Arcade.find({},(err, arcades)=>{
+     Arcade.find({}, (err, arcades)=>{
        if(err)  res.send(err);
-       res.json(arcades);
+       res.json({data: arcades});
        console.log('hit' + arcades);
      });
    });

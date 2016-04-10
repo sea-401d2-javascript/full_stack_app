@@ -45,29 +45,41 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+
 	const angular = __webpack_require__(1);
+
 	const app = angular.module('ArcadeApp', []);
 	app.controller('ArcadeController', ['$http', function($http){
-	  const mainRoute = 'http://localhost:5000/arcades';
-	  this.test = 'TEST';
-	  this.arcades = ['Arcade'];
-	  this.getArcade = function(){
-	    $http.get(mainRoute)
+	  const arcadeRoute = 'http://localhost:5000/arcades';
+	  // this.test = 'TEST';
+	  this.arcades = ['arcade'];
+	  // this.arcades = result.data.name;
+	  this.getArcades = function(){
+	    $http.get(arcadeRoute + '/arcades')
 	    .then((result)=>{
-	      console.log(result.data.arcades);
-	      this.arcades = result.data.arcades;
-	    }, function(err){
-	      console.log(err);
+	      // console.log('ARCADE NAME: ' + result.data.data);
+	      this.arcades = result.data.data;
+	    }, function(error){
+	      console.log(error);
 	    });
 	  };
 	  this.createArcade = function(arcade){
-	    $http.post(mainRoute, arcade)
-	  .then((res)=>{
-	    this.arcade.push(arcade);
-	    this.newArcade = {};
-	    return res();
-	  });
+	    $http.post(arcadeRoute, arcade)
+	      .then((res)=>{
+	        // console.log(res);
+	        this.arcades.push(arcade);
+	        this.newArcade = {};
+	      });
 
+	  };
+	  this.removeArcade = function(arcade) {
+	    $http.delete(arcadeRoute + '/' + arcade._id)
+	    .then((res)=>{
+	      console.log('removing')
+	      console.log(res.data);
+	      ;
+	      this.arcades = this.arcades.filter((a)=> a._id !=arcade._id);
+	    });
 	  };
 	}]);
 

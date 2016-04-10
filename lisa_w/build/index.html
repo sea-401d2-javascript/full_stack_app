@@ -2,11 +2,19 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>App</title>
   </head>
   <body data-ng-app="ArcadeApp">
-    <main data-ng-controller="ArcadeController as arcadectrl">
-      <h1>{{arcadectrl.Arcade}}</h1>
+    <h1>Arcades</h1>
+    <main data-ng-init="arcadectrl.getArcade()" data-ng-controller="ArcadeController as arcadectrl">
+
+      <ul>
+        <li data-ng-repeat="arcade in arcadectrl.arcades">{{arcade.data}}  </li>
+        <button data-ng-click="arcadectrl.removeArcade(arcade)">Delete</button>
+
+
+      </ul>
+      <h1>{{arcadectrl.arcade}}</h1>
       <form data-ng-submit="arcadectrl.createArcade(newArcade)">
         <input type="text" data-ng-model="newArcade.name"/>
         <button type="submit">New Arcade</button>
@@ -15,6 +23,6 @@
 
     </main>
 
-<script src='./bundle.js'></script>
+<script src='bundle.js'></script>
   </body>
 </html>
