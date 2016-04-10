@@ -19,6 +19,14 @@
           <input data-ng-model="conts.newConts.mineral" type="text"/><br>
         <button type="submit">Create New Continents!</button>
       </form>
+      <!-- Editing one data set selected by ID -->
+      <form data-ng-submit="conts.getByIdContinents()">
+        <label>*****Search by ID *****</label>
+        <p data-ng-bind="conts.id"></p>
+        <input data-ng-model="conts.id" type="text">
+        <button type="submit">Edit One By Id</button>
+      </form>
+      <!-- Getting all data via GET route -->
       <form data-ng-submit="conts.getContinents()">
         <div data-ng-repeat="contData in conts.continentsList"><br>
           <label class="initial">id:</label>
@@ -32,6 +40,7 @@
         </div>
         <button type="submit">Get All Data</button>
       </form>
+
       <!-- <form >
         Gem Id:<p data-ng-bind="conts.continents.gems"></p>
         <input data-ng-model="conts.newConts.gems" type="text"/><br><br>
