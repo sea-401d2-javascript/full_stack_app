@@ -66,18 +66,33 @@
 	  this.createMovie = function(movie) {
 	    $http.post(movieRoute, movie)
 	    .then((res) => {
-	      this.movies.push(movie)
+	      console.log(res.data);
+	      this.movies.push(res.data)
 	      this.newMovie = {};
 	    })
 	  }
 	  this.removeMovie = function(movie) {
-	    console.log(movie._id);
-	    $http.delete(movieRoute + '/' + movie._id)
-	    .then((res) => {
-	      console.log('hello!');
-	      console.log(res.data);
-	      this.movies = this.movies.filter((mov) => mov._id != movie._id);
-	    })
+	    if(movie._id) {
+	      $http.delete(movieRoute + '/' + movie._id)
+	      .then((res) => {
+	        console.log('hello!');
+	        this.movies = this.movies.filter((mov) => mov._id != movie._id);
+	      })
+	    } else {
+	      console.log('no id!');
+	    }
+	  }
+	  this.showEditFlip = function(movie) {
+	    console.log(movie.showEdit);
+	    if(!movie.showEdit) {
+	      movie.showEdit = true;
+	    } else {
+	      movie.showEdit = false;
+	    }
+	    console.log(movie.showEdit);
+	  }
+	  this.editMovie = function(movie) {
+
 	  }
 	}])
 
