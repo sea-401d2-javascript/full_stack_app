@@ -10,7 +10,7 @@
         <a href="">Ghosts</a>
         <a href="">Humans</a>
         <a href="">Cool ghosts</a>
-      </nav>ConfirmedConfirmedConfirmed
+      </nav>
     </header>
     <div data-ng-init="ghostctrl.getGhosts()" data-ng-controller='GhostController as ghostctrl'>
       {{ghostctrl.angTest}}
@@ -19,15 +19,14 @@
           <p>{{ghost}}
           <button data-ng-click="editShow = !editShow">Edit</button></p>
 
-          <form ng-show="editShow">
+          <form name="editForm" ng-show="editShow">
             Name: <input type="text" data-ng-model="changedGhost.ghost.name" value=""/>
             <p>Primary Power: <input type="text" data-ng-model="changedGhost.powers.primary" value=""/></p>
             <p>Secondary Power: <input type="text" data-ng-model="changedGhost.powers.secondary" value=""/></p>
             <p>Weakness: <input type="text" data-ng-model="changedGhost.powers.weakness" value=""/></p>
-            <p data-ng-show="editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted"</p>
             <button data-ng-click="ghostctrl.confirmChange(changedGhost, 'edit', ghost)">Submit</button>
-            <button data-ng-click="ghostctrl.reset()" data-ng-show="editConfirmation">Cancel Edit</button>
-            <p>Or:</p>
+            <p data-ng-show="editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted</p>
+            <button data-ng-click="editShow = !editShow; changedGhost = {}; editConfirmation = !editConfirmation" data-ng-show="editConfirmation">Cancel Edit</button>
             <button data-ng-click="ghostctrl.confirmChange(ghost,'delete')">Delete Ghost</button>
           </form>
 
