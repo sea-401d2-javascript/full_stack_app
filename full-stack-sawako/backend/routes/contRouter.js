@@ -26,6 +26,7 @@ module.exports = (ContRouter, Continent)=>{
   });
 
   ContRouter.post('/continents', (req, res)=>{
+    console.dir('REQ.BODY : ' + req.body);
     var newContinent = new Continent(req.body);
     newContinent.save((err, continent)=>{
       res.json(continent);

@@ -54,6 +54,9 @@
 	  var self = this;
 	  this.test = [];
 	  this.continents = [];
+	  this.newConts = {
+	    country: ''
+	  }
 	  this.getContinents = function(){
 	    $http.get(mainRoute)
 	    .then((result)=>{
@@ -63,12 +66,17 @@
 
 	    })
 	  }
-	  this.createContinents = function(incomingContData){
-	    $http.post(mainRoute, incomingContData)
+	  this.createContinents = function(){
+	    // console.log('This is incoming data : ' + incomingContData);
+	    console.dir('Here is conts array : ' + angular.toJson(this.newConts));
+	    $http.post(mainRoute, this.newConts)
 	    .then((res)=>{
 	      this.continentsFromDb = angular.toJson(res.data);
-	      console.log(this.continentsFromDb);
+	      console.log('Here is fromDB : ' + this.continentsFromDb);
+
 	      this.newContinent = {};
+	    },function(err){
+	      console.log('err : ' + err);
 	    })
 	  }
 	}]);
