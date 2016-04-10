@@ -1,12 +1,12 @@
 'use strict';
 
-var gulp = require('gulp');
-var lint = require('gulp-eslint');
-var mocha = require('gulp-mocha');
-var webpack = require('gulp-webpack');
-var del = require('del');
+const gulp = require('gulp');
+const lint = require('gulp-eslint');
+const mocha = require('gulp-mocha');
+const webpack = require('gulp-webpack');
+const del = require('del');
 
-var paths = ['*.js', 'models/*.js', 'routes/*.js', 'test/*.js'];
+let paths = ['*.js', 'models/*.js', 'routes/*.js', 'test/*.js', 'public/js/*.js'];
 
 gulp.task('eslint', () => {
   gulp.src(paths)
@@ -21,21 +21,20 @@ gulp.task('test', () => {
 
 gulp.task('del-build', () => {
   return del([
-    //content goes here
     __dirname + '/public/build/**', __dirname + '!/public/build'
   ])
-  .then(paths => console.log('Deleted files and folders:\n', paths.join('\n')))
-})
+  .then(paths => console.log('Deleted files and folders:\n', paths.join('\n')));
+});
 
 gulp.task('copy-html', () => {
   gulp.src(__dirname + '/public/index.html')
   .pipe(gulp.dest(__dirname + '/public/build'));
-})
+});
 
 gulp.task('copy-css', () => {
   gulp.src(__dirname + '/public/css/main.css')
-  .pipe(gulp.dest(__dirname + '/public/build'))
-})
+  .pipe(gulp.dest(__dirname + '/public/build'));
+});
 
 gulp.task('webpack', () => {
   return gulp.src(__dirname + '/public/js/app.js')
@@ -51,7 +50,7 @@ gulp.task('webpack', () => {
     }
   }))
   .pipe(gulp.dest(__dirname + '/public/build'));
-})
+});
 
 gulp.task('watch', () => {
   gulp.watch(paths);

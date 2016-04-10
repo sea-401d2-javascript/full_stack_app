@@ -11,27 +11,34 @@
     <main ng-init="custctrl.getCustomers()"ng-controller="CustomerController as custctrl" ng-cloak>
       <h3>customers!</h3>
       <section ng-repeat="customer in custctrl.customers" ng-cloak>
-        {{customer.name}}
-        {{customer.age}}
-        {{customer.email}}
-        <button type="submit" ng-click="custctrl.updateCust.rendered = customer._id">update record</button>
-        <button type="button" ng-click="custctrl.deleteCust(customer)">delete record</button>
-        <form class="" action="index.html" method="post">
-
+        {{customer.name}}<br>
+        {{customer.age}}<br>
+        {{customer.email}}<br>
+        <button type="submit" ng-click="custctrl.updateCustomer.rendered = customer._id">update record</button>
+        <button type="button" ng-click="custctrl.deleteCustomer(customer)">delete record</button>
+        <form ng-show="custctrl.updateCustomer.rendered === customer._id" ng-submit="custctrl.updateCustomer.rendered = null">
+          <span>Name:</span><input type="text" ng-model="customer.name"><br>
+          <span>Age:</span><input type="text" ng-model="customer.age"><br>
+          <span>Email:</span><input type="text" ng-model="customer.email"><br>
+          <button type="submit">Save Changes</button>
+          <button type="reset" ng-click="custctrl.resetCustomer(customer); custctrl.updateCustomer.rendered = null">Discard Changes</button>
         </form>
-        <!-- <div click-to-edit="location.region"></div> -->
       </section>
     </main>
     <main ng-init="prodctrl.getProducts()"ng-controller="ProductController as prodctrl" ng-cloak>
       <h3>products!</h3>
       <section ng-repeat="product in prodctrl.products" ng-cloak>
-        {{product.name}}
-        {{product.upc}}
-        {{product.stock}}
-        <button type="submit" ng-click="prodctrl.updateProd.rendered = product._id">Update Record</button>
-        <button type="submit"ng-click="prodctrl.deleteProd(product)">Delete Record</button>
-        <form class="" action="index.html" method="post">
-
+        {{product.name}}<br>
+        {{product.upc}}<br>
+        {{product.stock}}<br>
+        <button type="submit" ng-click="prodctrl.updateProduct.rendered = product._id">Update Record</button>
+        <button type="submit"ng-click="prodctrl.deleteProduct(product)">Delete Record</button>
+        <form ng-show="prodctrl.updateProduct.rendered === product._id" ng-submit="prodctrl.updateProduct.rendered = null">
+          <span>Name:</span><input type="text" ng-model="product.name"><br>
+          <span>UPC:</span><input type="text" ng-model="product.age"><br>
+          <span>Stock Count:</span><input type="text" ng-model="product.email"><br>
+          <button type="submit">Save Changes</button>
+          <button type="reset" ng-click="prodctrl.resetProduct(product); prodctrl.updateProduct.rendered = null">Discard Changes</button>
         </form>
       </section>
     </main>
