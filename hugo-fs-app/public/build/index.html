@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>2 Resource with Angular</title>
+  </head>
+  <body ng-app="CustomerApp">
+    <main ng-controller="CustomerController as custctrl" ng-init="custctrl.getCustomers()" ng-cloak>
+      <h1>Welcome!</h1>
+      <section ng-repeat="customer in customers">
+        {{customer}}
+        <!-- <div click-to-edit="location.region"></div> -->
+      </section>
+    </main>
+    <!-- move script tag below to top of body!!!! -->
+    <script type="text/javascript" src="/build/bundle.js"></script>
+  </body>
+</html>

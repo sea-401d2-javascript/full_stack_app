@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>2 Resource with Angular</title>
+  </head>
+  <body ng-app="CustomerApp">
+    <!-- move script tag below to top of body!!!! -->
+    <script type="text/javascript" src="/build/bundle.js"></script>
+    <h1>Welcome!</h1>
+    <main ng-init="custctrl.getCustomers()"ng-controller="CustomerController as custctrl" ng-cloak>
+      <h3>customers!</h3>
+      <section ng-repeat="customer in custctrl.customers" ng-cloak>
+        {{customer.name}}
+        {{customer.age}}
+        {{customer.email}}
+        <button type="submit" ng-click="custctrl.updateCust.rendered = customer._id">update record</button>
+        <button type="button" ng-click="custctrl.deleteCust(customer)">delete record</button>
+        <form class="" action="index.html" method="post">
+
+        </form>
+        <!-- <div click-to-edit="location.region"></div> -->
+      </section>
+    </main>
+    <main ng-init="prodctrl.getProducts()"ng-controller="ProductController as prodctrl" ng-cloak>
+      <h3>products!</h3>
+      <section ng-repeat="product in prodctrl.products" ng-cloak>
+        {{product.name}}
+        {{product.upc}}
+        {{product.stock}}
+        <button type="submit" ng-click="prodctrl.updateProd.rendered = product._id">Update Record</button>
+        <button type="submit"ng-click="prodctrl.deleteProd(product)">Delete Record</button>
+        <form class="" action="index.html" method="post">
+
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
