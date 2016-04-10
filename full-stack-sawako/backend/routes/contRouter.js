@@ -40,7 +40,7 @@ module.exports = (ContRouter, Continent)=>{
   ContRouter.put('/continents/:id', (req, res)=>{
     var query = { _id: req.params.id};
     Continent.update(query, req.body, (err, continent)=>{
-      res.json({id: continent});
+      res.json(continent);
       res.end();
     });
   });

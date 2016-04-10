@@ -51,7 +51,10 @@ app.controller('ContinentCtrl',['$http', function($http){
   this.editContinents = function(){
     $http.put(mainRoute +'/'+ this.id, this.getCont)
     .then((result)=>{
-      console.log('Here is result of PUT : ' + angular.toJson(result));
+      this.getCont = result.data;
+      this.status = 'Successfully updated : ' + angular.toJson(this.getCont);
+      console.log('Here is result of PUT : ' + angular.toJson(this.getCont));
+
     }, function(err){
       console.log('err : ' + err);
     })

@@ -31,9 +31,8 @@
         <input data-ng-show="conts.editing" data-ng-model="conts.getCont.region" type="text">
         <p data-ng-model="conts.getCont" data-ng-bind="conts.getCont.mineral"></p>
         <input data-ng-show="conts.editing" data-ng-model="conts.getCont.mineral" type="text">
+        <label data-ng-model="conts.status" data-ng-bind="conts.status"></label>
         <button type="submit">Search by Id</button>
-        <label data-ng-hide="!conts.editing" data-ng-bind="conts.getCont" data-ng-click=""></label>
-        <input data-ng-show="conts.editing" data-ng-model="conts.getCont" type="text">
         <input id="space-region" data-ng-click="conts.editing = !conts.editing" type="button" value="Edit">
         <input id="space-region" type="button" value="Delete">
         <input id="space-region" type="submit" data-ng-click="conts.editContinents()" value="Save Edit">
