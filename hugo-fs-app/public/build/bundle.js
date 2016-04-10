@@ -30903,7 +30903,7 @@
 
 
 	// module
-	exports.push([module.id, "", ""]);
+	exports.push([module.id, ".submit-form {\n  padding: 1%;\n  border: solid 1px red;\n}\n", ""]);
 
 	// exports
 
