@@ -7,12 +7,7 @@ var models = require(__dirname + '/models');
 var Game = models.Game;
 var Arcade = models.Arcade;
 var app = express();
-
-// const port = process.env.PORT || 5000;
-
-// mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:5000/dev')
 var router = express.Router();
-// var arcadeRouter = express.Router();
 
 app.use(bodyParser.json());
 
@@ -26,7 +21,6 @@ app.use((req, res, next)=>{
   next();
 });
 
-// app.use(morgan('dev'));
 app.use('/', router);
 
 

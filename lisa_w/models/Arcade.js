@@ -6,6 +6,7 @@ module.exports = (mongoose, models) => {
   let ArcadeSchema = new Schema({
     name: {type: String, default: 'You know who'},
     address: String,
+    hours: String,
     updated: {type: Date, default: Date.now },
     games: [{
       type: Schema.Types.ObjectId,

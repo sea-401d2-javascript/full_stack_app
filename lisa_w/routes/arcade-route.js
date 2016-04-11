@@ -1,5 +1,4 @@
 'use strict';
-// var bodyParser = require('body-parser');
 
 module.exports = (router, models)=>{
   let Arcade = models.Arcade;
@@ -9,7 +8,6 @@ module.exports = (router, models)=>{
     console.log('get was hit');
     Arcade.find({}, (err, arcades)=>{
       if(err)  return res.send(err);
-      // console.log('hit ' + arcades);
       res.json({arcades});
       res.end();
     });
@@ -17,8 +15,6 @@ module.exports = (router, models)=>{
    .post((req, res)=>{
      console.log('post was hit');
      var newArcade = new Arcade(req.body);
-     debugger;
-     console.log('req body '+ req.body);
      newArcade.save((err, arcade)=>{
        if (err) return res.send(err);
        console.log(arcade);
@@ -32,8 +28,7 @@ module.exports = (router, models)=>{
      console.log(('GET /arcade/:id was hit'));
      Arcade.findById(req.params.id, (err, arcade)=>{
        if (err) res.send(err);
-       res.json(arcade);
-      //  console.log(arcade);
+  
      });
    })
    .put((req, res)=>{

@@ -1,88 +1,43 @@
-'use strict';
-// grab our gulp packages
-var gulp  = require('gulp'),
-    gutil = require('gulp-util');
+var gulp = require('gulp');
+// var clean = require('gulp-clean');
+var webpack = require('webpack-stream');
 
-// create a default task and just log a message
-gulp.task('default', function() {
-  return gutil.log('Gulp is running!')
-});
-
-var eslint = require('gulp-eslint');
-// var mocha = require('gulp-mocha');
-var webpack = require('gulp-webpack');
-
-var eslintRules = {
-  'rules': {
-    'no-console': 0,
-    'indent': [
-      2,
-      2
-    ],
-    'quotes': [
-      2,
-      'single'
-    ],
-    'linebreak-style': [
-      2,
-      'unix'
-    ],
-    'semi': [
-      2,
-      'always'
-    ]
-  },
-  'env': {
-    'es6': true,
-    'node': true,
-    'browser': true
-  },
-  'globals': {
-    'describe': false,
-    'it': false,
-    'beforeEach': false,
-    'afterEach': false,
-    'before': false,
-    'after': false
-  },
-  'ecmaFeatures': {
-    'modules': true,
-    'experimentalObjectRestSpread': true
-  },
-  'extends': 'eslint:recommended'
+​
+var paths = {
+  html: ['build/index.html'],
+  js: ['app/*.js']
 };
-
-var path = ['*.js', 'test/*.js'];
-
-gulp.task('lint', function(){
-  return gulp.src(path)
-    .pipe(eslint(eslintRules))
-    .pipe(eslint.format());
+​
+gulp.task('build:html', function() {
+  gulp.src('build/index.html')
+  .pipe(gulp.dest('build/'));
 });
-
-var testPath = ['test/*.js'];
-
-gulp.task('mocha', function(){
-  return gulp.src(testPath, {read: false})
-    .pipe(mocha({reporter: 'nyan'}));
+​
+gulp.task('build:js', function() {
+  return gulp.src('app/index.js')
+  .pipe(webpack({
+    output: {
+      filename: 'bundle.js'
+    }
+  }))
+  .pipe(gulp.dest('build/'));
 });
+​
 
-gulp.task('webpack', function() {
-  return gulp.src('./app/index.js')
-    .pipe(webpack(require('./webpack.config.js')))
-    .pipe(gulp.dest('./build/'));
+
+gulp.task('watch:html', function() {
+	gulp.watch(paths.html, ['build:html']);
 });
-
-var wpPath = ['*.js', 'app/*.js'];
-
-gulp.task('wp-watch',function() {
-  gulp.watch(wpPath, ['webpack']);
+​
+gulp.task('watch:js', function() {
+	gulp.watch(paths.js, ['build:js']);
 });
-
-gulp.task('watch', function(){
-  gulp.watch(path, ['lint', 'mocha']);
+​
+gulp.task('watch:static', function() {
+  gulp.watch(paths.static, ['build:static'])
 });
-
-gulp.task('default', ['lint', 'mocha']);
-
-gulp.task('all', ['lint', 'mocha', 'watch']);
+​
+gulp.task('build:all', ['build:css', 'build:html', 'build:js', 'build:static']);
+gulp.task('test:all', ['test:mocha']);
+gulp.task('watch:all', ['watch:css', 'watch:html', 'watch:js']);
+gulp.task('default', ['build:all', 'watch:all']);
