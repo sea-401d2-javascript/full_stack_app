@@ -3,11 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+  <style>
+    .ng-cloak {
+      display: none !important;
+    }
+  </style>
   <title>Document</title>
 </head>
 <body data-ng-app="UserApp">
   <h1 id="title">Angular Crud for Two Resource API</h1>
-  <main data-ng-init="userctrl.getUser()" data-ng-controller="UserController as userctrl">
+  <main data-ng-cloak data-ng-init="userctrl.getUser()" data-ng-controller="UserController as userctrl">
     <ul>
       <li data-ng-repeat="user in userctrl.user">{{user.name}}
         <button class="btn" data-ng-click="userctrl.removeUser(user)">Delete</button>
