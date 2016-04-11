@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title>2 Resource with Angular</title>
+    <link rel="stylesheet" href="/css/animate.css" charset="utf-8">
   </head>
   <body ng-app="CustomerApp">
     <script type="text/javascript" src="/build/bundle.js"></script>
-    <h1>Welcome!</h1>
+    <h1 class="animated shake">Welcome!</h1>
     <main ng-init="custctrl.getCustomers()" ng-controller="CustomerController as custctrl" ng-cloak>
       <h3>customers!</h3>
       <section ng-repeat="customer in custctrl.customers" ng-cloak>
@@ -15,7 +16,7 @@
         {{customer.email}}<br>
         <button type="submit" ng-click="custctrl.updateCustomer.rendered = customer._id">update record</button>
         <button type="button" ng-click="custctrl.deleteCustomer(customer)">delete record</button>
-        <form class="submit-form" ng-show="custctrl.updateCustomer.rendered === customer._id" ng-submit="custctrl.updateCustomer.rendered = null">
+        <form class="animated bounceIn" ng-show="custctrl.updateCustomer.rendered === customer._id" ng-submit="custctrl.updateCustomer.rendered = null">
           <span>Name:</span><input type="text" ng-model="customer.name" ng-model-options="{debounce: 500}" minlength="3" required><br>
           <span>Age:</span><input type="number" ng-model="customer.age" ng-model-options="{debounce: 500}" required><br>
           <span>Email:</span><input type="email" ng-model="customer.email" ng-model-options="{debounce: 500}" required><br>
