@@ -1,36 +1,36 @@
+'use strict';
+
 var gulp = require('gulp');
 // var clean = require('gulp-clean');
 var webpack = require('webpack-stream');
 
-​
-var paths = {
-  html: ['build/index.html'],
-  js: ['app/*.js']
-};
-​
+// ​
+// var paths = {
+//   html: ['build/*.html'],
+//   js: ['app/*.js']
+// };
 gulp.task('build:html', function() {
   gulp.src('build/index.html')
   .pipe(gulp.dest('build/'));
 });
-​
-gulp.task('build:js', function() {
+
+​gulp.task('build:js', function(){
   return gulp.src('app/index.js')
   .pipe(webpack({
     output: {
       filename: 'bundle.js'
     }
   }))
-  .pipe(gulp.dest('build/'));
-});
+  .pipe(gulp.dest('/build/'));
+})
 ​
 
-
 gulp.task('watch:html', function() {
-	gulp.watch(paths.html, ['build:html']);
+  gulp.watch(paths.html, ['build:html']);
 });
 ​
 gulp.task('watch:js', function() {
-	gulp.watch(paths.js, ['build:js']);
+  gulp.watch(paths.js, ['build:js']);
 });
 ​
 gulp.task('watch:static', function() {
