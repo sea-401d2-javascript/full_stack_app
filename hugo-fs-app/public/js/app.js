@@ -38,6 +38,8 @@ app.controller('CustomerController', ['$http', function($http) {
     });
   };
 
+  this.createCustomer.rendered = null;
+
   //put route
   this.updateCustomer = function(customer) {
     console.log(customer);
@@ -88,6 +90,8 @@ app.controller('ProductController', ['$http', function($http) {
         this.newProduct = {};
       });
   };
+
+  this.createProduct.rendered = null;
 
   this.updateProduct = function(product) {
     $http.put(productsRoute + '/' + product._id, product)
