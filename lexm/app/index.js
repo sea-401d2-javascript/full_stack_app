@@ -22,7 +22,7 @@ app.controller('MovieController', ['$scope', '$http', function($scope, $http) {
     .then((res) => {
       console.log(res.data);
       this.movies.push(res.data)
-      this.newMovie = {};
+      // this.newMovie = {};
     })
   }
   this.removeMovie = function(movie) {
@@ -36,14 +36,24 @@ app.controller('MovieController', ['$scope', '$http', function($scope, $http) {
       console.log('no id!');
     }
   }
+  this.saveOldMovie = function(movie, oldMovie) {
+    if(!oldMovie) {
+      oldMovie = movie;
+    }
+    return oldMovie
+  }
   this.showEditFlip = function(movie) {
-    console.log(movie.showEdit);
+    var oldMovie;
+    console.log('showEdit1', movie.showEdit);
     if(!movie.showEdit) {
+      oldMovie = this.saveOldMovie(movie, oldMovie);
       movie.showEdit = true;
     } else {
       movie.showEdit = false;
     }
-    console.log(movie.showEdit);
+    console.log('showEdit2', movie.showEdit);
+    console.log('oldMovie: ', oldMovie);
+    console.log('movie: ', movie);
   }
   this.editMovie = function(movie) {
 
