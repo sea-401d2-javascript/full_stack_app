@@ -32,7 +32,7 @@ gulp.task('copy-html', () => {
 });
 
 gulp.task('copy-css', () => {
-  gulp.src(__dirname + '/public/css/main.css')
+  gulp.src(__dirname + '/public/css/*.css')
   .pipe(gulp.dest(__dirname + '/public/build'));
 });
 

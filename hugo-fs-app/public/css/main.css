@@ -1,4 +1,139 @@
-.submit-form {
+span {
+  font-family: lora;
+  font-size: 22px;
+}
+
+input {
+  font-family: roboto;
+}
+
+section {
+  font-family: roboto;
+}
+
+.green-button:hover {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 16px 33px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  /*box-shadow: 3px 3px 1px #888888;*/
+}
+
+.green-button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    box-shadow: 3px 3px 1px #888888;
+}
+
+.red-button:hover {
+    background-color: #f44336; /* red */
+    border: none;
+    color: white;
+    padding: 16px 33px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    box-shadow: 3px 3px 1px #888888;
+    cursor: pointer;
+}
+
+.red-button {
+    background-color: #f44336; /* red */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    box-shadow: 3px 3px 1px #888888;
+}
+
+.save-button:hover {
+  background-color: #008CBA; /* blue */
+  border: none;
+  color: white;
+  padding: 13px 23px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  cursor: pointer;
+  /*box-shadow: 3px 3px 1px #888888;*/
+}
+
+.save-button {
+    background-color: #008CBA; /* blue */
+    border: none;
+    color: white;
+    padding: 12px 22px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    box-shadow: 3px 3px 1px #888888;
+    margin-right: 2%;
+}
+
+.discard-button:hover {
+    background-color: #e7e7e7; /* red */
+    border: none;
+    color: black;
+    padding: 13px 23px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    cursor: pointer;
+    /*box-shadow: 3px 3px 1px #888888;*/
+}
+
+.discard-button {
+    background-color: #e7e7e7; /* red */
+    border: none;
+    color: black;
+    padding: 12px 22px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    box-shadow: 3px 3px 1px #888888;
+}
+
+form {
+  margin: 2%;
   padding: 1%;
-  border: solid 1px red;
+}
+
+h1, h3 {
+  font-family: roboto;
+  font-weight: bold;
+}
+
+.info-line {
+  list-style-type: none;
+  height: 28dp;
+  padding-left: 16dp;
+  padding-right: 16dp;
+  padding-top: 8dp
+}
+
+.header {
+  background-color: teal;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  color: white;
 }
