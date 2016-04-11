@@ -4,24 +4,45 @@
     <meta charset="utf-8">
     <title>doc</title>
   </head>
-  <body ng-app="PeopleApp">
-    <section ng-init="peoplectrl.getPeople()" ng-controller="PeopleController as peoplectrl">
-      <p>{{peoplectrl.test}}</p>
-      <p>{{peoplectrl.people}}</p>
+  <body>
+    <main ng-app="PeopleApp">
 
-      <ul>
-        <li ng-repeat="person in peoplectrl.people">{{person.name}}
-          <button ng-click="peoplectrl.removePerson(person)">Delete</button>
-        </li>
-      </ul>
+      <section ng-init="peoplectrl.getPeople()" ng-controller="PeopleController as peoplectrl">
+        <p>{{peoplectrl.test}}</p>
+        <p>{{peoplectrl.people}}</p>
 
-      <form ng-submit="peoplectrl.createPerson(newPerson)">
-        <input type="text" ng-model="newPerson.name"/>
-        <button type="submit">New Person</button>
-      </form>
+        <ul>
+          <li ng-repeat="person in peoplectrl.people">{{person.name}}
+            <button ng-click="peoplectrl.removePerson(person)">Delete</button>
+          </li>
+        </ul>
 
-    </section>
+        <form ng-submit="peoplectrl.createPerson(newPerson)">
+          <input type="text" ng-model="newPerson.name"/>
+          <button type="submit">New Person</button>
+        </form>
 
+      </section>
+    <!-- </main>
+      <section ng-init="peoplectrl.getPeople()" ng-controller="PeopleController as peoplectrl">
+        <p>{{peoplectrl.test}}</p>
+        <p>{{peoplectrl.people}}</p>
+
+        <ul>
+          <li ng-repeat="person in peoplectrl.people">{{person.name}}
+            <button ng-click="peoplectrl.removePerson(person)">Delete</button>
+          </li>
+        </ul>
+
+        <form ng-submit="peoplectrl.createPerson(newPerson)">
+          <input type="text" ng-model="newPerson.name"/>
+          <button type="submit">New Person</button>
+        </form>
+
+      </section>
+    <main> -->
+
+    </main>
     <script src="./bundle.js"></script>
   </body>
 </html>
