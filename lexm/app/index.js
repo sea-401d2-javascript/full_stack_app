@@ -48,6 +48,8 @@ app.controller('MovieController', ['$scope', '$http', function($scope, $http) {
     if(movie.showEdit === undefined) {
       oldMovie = this.saveOldMovie(movie, oldMovie);
       movie.showEdit = true;
+    } else if (!movie.showEdit) {
+      movie.showEdit = true;
     } else {
       movie.showEdit = false;
     }
