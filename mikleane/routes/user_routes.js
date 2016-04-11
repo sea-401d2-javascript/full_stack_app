@@ -45,8 +45,11 @@ publicRouter.get('/users/:id', (req, res) => {
 });
 
 publicRouter.post('/users', (req, res) => {
+  console.log('rec ', req.body)
   var newUser = new User(req.body);
   newUser.save((err, user) => {
+    console.log('err', err)
+    console.log('user ', user)
     res.json(user);
   });
 });

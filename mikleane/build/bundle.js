@@ -116,9 +116,11 @@
 	    };
 
 	    this.createUser = function(user) {
+	      // user.favBeers = user.favBeers.split(', ')
+	      console.log('user ', user)
 	      $http.post(userRoute, user)
 	      .then((res) => {
-	        this.users.push(user);
+	        this.users.push(res.data);
 	        this.newUser = {};
 	      })
 	    }
