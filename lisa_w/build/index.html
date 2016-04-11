@@ -8,15 +8,15 @@
     <h1>Arcades</h1>
     <main data-ng-init="arcadectrl.getArcades()" data-ng-controller="ArcadeController as arcadectrl">
 
-<div data-ng-repeat="arcade in arcades">
+<div data-ng-repeat="arcade in arcadectrl.arcades">
   {{arcade.name}}
 
 </div>
       <ul>
         <li data-ng-repeat="arcade in arcadectrl.arcades">Arcade Name: {{arcade.name}}
           <p>Arcade Name: {{arcade.name}}</p>
+          <button data-ng-click="arcadectrl.removeArcade(arcade)">Delete</button>
            </li>
-        <button data-ng-click="arcadectrl.removeArcade()">Delete</button>
 
 
       </ul>

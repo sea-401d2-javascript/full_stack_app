@@ -2,7 +2,7 @@
   "name": "lisa_w",
   "version": "1.0.0",
   "description": "",
-  "main": "angular-resource.js",
+  "main": "server.js",
   "directories": {
     "test": "test"
   },

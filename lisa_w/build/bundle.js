@@ -50,18 +50,19 @@
 
 	const app = angular.module('ArcadeApp', []);
 	app.controller('ArcadeController', ['$scope','$http', function($scope, $http){
+
 	  console.log('marker1');
 
 	  const arcadeRoute = 'http://localhost:5000/arcades';
 	  $scope.dance = 'Add New Arcade';
-	  // this.test = 'TEST';
 	  this.arcades = ['arcade'];
-	  // this.arcades = result.data.name;
+	  this.newArcade = {};
+
 	  this.getArcades = function(){
 	    $http.get(arcadeRoute)
 	    .then((result)=>{
-	      // console.log('ARCADE NAME: ' + result);
-	      this.arcades = result;
+	      debugger;
+	      this.arcades = result.data.arcades;
 	    }, function(error){
 	      console.log(error);
 	    });
@@ -69,10 +70,10 @@
 	  this.createArcade = function(arcade){
 	    $http.post(arcadeRoute, arcade)
 	      .then((res)=>{
-	    console.log(arcade);
-	        this.arcades.push(arcade);
+	        console.log(res.data);
+	        this.arcades.push(res.data);
 
-	        this.newArcade = {};
+
 	      });
 
 	  };
