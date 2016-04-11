@@ -27,7 +27,7 @@ module.exports = (middleRouter) => {
   })
   .put((req, res) => {
     console.log('PUT route hit for /customers/:id');
-    Customer.findByIdAndUpdate({id: req.params.id}, req.body, (err, customer) => {
+    Customer.findByIdAndUpdate({_id: req.params.id}, req.body, (err, customer) => {
       if (err) return res.send(err);
       res.json(customer);
     });
@@ -66,7 +66,7 @@ module.exports = (middleRouter) => {
   })
   .put((req, res) => {
     console.log('PUT route hit for /products/:id');
-    Product.findByIdAndUpdate(req.params.id, req.body, (err, product) => {
+    Product.findByIdAndUpdate({_id: req.params.id}, req.body, (err, product) => {
       if (err) return res.send(err);
       res.json(product);
     });
