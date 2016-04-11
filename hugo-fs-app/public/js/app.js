@@ -1,6 +1,8 @@
 require(__dirname + '/../../bower_components/angular/angular.js');
+require(__dirname + '/../css/normalize.css');
 require(__dirname + '/../css/main.css');
-//needs put routes!!!!
+require(__dirname + '/../css/animate.css');
+
 const app = angular.module('CustomerApp', []);
 app.controller('CustomerController', ['$http', function($http) {
   const customersRoute = 'http://localhost:3000/customers';
