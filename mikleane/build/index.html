@@ -5,27 +5,22 @@
     <title>The Joy of Beer</title>
   </head>
   <body data-ng-app="app">
-    <main data-ng-controller="BeersController as beersctrl" data-ng-init="beersctrl.getBeers()">
-      <h2>{{beersctrl.beers}}</h2>
+    <div data-ng-controller="BeersController as beersctrl" data-ng-init="beersctrl.getBeers()">
+      <h3>{{beersctrl.beers}}</h3>
       <ul>
         <li data-ng-repeat="beer in beersctrl.beers">{{beer.name}}
           <button type"submit" ng-click="beersctrl.removeBeer(beer)">Delete Beer</button>
           <button type="submit" ng-click="beersctrl.updateBeer.displayed = beer._id">Edit Beer</button>
           <form data-ng-show="beersctrl.updateBeer.displayed == beer._id" data-ng-submit="beersctrl.updateBeer(beer); beersctrl.updateBeer.displayed = null">
-            <input type="text" placeholder="name" data-ng-model="newBeer.name"/>
-            <input type="text" placeholder="type" data-ng-model="newBeer.type"/>
-            <input type="text" placeholder="style" data-ng-model="newBeer.style"/>
-            <input type="text" placeholder="brewery" data-ng-model="newBeer.brewery"/>
+            <input type="text" placeholder="name" data-ng-model="beer.name"/>
+            <input type="text" placeholder="type" data-ng-model="beer.type"/>
+            <input type="text" placeholder="style" data-ng-model="beer.style"/>
+            <input type="text" placeholder="brewery" data-ng-model="beer.brewery"/>
             <button type="submit">Make Changes</button>
             <button type="reset" data-ng-click="beersctrl.resetBeer(beer); beersctrl.updateBeer.displayed = null">Cancel Changes</button>
           </form>
         </li>
       </ul>
-
-
-
-
-
       <form data-ng-submit="beersctrl.createBeer(newBeer)">
         <input type="text" placeholder="name" ng-required="true" data-ng-model="newBeer.name"/>
         <input type="text" placeholder="type" data-ng-model="newBeer.type"/>
@@ -34,7 +29,30 @@
         <input type="reset"/>
         <button type="submit">Add New Beer</button>
       </form>
-    </main>
+    </div>
+    <div data-ng-controller="UsersController as usersctrl" data-ng-init="usersctrl.getUsers()">
+      <h3>{{usersctrl.users}}</h3>
+      <ul>
+        <li data-ng-repeat="user in usersctrl.users">{{user.firstName}}
+        <button type="submit" data-ng-click="usersctrl.removeUser(user)">Delete User</button>
+        <button type="submit" data-ng-click="usersctrl.updateUser.displayed = user._id">Update User</button>
+        <form data-ng-show="usersctrl.updateUser.displayed == user._id" data-ng-submit="usersctrl.updateUser(user); usersctrl.updateUser.displayed = null">
+          <input type="text" placeholder="first name" data-ng-model="user.firstName"/>
+          <input type="text" placeholder="last name" data-ng-model="user.lastName"/>
+          <input type="text" placeholder="favorite beer" data-ng-model="user.favBeers"/>
+          <button type="submit">Make Changes</button>
+          <button type="reset" data-ng-click="usersctrl.resetUser(user); usersctrl.updateUser.displayed = null">Cancel Changes</button>
+        </form>
+        </li>
+      </ul>
+      <form data-ng-submit="usersctrl.createUser(newUser)">
+        <input type="text" placeholder="first name" data-ng-required="true" data-ng-model="newUser.firstName"/>
+        <input type="text" placeholder="last name" data-ng-model="newUser.lastName"/>
+        <input type="text" placeholder="favorite beers" data-ng-model="newUser.favBeers"/>
+        <input type="reset"/>
+        <button type="submit">Add New User</button>
+      </form>
+    </div>
     <script src="./bundle.js"></script>
   </body>
 </html>
