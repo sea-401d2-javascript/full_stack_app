@@ -74,3 +74,37 @@ app.controller('ContinentCtrl',['$http', function($http){
     })
   }
 }]);
+
+app.controller('gemsController',['$http',function($http){
+  var mainRoute = 'http://localhost:3000/gems'
+  this.gemsList = [];
+  this.gems = [];
+  this.newGem = {
+    name: '',
+    color: '',
+    density: ''
+  }
+  this.getGem = {}
+  this.id = ''
+  this.editing = false;
+
+  this.getGems = function(){
+    $http.get(mainRoute)
+    .then((result)=>{
+      this.gemsList = result.data;
+      console.log('Here is gemsList : ' + this.gemsList);
+    }, function(err){
+      console.log('Err : ' + err);
+    });
+  }
+
+  this.createGems = function(){
+    $http.post(mainRoute, this.newGem)
+    .then((result)=>{
+      this.gems = result.data;
+      console.log('Here is new Gem! : ' + this.gems);
+    }, function(err){
+      console.log('Err : ' + err);
+    })
+  }
+}])

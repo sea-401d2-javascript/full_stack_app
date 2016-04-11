@@ -1,60 +1,13 @@
 body {
-  background-color: pink;
+  background-color: #7AADC2;
+  color: #333300;
 }
 
-.initial {
+.conts-repeat {
   display: inline-block;
-  float: left;
-  padding-left: 1em;
-  padding-right: 1em;
-  margin-top: 1em;
-  margin-right: 1em;
-  margin-left: 1em;
 
 }
 
-#create-form {
-  display: inline-block;
-  width: 100%;
-  height: 10em;
-}
-
-p {
-  width: 12em;
-  height: 1em;
-  display: inline-block;
-  padding-left: 1em;
-  padding-right: 1em;
-  margin-right: 1em;
-  margin-left: 1em;
-  border: 2px green solid;
-}
-
-.p-repeat {
-    display: inline-block;
-}
-
-.space {
-    display: inline-block;
-    /*margin-left: 5em;*/
-}
-
-#space-region {
-  display: inline-block;
-  clear: both;
-}
-
-#edit-form {
-  display: inline-block;
-  border: 3px solid red;
-  width: 100%;
-  height: 20em;
-}
-
-input {
-  display: inline-block;
-  width: 12em;
-  height: 1em;
-  margin-right: 2em;
-  margin-left: 2em;
+label {
+  font-weight: bold;
 }

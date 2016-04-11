@@ -121,6 +121,40 @@
 	  }
 	}]);
 
+	app.controller('gemsController',['$http',function($http){
+	  var mainRoute = 'http://localhost:3000/gems'
+	  this.gemsList = [];
+	  this.gems = [];
+	  this.newGem = {
+	    name: '',
+	    color: '',
+	    density: ''
+	  }
+	  this.getGem = {}
+	  this.id = ''
+	  this.editing = false;
+
+	  this.getGems = function(){
+	    $http.get(mainRoute)
+	    .then((result)=>{
+	      this.gemsList = result.data;
+	      console.log('Here is gemsList : ' + this.gemsList);
+	    }, function(err){
+	      console.log('Err : ' + err);
+	    });
+	  }
+
+	  this.createGems = function(){
+	    $http.post(mainRoute, this.newGem)
+	    .then((result)=>{
+	      this.gems = result.data;
+	      console.log('Here is new Gem! : ' + this.gems);
+	    }, function(err){
+	      console.log('Err : ' + err);
+	    })
+	  }
+	}])
+
 
 /***/ },
 /* 1 */
@@ -30884,7 +30918,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  background-color: pink;\n}\n\n.initial {\n  display: inline-block;\n  float: left;\n  padding-left: 1em;\n  padding-right: 1em;\n  margin-top: 1em;\n  margin-right: 1em;\n  margin-left: 1em;\n\n}\n\n#create-form {\n  display: inline-block;\n  width: 100%;\n  height: 10em;\n}\n\np {\n  width: 12em;\n  height: 1em;\n  display: inline-block;\n  padding-left: 1em;\n  padding-right: 1em;\n  margin-right: 1em;\n  margin-left: 1em;\n  border: 2px green solid;\n}\n\n.p-repeat {\n    display: inline-block;\n}\n\n.space {\n    display: inline-block;\n    /*margin-left: 5em;*/\n}\n\n#space-region {\n  display: inline-block;\n  clear: both;\n}\n\n#edit-form {\n  display: inline-block;\n  border: 3px solid red;\n  width: 100%;\n  height: 20em;\n}\n\ninput {\n  display: inline-block;\n  width: 12em;\n  height: 1em;\n  margin-right: 2em;\n  margin-left: 2em;\n}\n", ""]);
+	exports.push([module.id, "body {\n  background-color: #7AADC2;\n  color: #333300;\n}\n\n.conts-repeat {\n  display: inline-block;\n\n}\n\nlabel {\n  font-weight: bold;\n}\n", ""]);
 
 	// exports
 
