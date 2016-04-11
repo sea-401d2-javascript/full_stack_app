@@ -17,10 +17,11 @@ module.exports = (router, models)=>{
    .post((req, res)=>{
      console.log('post was hit');
      var newArcade = new Arcade(req.body);
-     console.log('req body '+ req.body._id);
+     debugger;
+     console.log('req body '+ req.body);
      newArcade.save((err, arcade)=>{
        if (err) return res.send(err);
-       console.log(arcade.name);
+       console.log(arcade);
        res.json(arcade);
        res.end();
      });

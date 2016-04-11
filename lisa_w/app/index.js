@@ -3,13 +3,14 @@
 const angular = require('angular');
 
 const app = angular.module('ArcadeApp', []);
-app.controller('ArcadeController', ['$http','$scope', function($http, $scope){
+app.controller('ArcadeController', ['$scope','$http', function($scope, $http){
   console.log('marker1');
 
   const arcadeRoute = 'http://localhost:5000/arcades';
   $scope.dance = 'Add New Arcade';
   // this.test = 'TEST';
   this.arcades = ['arcade'];
+  $scope.newArcade = {};
   // this.arcades = result.data.name;
   this.getArcades = function(){
     $http.get(arcadeRoute)
@@ -23,12 +24,12 @@ app.controller('ArcadeController', ['$http','$scope', function($http, $scope){
   this.createArcade = function(arcade){
     $http.post(arcadeRoute, arcade)
       .then((res)=>{
+        debugger;
     // console.log('create ' + arcade);
-    console.log(res.data);
-        this.arcades.push(res.data);
+      console.log(res.data.data);
+        this.arcades.push(res.data.data);
 
-        // res.end();
-        // $scope.newArcade = {};
+    
       });
 
   };
