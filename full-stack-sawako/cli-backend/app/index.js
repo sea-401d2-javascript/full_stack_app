@@ -121,6 +121,7 @@ app.controller('gemsController',['$http',function($http){
   this.getGemById = function(){
       $http.get(mainRoute + '/' + this.id)
       .then((result)=>{
+        this.buttonShow = true;
         this.getGem = result.data;
         this.fetchedData = angular.copy(result.data);
       }, function(err){

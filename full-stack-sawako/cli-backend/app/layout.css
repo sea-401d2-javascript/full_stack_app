@@ -11,3 +11,11 @@ body {
 label {
   font-weight: bold;
 }
+
+input.ng-invalid {
+  background-color: yellow;
+}
+
+input.ng-valid {
+  background-color: lightgreen;
+}

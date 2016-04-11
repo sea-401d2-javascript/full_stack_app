@@ -167,6 +167,7 @@
 	  this.getGemById = function(){
 	      $http.get(mainRoute + '/' + this.id)
 	      .then((result)=>{
+	        this.buttonShow = true;
 	        this.getGem = result.data;
 	        this.fetchedData = angular.copy(result.data);
 	      }, function(err){
@@ -30968,7 +30969,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  background-color: #7AADC2;\n  color: #333300;\n}\n\n.conts-repeat {\n  display: inline-block;\n\n}\n\nlabel {\n  font-weight: bold;\n}\n", ""]);
+	exports.push([module.id, "body {\n  background-color: #7AADC2;\n  color: #333300;\n}\n\n.conts-repeat {\n  display: inline-block;\n\n}\n\nlabel {\n  font-weight: bold;\n}\n\ninput.ng-invalid {\n  background-color: yellow;\n}\n\ninput.ng-valid {\n  background-color: lightgreen;\n}\n", ""]);
 
 	// exports
 

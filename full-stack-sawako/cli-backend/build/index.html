@@ -23,22 +23,22 @@
         <button type="submit">Create New Continents!</button>
       </form>
       <!-- Editing one data set selected by ID -->
-      <form data-ng-submit="conts.getByIdContinents()">
+      <form name="myForm" data-ng-submit="conts.getByIdContinents()" novalidate>
         <label>*****Search by ID *****</label>
         <p data-ng-hide="editing" data-ng-model="conts.getCont" data-ng-bind="conts.getCont._id"></p>
         <label data-ng-show="conts.editing">id:</label>
-        <input data-ng-model="conts.id" type="text">
+        <input name="id" data-ng-model="conts.id" type="text" required>
         <label data-ng-show="conts.editing">country:</label>
-        <input data-ng-show="conts.editing" data-ng-model="conts.getCont.country" type="text">
+        <input name="country" data-ng-show="conts.editing" data-ng-model="conts.getCont.country" type="text" required>
         <p data-ng-model="conts.getCont" data-ng-bind="conts.getCont.country"></p>
         <label data-ng-show="conts.editing">region:</label>
-        <input data-ng-show="conts.editing" data-ng-model="conts.getCont.region" type="text">
+        <input name="region" data-ng-show="conts.editing" data-ng-model="conts.getCont.region" type="text" required>
         <p data-ng-model="conts.getCont" data-ng-bind="conts.getCont.region"></p>
         <label data-ng-show="conts.editing">mineral:</label>
-        <input data-ng-show="conts.editing" data-ng-model="conts.getCont.mineral" type="text">
+        <input name="mineral" data-ng-show="conts.editing" data-ng-model="conts.getCont.mineral" type="text" required>
         <p data-ng-model="conts.getCont" data-ng-bind="conts.getCont.mineral"></p>
         <label data-ng-model="conts.status" data-ng-bind="conts.status"></label>
-        <button type="submit">Search by Id</button>
+        <button data-ng-show="myForm.id.$valid" type="submit">Search by Id</button>
         <input data-ng-hide="!conts.editing" data-ng-click="conts.cancelEdits()" type="button" value="Cxl Edit">
         <input data-ng-hide="!conts.buttonShow" data-ng-click="conts.editing = !conts.editing" type="button" value="Edit">
         <input data-ng-hide="!conts.editing" data-ng-click="conts.deleteContinentById()" type="button" value="Delete">
@@ -60,38 +60,38 @@
       </form>
     </section>
     <section data-ng-controller="gemsController as gems">
-      <form data-ng-submit="gems.createGems(gems.newGem)">
+      <form data-ng-submit="gems.createGems(gems.newGem)" novalidate="">
         <label>Name:</label>
           <p data-ng-bind="gems.newGem.name"></p>
-          <input data-ng-model="gems.newGem.name" type="text"/><br>
+          <input name="name" data-ng-model="gems.newGem.name" type="text" required/><br>
         <label>Color:</label>
           <p data-ng-bind="gems.newGem.color"></p>
-          <input data-ng-model="gems.newGem.color" type="text"/><br>
+          <input name="color" data-ng-model="gems.newGem.color" type="text" required/><br>
         <label>Density:</label>
           <p data-ng-bind="gems.newGem.density"></p>
-          <input data-ng-model="gems.newGem.density" type="text"/><br>
+          <input name="density" data-ng-model="gems.newGem.density" type="text" required/><br>
         <div data-ng-mode="gems.newGem" data-ng-bind="gems.newGem"></div>
         <button type="submit">Create New Gem!</button>
       </form>
-      <form data-ng-submit="gems.getGemById()">
+      <form name="myForm2" data-ng-submit="gems.getGemById()" novalidate="">
         <label>*****Search by ID *****</label>
         <p data-ng-hide="editing" data-ng-model="gems.getGem" data-ng-bind="gems.getGem._id"></p>
         <label data-ng-show="gems.editing">id:</label>
-        <input data-ng-model="gems.id" type="text">
+        <input name="id2" data-ng-model="gems.id" type="text" required>
         <label data-ng-show="gems.editing">name:</label>
-        <input data-ng-show="gems.editing" data-ng-model="gems.getGem.name" type="text">
+        <input name="gem-name" data-ng-show="gems.editing" data-ng-model="gems.getGem.name" type="text" required>
         <p data-ng-model="gems.getGem" data-ng-bind="gems.getGem.name"></p>
         <label data-ng-show="gems.editing">color:</label>
-        <input data-ng-show="gems.editing" data-ng-model="gems.getGem.color" type="text">
+        <input name="color" data-ng-show="gems.editing" data-ng-model="gems.getGem.color" type="text" required>
         <p data-ng-model="gems.getGem" data-ng-bind="gems.getGem.color"></p>
         <label data-ng-show="gems.editing">density:</label>
-        <input data-ng-show="gems.editing" data-ng-model="gems.getGem.density" type="text">
+        <input name="density" data-ng-show="gems.editing" data-ng-model="gems.getGem.density" type="text" required>
         <p data-ng-model="gems.getGem" data-ng-bind="gems.getGem.density"></p>
-        <input data-ng-show="gems.editing" data-ng-model="gems.getGem.mineral" type="text">
+        <input name="mineral" data-ng-show="gems.editing" data-ng-model="gems.getGem.mineral" type="text" required>
         <label data-ng-model="gems.status" data-ng-bind="gems.status"></label>
-        <button type="submit">Search by Id</button>
+        <button data-ng-show="myForm2.id2.$valid" type="submit">Search by Id</button>
         <input data-ng-hide="!gems.editing" data-ng-click="gems.cancelEdits()" type="button" value="Cxl Edit">
-        <input data-ng-hide="gems.buttonShow" data-ng-click="gems.editing = !gems.editing" type="button" value="Edit">
+        <input data-ng-hide="!gems.buttonShow" data-ng-click="gems.editing = !gems.editing" type="button" value="Edit">
         <input data-ng-hide="!gems.editing" data-ng-click="gems.deleteGemById()" type="button" value="Delete">
         <input data-ng-hide="!gems.editing" type="submit" data-ng-click="gems.editGem()" value="Save Edit">
       </form>
