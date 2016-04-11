@@ -10,17 +10,15 @@
       <nav>
         <a href="" data-ng-click="tabctrl.setTab('ghosts')">Ghosts</a>
         <a href="" data-ng-click="tabctrl.setTab('humans')">Humans</a>
-        <a href="" data-ng-click="tabctrl.setTab('coolGhosts')">Cool ghosts</a>
       </nav>
     </header>
     <section data-ng-init="ghostctrl.getGhosts()" data-ng-controller='GhostController as ghostctrl' data-ng-show="tabctrl.active('ghosts')">
-      {{ghostctrl.angTest}}
       <ul>
         <li data-ng-repeat="ghost in ghostctrl.ghosts">
           <p>{{ghost}}
-          <button data-ng-click="editShow = !editShow">Edit</button></p>
+          <button data-ng-click="ghostctrl.toggle(ghost.name)">Edit</button></p>
 
-          <form name="editForm" ng-show="editShow">
+          <form name="editForm" ng-show="ghostctrl.editShow == ghost.name">
             Name: <input type="text" data-ng-model="changedGhost.ghost.name" value=""/>
             <p>Primary Power: <input type="text" data-ng-model="changedGhost.powers.primary" value=""/></p>
             <p>Secondary Power: <input type="text" data-ng-model="changedGhost.powers.secondary" value=""/></p>
@@ -29,16 +27,18 @@
             <button data-ng-click="ghostctrl.confirmChange(changedGhost, 'edit', ghost)">Submit</button>
             <p data-ng-show="editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted</p>
 
-            <button form="editForm" data-ng-click="ghostctrl.reset(); editShow=!editShow; changedGhost={}" data-ng-show="editConfirmation">Cancel Edit</button>
+            <button form="editForm" data-ng-click="ghostctrl.reset(); changedGhost={}" data-ng-show="editConfirmation">Cancel Edit</button>
             <button data-ng-click="ghostctrl.confirmChange(ghost,'delete')">Delete Ghost</button>
           </form>
 
         </li>
       </ul>
 
-      <form name="newForm" data-ng-submit="ghostctrl.createGhost(newGhost)" ng-show="!editShow">
+      <form name="newForm" data-ng-submit="ghostctrl.createGhost(newGhost)" ng-show="ghostctrl.editShow == 'new'">
         Name: <input type="text" data-ng-model="newGhost.name" value=""/>
         <p>Primary Power: <input type="text" data-ng-model="newGhost.powers.primary" value=""/></p>
+        <p>Secondary Power: <input type="text" data-ng-model="newGhost.powers.secondary" value=""/></p>
+        <p>Weakness: <input type="text" data-ng-model="newGhost.powers.weakness" value=""/></p>
         <button type="submit">Submit</button>
       </form>
 
@@ -49,23 +49,24 @@
       <ul>
         <li data-ng-repeat="human in humanctrl.humans">
           <p>{{human}}
-            <button data-ng-click="editShow = !editShow">Edit</button></p>
+            <button data-ng-click="humanctrl.toggle(human.name)">Edit</button></p>
 
-            <form name="editForm" ng-show="editShow">
+            <form name="editForm" ng-show="humanctrl.editShow == human.name">
               Name: <input type="text" data-ng-model="changedHuman.name" value=""/>
               <p>Number of Teeth: <input type="text" data-ng-model="changedHuman.numTeeth" value=""/></p>
 
               <button data-ng-click="humanctrl.confirmChange(changedHuman, 'edit', human)">Submit</button>
               <p data-ng-show="editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted</p>
 
-              <button data-ng-click="humanctrl.reset(); editShow=!editShow; changedHuman={}" data-ng-show="editConfirmation">Cancel Edit</button>
+              <button data-ng-click="humanctrl.reset(); changedHuman={}" data-ng-show="editConfirmation">Cancel Edit</button>
               <button data-ng-click="humanctrl.confirmChange(human,'delete')">Delete Human</button>
             </form>
 
         </li>
       </ul>
 
-      <form name="humanForm" data-ng-submit="humanctrl.createHuman(newHuman)" ng-show="!editShow">
+      <form name="humanForm" data-ng-submit="humanctrl.createHuman(newHuman)" ng-show="humanctrl.editShow == 'new'">
+        <p>New Human:</p>
         Name: <input type="text" data-ng-model="newHuman.name" value=""/>
         <p>Number of Teeth: <input type="text" data-ng-model="newHuman.numTeeth" value=""/></p>
         <button type="submit">Submit</button>

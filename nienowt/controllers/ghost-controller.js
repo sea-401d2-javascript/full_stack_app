@@ -4,8 +4,12 @@ require('angular');
 angular.module('app',[])
   .controller('GhostController',['$scope','$http', function($scope, $http) {
     const mainRoute = 'http://localhost:3000/api/ghosts';
-    this.angTest = 'TOO GOOD ???';
     this.ghosts = ['ghost'];
+    this.editShow = 'new';
+    this.toggle = function(name){
+      if (this.editShow !== 'new') return this.editShow = 'new';
+      this.editShow = name;
+    }
 
     this.confirmChange = function(ghost, buttonName, curGhost){
       if (!$scope.editConfirmation) return $scope.editConfirmation = true;
@@ -50,9 +54,8 @@ angular.module('app',[])
     }
               // doesnt work?
     this.reset = function(){
+      this.editShow = 'new';
       return $scope.editConfirmation = false;
-      // $scope.changedGhost = {};
-      // $scope.editShow = false;
     }
   }])
   .controller('TabController', function(){
@@ -66,8 +69,12 @@ angular.module('app',[])
   })
   .controller('HumanController', ['$scope', '$http', function($scope, $http) {
     const mainRoute = 'http://localhost:3000/api/humans';
-    this.angTest = 'TOO GOOD ???';
     this.humans = ['human'];
+    this.editShow = 'new';
+    this.toggle = function(name){
+      if (this.editShow !== 'new') return this.editShow = 'new';
+      this.editShow = name;
+    }
     this.confirmChange = function(human, buttonName, curHuman){
       if (!$scope.editConfirmation) return $scope.editConfirmation = true;
       if(buttonName === 'delete') return this.removeHuman(human);
@@ -106,8 +113,7 @@ angular.module('app',[])
       })
     }
     this.reset = function(){
+      this.editShow = 'new';
       return $scope.editConfirmation = false;
-      // $scope.changedGhost = {};
-      // $scope.editShow = false;
     }
   }])
