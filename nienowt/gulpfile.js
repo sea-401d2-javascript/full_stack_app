@@ -4,12 +4,12 @@ var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
 var webpack = require('gulp-webpack');
-var paths = ['*.js', 'test/*.js', 'routes/*.js', 'models/*.js','build/*', 'controllers/*'];
+var paths = ['*.js', 'test/*.js', 'routes/*.js', 'models/*.js','build/*', 'controllers/*', '*.html','css/*'];
 
 gulp.task('default', ['watch']);
 
 gulp.task('watch', function() {
-  gulp.watch(paths,['webpack']);
+  gulp.watch(paths,['webpack', 'build', 'buildcss']);
 });
 
 gulp.task('lint', function(){
@@ -61,6 +61,15 @@ gulp.task('mocha', function() {
   .pipe(mocha({reporter: 'progress'}));
 });
 
+gulp.task('build', function() {
+  return gulp.src(['./index.html'])
+  .pipe(gulp.dest('./build/'))
+});
+
+gulp.task('buildcss', function(){
+  return gulp.src(['css/*'])
+  .pipe(gulp.dest('./build/css'))
+})
 
 gulp.task('webpack', function() {
   return gulp.src('./entry.js')

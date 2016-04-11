@@ -49,7 +49,6 @@
       <ul>
         <li data-ng-repeat="human in humanctrl.humans">
           <p>{{human}}
-            <button data-ng-click="humanctrl.haunt(human)">Haunt</button>
             <button data-ng-click="editShow = !editShow">Edit</button></p>
 
             <form name="editForm" ng-show="editShow">
