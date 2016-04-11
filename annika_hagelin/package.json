@@ -1,0 +1,63 @@
+{
+  "name": "annika_hagelin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "gulp test",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.5.3",
+    "bcrypt": "^0.8.5",
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.7",
+    "webpack": "^1.12.14"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0",
+    "gulp-mocha": "^2.2.0"
+  },
+  "eslintConfig": {
+    "rules": {
+      "no-console": 0,
+      "indent": [
+        2,
+        2
+      ],
+      "linebreak-style": [
+        2,
+        "unix"
+          ],
+          "semi": [
+            2,
+            "always"
+          ]
+    },
+    "env": {
+      "es6": true,
+      "node": true,
+      "browser": true
+    },
+    "globals": {
+      "describe": false,
+      "it": false,
+      "beforeEach": false,
+      "afterEach": false,
+      "before": false,
+      "after": false
+    },
+    "ecmaFeatures": {
+      "modules": true,
+      "experimentalObjectRestSpread": true
+    },
+    "extends": "eslint:recommended"
+  }
+}
