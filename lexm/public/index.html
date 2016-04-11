@@ -7,7 +7,7 @@
 <body data-ng-app="MovieApp">
   <main data-ng-init="moviectrl.getMovies()" data-ng-controller="MovieController as moviectrl">
     <ul>
-      <li data-ng-repeat="movie in moviectrl.movies" data-ng-init="oldMovie._id=movie._id">
+      <li data-ng-repeat="movie in moviectrl.movies" data-ng-init="movEdit._id=movie._id">
         <p>Movie Title: {{movie.name}}</p>
         <p>Release Date: {{movie.release_date | amDateFormat:'MMMM Do YYYY'}}</p>
         <section data-ng-hide="!movie.showEdit">
