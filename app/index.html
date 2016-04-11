@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Favorite Cars and Bikes</title>
+  </head>
+  <body data-ng-app="carsApp">
+    <main data-ng-controller="carsController">
+      <h1>Favorite Cars</h1>
+      <ul>
+        <li data-ng-repeat="car in cars">{{car.make}}, {{car.model}}
+          <button data-ng-click="deleteCar(car)">Delete Car</button>
+          <button data-ng-click="car.editing = !car.editing">Update Car</button>
+          <form data-ng-if="car.editing" data-ng-submit="updateCar(car)">
+            <input data-ng-model="car.make" type="text"/>
+            <input data-ng-model="car.model" type="text"/>
+            <button type="submit">Update</button>
+          </form>
+        </li>
+      </ul>
+      <form data-ng-submit="createCar)newCar">
+        <input data-ng-model="newCar.make" type="text"/>
+        <input data-ng-model="newCar.model" type="text"/>
+        <button type="submit">New Car</button>
+      </form>
+      <p>{{cars}}</p>
+    </main>
+    <script src="bundle.js"></script>
+  </body>
+</html>
