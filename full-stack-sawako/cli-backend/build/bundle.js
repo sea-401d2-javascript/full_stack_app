@@ -68,6 +68,7 @@
 	  this.buttonShow = false;
 	  this.deleting = false;
 	  this.fetchedData = [];
+
 	  this.cancelEdits = function(){
 	    this.getCont = this.fetchedData;
 	    console.log('back to original : ' + angular.toJson(this.fetchedData));
@@ -148,16 +149,26 @@
 	  this.id = ''
 	  this.editing = false;
 	  this.buttonShow = false;
+	  this.deleting = false;
+	  this.allGems = [];
 	  this.fetchedData = [];
+
 	  this.cancelEdits = function(){
 	    this.getGem = this.fetchedData;
 	    console.log('back to original : ' + angular.toJson(this.fetchedData));
 	  }
 
+	  this.removeGemFromArr = function(){
+	      this.allGems = this.allGems.filter((data)=>{
+	        return data._id !== this.id;
+	      });
+	  };
+
 	  this.getGems = function(){
 	    $http.get(mainRoute)
 	    .then((result)=>{
 	      this.gemsList = result.data;
+	      this.allGems = angular.copy(result.data);
 	      console.log('Here is gemsList : ' + this.gemsList);
 	    }, function(err){
 	      console.log('Err : ' + err);
@@ -196,6 +207,10 @@
 	  }
 
 	  this.deleteGemById = function(){
+	    this.deleting = true;
+	    this.removeGemFromArr();
+	    console.log('Filtered array? : ' + angular.toJson(this.allGems));
+	    console.log(this.deleting);
 	    $http.delete(mainRoute + '/' + this.id, this.getGem)
 	    .then((result)=>{
 	      this.getGem = result.data;

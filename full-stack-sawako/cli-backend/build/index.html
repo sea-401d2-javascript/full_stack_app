@@ -96,7 +96,7 @@
         <input data-ng-hide="!gems.editing" type="submit" data-ng-click="gems.editGem()" value="Save Edit">
       </form>
       <form data-ng-submit="gems.getGems()">
-        <div data-ng-repeat="gemsData in gems.gemsList">
+        <div "gems.deleting === true" ? data-ng-repeat="gemsData in gems.allGems" : data-ng-repeat="gemsData in gems.gemsList">
           <label>id:</label>
           <p data-ng-bind="gemsData._id"></p>
           <label>Name:</label>
