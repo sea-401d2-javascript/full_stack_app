@@ -11,11 +11,11 @@
         <p>Movie Title: {{movie.name}}</p>
         <p>Release Date: {{movie.release_date | amDateFormat:'MMMM Do YYYY'}}</p>
         <section data-ng-hide="!movie.showEdit">
-          <form data-ng-submit="moviectrl.putMovie(oldMovie)">
-            <input type="text" data-ng-model="oldMovie.name" data-ng-init="oldMovie.name=movie.name">
-            <input type="text" data-ng-model="oldMovie.release_date" data-ng-init="oldMovie.release_date=movie.release_date">
+          <form data-ng-submit="moviectrl.putMovie(movEdit)">
+            <input type="text" data-ng-model="movEdit.name" data-ng-init="movEdit.name=movie.name">
+            <input type="text" data-ng-model="movEdit.release_date" data-ng-init="movEdit.release_date=movie.release_date">
             <button type="submit">Submit Edit</button>
-            <button ng-click="moviectrl.cancelEdit(movie)">Cancel Edit</button>
+            <button ng-click="moviectrl.cancelEdit(movEdit, movie)">Cancel Edit</button>
           </form>
         </section>
         <p>

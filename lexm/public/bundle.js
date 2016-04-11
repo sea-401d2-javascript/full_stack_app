@@ -123,6 +123,13 @@
 	      console.log('movie: ', movie);
 	    }
 	  }
+	  this.cancelEdit = function(movEdit, movie) {
+	    movEdit._id = movie._id;
+	    movEdit.name = movie.name;
+	    movEdit.release_date = movie.release_date;
+	    console.log('cE movEdit: ', movEdit);
+	    console.log('cE movie: ', movie);
+	  }
 	}])
 
 
