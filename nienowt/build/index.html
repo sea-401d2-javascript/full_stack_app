@@ -2,9 +2,15 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <!-- MOVE TO CSS -->
+    <style>
+    [data-ng-cloak] {
+      display: none !important;
+    }
+    </style>
     <title></title>
   </head>
-  <body data-ng-app='app' data-ng-controller="TabController as tabctrl">
+  <body data-ng-app='app' data-ng-controller="TabController as tabctrl" data-ng-cloak>
     <header>
       <nav>
         <a href="" data-ng-click="tabctrl.setTab('ghosts')">Ghosts</a>
@@ -28,7 +34,7 @@
             <button data-ng-click="ghostctrl.confirmChange(changedGhost, 'edit', ghost)">Submit</button>
             <p data-ng-show="editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted</p>
 
-            <button data-ng-click="editShow = !editShow; changedGhost = {}; editConfirmation = !editConfirmation" data-ng-show="editConfirmation">Cancel Edit</button>
+            <button form="editForm" data-ng-click="ghostctrl.reset(); editShow=!editShow; changedGhost={}" data-ng-show="editConfirmation">Cancel Edit</button>
             <button data-ng-click="ghostctrl.confirmChange(ghost,'delete')">Delete Ghost</button>
           </form>
 

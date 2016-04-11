@@ -9,6 +9,7 @@ angular.module('app',[])
 
     this.confirmChange = function(ghost, buttonName, curGhost){
       if (!$scope.editConfirmation) return $scope.editConfirmation = true;
+
       if(buttonName === 'delete') return this.removeGhost(ghost);
       if(buttonName === 'edit') return this.editGhost(ghost, curGhost);
     }
@@ -47,12 +48,12 @@ angular.module('app',[])
         this.ghosts = this.ghosts.filter((g) => g._id != ghost._id);
       })
     }
-              //doesnt work?
-    // this.reset = function(changedGhost){
-    //   console.log('button being clicked');
-    //   $scope.changedGhost = {};
-    //   $scope.editShow = false;
-    // }
+              // doesnt work?
+    this.reset = function(changedG){
+      return $scope.editConfirmation = false;
+      // $scope.changedGhost = {};
+      // $scope.editShow = false;
+    }
   }])
   .controller('TabController', function(){
     this.tab = 'ghosts';
