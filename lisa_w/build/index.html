@@ -22,13 +22,15 @@
       <h2><em>Hours:</em> {{arcade.hours}}</h2>
     <button data-ng-click="arcadectrl.removeArcade(arcade)">Delete</button>
 
-    <button data-ng-click="arcadectrl.updateArcade(arcade)" , "showDetails =! showDetails">Update</button>
+    <button data-ng-click="arcadectrl.updateArcade(arcade)" data-ng-hide= "showDetails =! showDetails">Update</button>
+    <!-- <button data-ng-click="arcadectrl.cancelUpdate(arcade)">Cancel Update</button> -->
 
-    <form data-ng-submit="arcadectrl.updateArcade(arcade)" data-ng-show="showDetails">
+    <form data-ng-submit="arcadectrl.updateArcade(arcade)">
       Name<input type="text" data-ng-model="arcade.name">
       Address<input type="text" data-ng-model="arcade.address">
       Hours<input type="text" data-ng-model="arcade.hours">
       <button type="submit">Update Arcade</button>
+      <button type="submit" data-ng-click="arcadectrl.cancelUpdate(this.cancelEdit)">Cancel Edit</button>
 
     </form>
 

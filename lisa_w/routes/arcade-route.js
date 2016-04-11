@@ -28,7 +28,7 @@ module.exports = (router, models)=>{
      console.log(('GET /arcade/:id was hit'));
      Arcade.findById(req.params.id, (err, arcade)=>{
        if (err) res.send(err);
-  
+
      });
    })
    .put((req, res)=>{
@@ -39,6 +39,7 @@ module.exports = (router, models)=>{
      });
    })
     .delete((req, res)=> {
+      console.log('Delete /arcade/:id was hit');
       Arcade.remove({_id: req.params.id}, (err, arcade)=> {
         if(err) return res.send(err);
         res.json({
