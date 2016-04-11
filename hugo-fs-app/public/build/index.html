@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>2 Resource with Angular</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto|Lora' rel='stylesheet' type='text/css'>
+  </head>
+  <body ng-app="CustomerApp">
+    <script type="text/javascript" src="/build/bundle.js"></script>
+    <header class="header">
+      <h1 class="animated shake">Welcome!</h1>
+    </header>
+    <main class="container">
+      <main ng-init="custctrl.getCustomers()" ng-controller="CustomerController as custctrl" ng-cloak>
+        <h3>Customers!</h3>
+        <section ng-repeat="customer in custctrl.customers" ng-cloak>
+          <ul>
+            <li class="info-line"><span>Name: </span>{{customer.name}}</li><br>
+            <li class="info-line"><span>Age: </span>{{customer.age}}</li><br>
+            <li class="info-line"><span>Email:</span>{{customer.email}}</li><br>
+          </ul>
+          <button class="green-button" type="submit" ng-click="custctrl.updateCustomer.rendered = customer._id">update record</button>
+          <button class="red-button" type="button" ng-click="custctrl.deleteCustomer(customer)">delete record</button>
+          <form class="animated flipInX" ng-show="custctrl.updateCustomer.rendered === customer._id" ng-submit="custctrl.updateCustomer.rendered = null">
+            <span>Name:</span><input type="text" ng-model="customer.name" ng-model-options="{debounce: 500}" minlength="3" required><br>
+            <span>Age:</span><input type="number" ng-model="customer.age" ng-model-options="{debounce: 500}" required><br>
+            <span>Email:</span><input type="email" ng-model="customer.email" ng-model-options="{debounce: 500}" required><br>
+            <button class="save-button" type="submit">Save Changes</button>
+            <button class="discard-button" type="reset" ng-click="custctrl.resetCustomer(customer); custctrl.updateCustomer.rendered = null">Discard Changes</button>
+          </form>
+        </section>
+      </main>
+      <main ng-init="prodctrl.getProducts()" ng-controller="ProductController as prodctrl" ng-cloak>
+        <h3>Products!</h3>
+        <section ng-repeat="product in prodctrl.products" ng-cloak>
+          <li class="info-line"><span>Name: </span>{{product.name}}</li><br>
+          <li class="info-line"><span>UPC: </span>{{product.upc}}</li><br>
+          <li class="info-line"><span>Stock Count: </span>{{product.stock}}</li><br>
+          <button class="green-button" type="submit" ng-click="prodctrl.updateProduct.rendered = product._id">Update Record</button>
+          <button class="red-button" type="submit" ng-click="prodctrl.deleteProduct(product)">Delete Record</button>
+          <form class="animated flipInX" ng-show="prodctrl.updateProduct.rendered === product._id" ng-submit="prodctrl.updateProduct.rendered = null">
+            <span>Name:</span><input type="text" ng-model="product.name" ng-model-options="{debounce: 500}" minlength="3" required><br>
+            <span>UPC:</span><input type="text" ng-model="product.upc" ng-model-options="{debounce: 500}" required><br>
+            <span>Stock Count:</span><input type="number" ng-model="product.stock" ng-model-options="{debounce: 500}" required><br>
+            <button class="save-button" type="submit">Save Changes</button>
+            <button class="discard-button" type="reset" ng-click="prodctrl.resetProduct(product); prodctrl.updateProduct.rendered = null">Discard Changes</button>
+          </form>
+        </section>
+      </main>
+
+    </main>
+  </body>
+</html>
