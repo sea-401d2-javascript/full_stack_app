@@ -4,7 +4,7 @@
 module.exports = (mongoose, models) => {
   let Schema = mongoose.Schema;
   let ArcadeSchema = new Schema({
-    name: String,
+    name: {type: String, default: 'You know who'},
     address: String,
     updated: {type: Date, default: Date.now },
     games: [{

@@ -10,17 +10,19 @@ module.exports = (router, models)=>{
     Arcade.find({}, (err, arcades)=>{
       if(err)  return res.send(err);
       // console.log('hit ' + arcades);
-      res.json({data: arcades});
+      res.json({arcades});
+      res.end();
     });
   })
    .post((req, res)=>{
      console.log('post was hit');
      var newArcade = new Arcade(req.body);
-     console.log('req body '+ req.body);
+     console.log('req body '+ req.body._id);
      newArcade.save((err, arcade)=>{
        if (err) return res.send(err);
-       console.log(arcade);
+       console.log(arcade.name);
        res.json(arcade);
+       res.end();
      });
 
    });

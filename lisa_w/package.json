@@ -17,7 +17,9 @@
     "mongoose": "^4.4.12",
     "webpack": "^1.12.15"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp-util": "^3.0.7"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"

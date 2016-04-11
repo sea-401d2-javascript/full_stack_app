@@ -1,8 +1,15 @@
 'use strict';
+// grab our gulp packages
+var gulp  = require('gulp'),
+    gutil = require('gulp-util');
 
-var gulp = require('gulp');
+// create a default task and just log a message
+gulp.task('default', function() {
+  return gutil.log('Gulp is running!')
+});
+
 var eslint = require('gulp-eslint');
-var mocha = require('gulp-mocha');
+// var mocha = require('gulp-mocha');
 var webpack = require('gulp-webpack');
 
 var eslintRules = {

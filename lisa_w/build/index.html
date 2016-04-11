@@ -9,10 +9,10 @@
     <main data-ng-init="arcadectrl.getArcades()" data-ng-controller="ArcadeController as arcadectrl">
 
       <ul>
-        <li data-ng-repeat="arcade in arcadectrl.arcades">Arcade Name: {{arcade}}
+        <li data-ng-repeat="arcade in arcadectrl.arcades">Arcade Name: {{arcade.name}}
           <!-- <p>Arcade Name: {{arcade.name}}</p> -->
            </li>
-        <button data-ng-click="arcadectrl.removeArcade()">Delete</button>
+        <!-- <button data-ng-click="arcadectrl.removeArcade()">Delete</button> -->
 
 
       </ul>
