@@ -47,10 +47,62 @@ angular.module('app',[])
         this.ghosts = this.ghosts.filter((g) => g._id != ghost._id);
       })
     }
-
+              //doesnt work?
     // this.reset = function(changedGhost){
     //   console.log('button being clicked');
     //   $scope.changedGhost = {};
     //   $scope.editShow = false;
     // }
+  }])
+  .controller('TabController', function(){
+    this.tab = 'ghosts';
+    this.setTab = function(tab){
+      this.tab = tab;
+    };
+    this.active = function(tab){
+      return this.tab == tab;
+    }
+  })
+  .controller('HumanController', ['$scope', '$http', function($scope, $http) {
+    const mainRoute = 'http://localhost:3000/api/humans';
+    this.angTest = 'TOO GOOD ???';
+    this.humans = ['human'];
+    this.confirmChange = function(human, buttonName, curHuman){
+      if (!$scope.editConfirmation) return $scope.editConfirmation = true;
+      if(buttonName === 'delete') return this.removeHuman(human);
+      if(buttonName === 'edit') return this.editHuman(human, curHuman);
+    }
+
+    this.getHumans = function() {
+      $http.get(mainRoute)
+      .then((results) => {
+        console.log(results);
+        this.humans = results.data;
+        console.log(results.data)
+      },(err) => {
+        if (err) console.log(err);
+      })
+    }
+    this.createHuman = function(human) {
+      $http.post(mainRoute, human)
+      .then((res) => {
+        this.humans.push(human)
+        $scope.newHuman = {};
+        $scope.humanForm.$setPristine();
+      })
+    }
+    this.editHuman = function(changedHuman, human){
+      $http.put(mainRoute + '/' + human._id, changedHuman)
+      .then((res) => {
+        this.humans = this.humans.filter((g) => g._id != human._id);
+        this.humans.push(changedHuman);
+      })
+    }
+
+    this.removeHuman = function(human){
+      $http.delete(mainRoute + '/' + human._id)
+      .then((res) => {
+        this.humans = this.humans.filter((g) => g._id != human._id);
+      })
+    }
   }])

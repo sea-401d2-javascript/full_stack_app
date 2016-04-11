@@ -38,6 +38,7 @@ module.exports = (router) => {
     .put((req, res) => {
       Human.findByIdAndUpdate(req.params.id,{ $set: req.body }, (err) => {
         if (err) res.end(err);
+        if (err) console.log(err);
         res.write('HUMAN ALTERED');
         res.end();
       });
