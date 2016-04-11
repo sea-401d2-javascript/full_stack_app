@@ -9,7 +9,7 @@
     <main data-ng-init="arcadectrl.getArcades()" data-ng-controller="ArcadeController as arcadectrl">
 
       <ul>
-        <li data-ng-repeat="arcade in arcadectrl.arcades">Arcade Name: {{arcade.name}}
+        <li data-ng-repeat="arcade in arcadectrl.arcades">Arcade Name: {{arcade}}
           <!-- <p>Arcade Name: {{arcade.name}}</p> -->
            </li>
         <button data-ng-click="arcadectrl.removeArcade()">Delete</button>
@@ -18,7 +18,7 @@
       </ul>
       <h1>{{dance}}</h1>
       <form data-ng-submit="arcadectrl.createArcade()">
-        Add Name<input type="text" data-ng-model="newArcade">
+        Add Name<input type="text" data-ng-model="newArcade.name">
         <button type="submit">New Arcade</button>
 
       </form>

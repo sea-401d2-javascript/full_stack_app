@@ -1,6 +1,6 @@
 'use strict';
 process.env.MONGOLAB_URI = 'mongodb://localhost/arcade-test';
-require(__dirname + '/../server.js');
+require(__dirname + '../../server.js');
 var mongoose = require('mongoose');
 var chai = require('chai');
 var chaiHTTP = require('chai-http');

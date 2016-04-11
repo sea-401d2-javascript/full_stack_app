@@ -2,7 +2,7 @@
 
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
-// var mocha = require('gulp-mocha');
+var mocha = require('gulp-mocha');
 var webpack = require('gulp-webpack');
 
 var eslintRules = {
@@ -63,14 +63,14 @@ gulp.task('mocha', function(){
 gulp.task('webpack', function() {
   return gulp.src('./app/index.js')
     .pipe(webpack(require('./webpack.config.js')))
-    .pipe(gulp.dest('./build/'))
-})
+    .pipe(gulp.dest('./build/'));
+});
 
 var wpPath = ['*.js', 'app/*.js'];
 
 gulp.task('wp-watch',function() {
   gulp.watch(wpPath, ['webpack']);
-})
+});
 
 gulp.task('watch', function(){
   gulp.watch(path, ['lint', 'mocha']);

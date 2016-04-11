@@ -14,8 +14,8 @@ app.controller('ArcadeController', ['$scope','$http', function($scope, $http){
   this.getArcades = function(){
     $http.get(arcadeRoute)
     .then((result)=>{
-      // console.log('ARCADE NAME: ' + result);
-      this.arcades = result;
+      console.log('ARCADE NAME: ' + result.data);
+      this.arcades = result.data;
     }, function(error){
       console.log(error);
     });
