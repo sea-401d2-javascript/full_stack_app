@@ -159,16 +159,5 @@ app.listen(PORT, () => {
   console.log('server started 3000');
 });
 
-// app.get('/ferr-mostwins', (req, res) => {
-//   Ferrari.find().sort({raceWins: -1}).limit(1).exec((err, fdrivers) => {
-//     // console.log(fdrivers);
-//     res.json({data: fdrivers});
-//   });
-// });
 
-// app.get('/merc-mostwins', (req, res) => {
-//   Mercedes.find().sort({raceWins: -1}).limit(1).exec((err, mdrivers) => {
-//     // console.log(mdrivers);
-//     res.json({data: mdrivers});
-//   });
-// });
+//mongod --dbpath="./db"
