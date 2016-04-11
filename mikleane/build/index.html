@@ -3,12 +3,17 @@
   <head>
     <meta charset="utf-8">
     <title>The Joy of Beer</title>
+    <style>
+      .ng-cloak {
+        display: none !important;
+      }
+    </style>
   </head>
   <body data-ng-app="app">
     <div data-ng-controller="BeersController as beersctrl" data-ng-init="beersctrl.getBeers()">
-      <h3>{{beersctrl.beers}}</h3>
+      <h3 class="ng-cloak" ng-cloak>{{beersctrl.beers}}</h3>
       <ul>
-        <li data-ng-repeat="beer in beersctrl.beers">{{beer.name}}
+        <li class="ng-cloak" ng-cloak data-ng-repeat="beer in beersctrl.beers">{{beer.name}}
           <button type"submit" ng-click="beersctrl.removeBeer(beer)">Delete Beer</button>
           <button type="submit" ng-click="beersctrl.updateBeer.displayed = beer._id">Edit Beer</button>
           <form data-ng-show="beersctrl.updateBeer.displayed == beer._id" data-ng-submit="beersctrl.updateBeer(beer); beersctrl.updateBeer.displayed = null">
@@ -31,9 +36,9 @@
       </form>
     </div>
     <div data-ng-controller="UsersController as usersctrl" data-ng-init="usersctrl.getUsers()">
-      <h3>{{usersctrl.users}}</h3>
+      <h3 class="ng-cloak" ng-cloak>{{usersctrl.users}}</h3>
       <ul>
-        <li data-ng-repeat="user in usersctrl.users">{{user.firstName}}
+        <li class="ng-cloak" data-ng-repeat="user in usersctrl.users">{{user.firstName}}
         <button type="submit" data-ng-click="usersctrl.removeUser(user)">Delete User</button>
         <button type="submit" data-ng-click="usersctrl.updateUser.displayed = user._id">Update User</button>
         <form data-ng-show="usersctrl.updateUser.displayed == user._id" data-ng-submit="usersctrl.updateUser(user); usersctrl.updateUser.displayed = null">
