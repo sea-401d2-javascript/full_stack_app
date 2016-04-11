@@ -4,45 +4,48 @@
     <meta charset="utf-8">
     <title>doc</title>
   </head>
-  <body>
-    <main ng-app="PeopleApp">
-
+  <body ng-app="TwoResourceApp">
+    <main>
       <section ng-init="peoplectrl.getPeople()" ng-controller="PeopleController as peoplectrl">
-        <p>{{peoplectrl.test}}</p>
         <p>{{peoplectrl.people}}</p>
 
         <ul>
           <li ng-repeat="person in peoplectrl.people">{{person.name}}
             <button ng-click="peoplectrl.removePerson(person)">Delete</button>
+            <button ng-click="peoplectrl.updatePerson(person)">Edit</button>
           </li>
         </ul>
 
         <form ng-submit="peoplectrl.createPerson(newPerson)">
-          <input type="text" ng-model="newPerson.name"/>
+          <input type="text" placeholder="name" ng-model="newPerson.name"/>
+          <input type="text" placeholder="favorite-food" ng-model="newPerson.favoriteFood"/>
+          <input type="text" placeholder="age" ng-model="newPerson.age"/>
           <button type="submit">New Person</button>
         </form>
-
       </section>
-    <!-- </main>
-      <section ng-init="peoplectrl.getPeople()" ng-controller="PeopleController as peoplectrl">
-        <p>{{peoplectrl.test}}</p>
-        <p>{{peoplectrl.people}}</p>
-
-        <ul>
-          <li ng-repeat="person in peoplectrl.people">{{person.name}}
-            <button ng-click="peoplectrl.removePerson(person)">Delete</button>
-          </li>
-        </ul>
-
-        <form ng-submit="peoplectrl.createPerson(newPerson)">
-          <input type="text" ng-model="newPerson.name"/>
-          <button type="submit">New Person</button>
-        </form>
-
-      </section>
-    <main> -->
-
     </main>
+
+    <main>
+      <section ng-init="animalctrl.getAnimal()" ng-controller="AnimalController as animalctrl">
+        <p>{{animalctrl.animals}}</p>
+
+        <ul>
+          <li ng-repeat="animal in animalctrl.animals">{{animal.name}}
+            <button ng-click="animalctrl.removeAnimal(animal)">Delete</button>
+            <button ng-click="animalctrl.updateAnimal(animal)">Edit</button>
+          </li>
+        </ul>
+
+        <form ng-submit="animalctrl.createAnimal(newAnimal)">
+          <input type="text" placeholder="name" ng-model="newAnimal.name"/>
+          <input type="text" placeholder="favorite-food" ng-model="newAnimal.favoriteFood"/>
+          <input type="text" placeholder="age" ng-model="newAnimal.age"/>
+          <button type="submit">New Animal</button>
+        </form>
+
+      </section>
+    </main>
+
     <script src="./bundle.js"></script>
   </body>
 </html>

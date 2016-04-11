@@ -4,17 +4,15 @@ let Animal = require(__dirname + '/../models/animals_model');
 module.exports = (apiRouter) => {
   apiRouter.route('/animals')
     .post((req, res) => {
-      req.on('data', (data) => {
-        req.body = JSON.parse(data);
-        var newAnimal = new Animal(req.body);
-        newAnimal.save((err, animal) => {
-          res.json({
-            status: 200,
-            data: animal
-          })
-          res.end();
+      var newAnimal = new Animal(req.body);
+      newAnimal.save((err, animal) => {
+        res.json({
+          status: 200,
+          data: animal
         })
+        res.end();
       })
+
     })
     .get((req, res) => {
       Animal.find({}, (err, animal) => {
@@ -36,17 +34,15 @@ module.exports = (apiRouter) => {
         res.end();
       })
     })
-    .put((req, res) => {
-      req.on('data', (data) => {
-        req.body = JSON.parse(data);
-        Animal.update({_id: req.params.id}, req.body, (err, animal) => {
-          res.json({
-            status: 200,
-            data: req.body
-          })
-          res.end();
+    .put((req, res) => {      
+      Animal.update({_id: req.params.id}, req.body, (err, animal) => {
+        res.json({
+          status: 200,
+          data: req.body
         })
+        res.end();
       })
+
     })
     .delete((req, res) => {
       Animal.findById(req.params.id, (err, animal) => {

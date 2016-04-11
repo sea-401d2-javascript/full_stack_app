@@ -13,16 +13,13 @@ module.exports = (apiRouter) => {
       })
     })
     .post((req, res) => {
-      req.on('data', (data) => {
-        req.body = JSON.parse(data);
-        var newPerson = new People(req.body);
-        newPerson.save((err, person) => {
-          res.json({
-            status: 200,
-            data: person
-          })
-          res.end();
+      var newPerson = new People(req.body);
+      newPerson.save((err, person) => {
+        res.json({
+          status: 200,
+          data: person
         })
+        res.end();
       })
     })
 
@@ -37,17 +34,12 @@ module.exports = (apiRouter) => {
       })
     })
     .put((req, res) => {
-      req.on('data', (data) => {
-        req.body = JSON.parse(data);
-        People.update({_id: req.params.id}, req.body, (err, person) => {
-          console.log(req.body);
-          console.log('person updated');
-          res.json({
-            status: 200,
-            data: req.body
-          })
-          res.end();
+      People.update({_id: req.params.id}, req.body, (err, person) => {
+        res.json({
+          status: 200,
+          data: req.body
         })
+        res.end();
       })
     })
     .delete((req, res) => {
