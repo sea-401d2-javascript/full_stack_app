@@ -61,7 +61,7 @@
 	    $http.get(arcadeRoute)
 	    .then((result)=>{
 	      // console.log('ARCADE NAME: ' + result);
-	      this.arcades = result[0].data;
+	      this.arcades = result;
 	    }, function(error){
 	      console.log(error);
 	    });
@@ -69,8 +69,9 @@
 	  this.createArcade = function(arcade){
 	    $http.post(arcadeRoute, arcade)
 	      .then((res)=>{
-	        console.log(res.data);
-	        this.arcades.push(res.data[0].name);
+	    console.log(arcade);
+	        this.arcades.push(arcade);
+
 	        this.newArcade = {};
 	      });
 

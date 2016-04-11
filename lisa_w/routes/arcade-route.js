@@ -8,7 +8,7 @@ module.exports = (router, models)=>{
   .get((req, res) =>{
     console.log('get was hit');
     Arcade.find({}, (err, arcades)=>{
-      if(err)  res.send(err);
+      if(err)  return res.send(err);
       // console.log('hit ' + arcades);
       res.json({data: arcades});
     });
@@ -16,9 +16,10 @@ module.exports = (router, models)=>{
    .post((req, res)=>{
      console.log('post was hit');
      var newArcade = new Arcade(req.body);
-    //  console.log('req body '+ req.body);
+     console.log('req body '+ req.body);
      newArcade.save((err, arcade)=>{
-       if (err) res.send(err);
+       if (err) return res.send(err);
+       console.log(arcade);
        res.json(arcade);
      });
 
