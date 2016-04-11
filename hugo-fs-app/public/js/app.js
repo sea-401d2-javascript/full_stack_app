@@ -40,6 +40,7 @@ app.controller('CustomerController', ['$http', function($http) {
 
   //put route
   this.updateCustomer = function(customer) {
+    console.log(customer);
     $http.put(customersRoute + '/' + customer._id, customer)
     .then(res => console.log(res.data))
     .catch(err => console.log(err));
