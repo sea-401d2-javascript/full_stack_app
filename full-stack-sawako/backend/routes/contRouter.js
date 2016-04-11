@@ -47,8 +47,8 @@ module.exports = (ContRouter, Continent)=>{
 
   ContRouter.delete('/continents/:id',(req, res)=>{
     var query = {_id: req.params.id};
-    Continent.remove(query, (err)=>{
-      console.log('This is hit : ' + err);
+    Continent.remove(query, (data)=>{
+      console.log('This is hit : ' + data);
       res.json({msg: 'requested continent has been removed.'});
     });
   });

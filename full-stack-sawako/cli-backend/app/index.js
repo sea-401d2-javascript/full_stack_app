@@ -3,12 +3,10 @@ var angular = require('angular');
 require('./layout.css');
 
 
-
 var app = angular.module('myApp', []);
 
 app.controller('ContinentCtrl',['$http', function($http){
   var mainRoute = 'http://localhost:3000/continents';
-  // var idRoute = "'http://localhost:3000/continents/" + angular.toJson(this.id)"'";
   var self = this;
   this.continentsList = [];
   this.continents = [];
@@ -20,6 +18,13 @@ app.controller('ContinentCtrl',['$http', function($http){
   this.getCont = {};
   this.id = ''
   this.editing = false;
+  this.buttonShow = false;
+  this.fetchedData = [];
+  this.cancelEdits = function(){
+    this.getCont = this.fetchedData;
+    console.log('back to original : ' + angular.toJson(this.fetchedData));
+  }
+
   this.getContinents = function(){
     $http.get(mainRoute)
     .then((result)=>{
@@ -30,10 +35,12 @@ app.controller('ContinentCtrl',['$http', function($http){
     })
   }
   this.getByIdContinents = function(){
-    var test = angular.toJson(this.id);
       $http.get(mainRoute + '/'+ this.id)
       .then((result)=>{
+        this.buttonShow = true;
         this.getCont = result.data;
+        this.fetchedData = angular.copy(result.data);
+        console.log('Fetched data : ' + angular.toJson(this.fetchedData));
       }, function(err){
         console.log(err);
       })
@@ -54,9 +61,16 @@ app.controller('ContinentCtrl',['$http', function($http){
       this.getCont = result.data;
       this.status = 'Successfully updated : ' + angular.toJson(this.getCont);
       console.log('Here is result of PUT : ' + angular.toJson(this.getCont));
-
     }, function(err){
       console.log('err : ' + err);
+    })
+  }
+
+  this.deleteContinentById = function(){
+    $http.delete(mainRoute + '/'+ this.id, this.getCont)
+    .then((result)=>{
+      this.getCont = this.data;
+      this.status = 'Successfully deleted : ' + angular.toJson(this.getCont);
     })
   }
 }]);

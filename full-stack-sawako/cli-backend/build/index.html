@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>Full Stack App</title>
-    <!-- <link rel="stylesheet" href="./../css/layout.css" charset="utf-8"> -->
   </head>
   <body data-ng-app="myApp">
     <section data-ng-controller="ContinentCtrl as conts">
@@ -33,9 +32,10 @@
         <input data-ng-show="conts.editing" data-ng-model="conts.getCont.mineral" type="text">
         <label data-ng-model="conts.status" data-ng-bind="conts.status"></label>
         <button type="submit">Search by Id</button>
-        <input id="space-region" data-ng-click="conts.editing = !conts.editing" type="button" value="Edit">
-        <input id="space-region" type="button" value="Delete">
-        <input id="space-region" type="submit" data-ng-click="conts.editContinents()" value="Save Edit">
+        <input id="space-region" data-ng-hide="!conts.editing" data-ng-click="conts.cancelEdits()" type="button" value="Cxl Edit">
+        <input id="space-region" data-ng-hide="!conts.buttonShow" data-ng-click="conts.editing = !conts.editing" type="button" value="Edit">
+        <input id="space-region" data-ng-hide="!conts.editing" data-ng-click="conts.deleteContinentById()" type="button" value="Delete">
+        <input id="space-region" data-ng-hide="!conts.editing" type="submit" data-ng-click="conts.editContinents()" value="Save Edit">
       </form>
       <!-- Getting all data via GET route -->
       <form data-ng-submit="conts.getContinents()">
