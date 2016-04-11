@@ -91,7 +91,7 @@
 	  this.showEditFlip = function(movie) {
 	    var oldMovie;
 	    console.log('showEdit1', movie.showEdit);
-	    if(!movie.showEdit) {
+	    if(movie.showEdit === undefined) {
 	      oldMovie = this.saveOldMovie(movie, oldMovie);
 	      movie.showEdit = true;
 	    } else {
@@ -101,8 +101,25 @@
 	    console.log('oldMovie: ', oldMovie);
 	    console.log('movie: ', movie);
 	  }
-	  this.editMovie = function(movie) {
-
+	  this.putMovie = function(movie) {
+	    if(movie._id) {
+	      $http.put(movieRoute + '/' + movie._id, movie)
+	      .then((res) => {
+	        this.movies = this.movies.map((mov) => {
+	          if(mov._id === movie._id) {
+	            return movie;
+	          } else {
+	            return mov;
+	          }
+	        })
+	        console.log('res.data: ', res.data);
+	        console.log('movie: ', movie);
+	        console.log('this.movies: ', this.movies);
+	      })
+	    } else {
+	      console.log('no id!');
+	      console.log('movie: ', movie);
+	    }
 	  }
 	}])
 
