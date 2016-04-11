@@ -6,24 +6,26 @@
   </head>
   <body data-ng-app="ArcadeApp">
     <h1>Arcades</h1>
-    <main data-ng-init="arcadectrl.getArcade()" data-ng-controller="ArcadeController as arcadectrl">
+    <main data-ng-init="arcadectrl.getArcades()" data-ng-controller="ArcadeController as arcadectrl">
 
       <ul>
-        <li data-ng-repeat="arcade in arcadectrl.arcade">{{arcade.name}}  </li>
-        <button data-ng-click="arcadectrl.removeArcade(arcade)">Delete</button>
+        <li data-ng-repeat="arcade in arcadectrl.arcades">Arcade Name: {{arcade.name}}
+          <!-- <p>Arcade Name: {{arcade.name}}</p> -->
+           </li>
+        <button data-ng-click="arcadectrl.removeArcade()">Delete</button>
 
 
       </ul>
       <h1>{{dance}}</h1>
-      <form data-ng-submit="arcadectrl.createArcade(newArcade)">
-        <input type="text" data-ng-model="newArcade.name">
+      <form data-ng-submit="arcadectrl.createArcade()">
+        Add Name<input type="text" data-ng-model="newArcade.name">
         <button type="submit">New Arcade</button>
 
       </form>
 
     </main>
 
-<script src='bundle.js'></script>
+<script src="./bundle.js" type="text/javascript"></script>
 <!-- <script src='../angular-resource.js'></script> -->
   </body>
 </html>

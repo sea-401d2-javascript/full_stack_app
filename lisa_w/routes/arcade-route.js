@@ -5,22 +5,23 @@ module.exports = (router, models)=>{
   let Arcade = models.Arcade;
 
   router.route('/arcades')
+  .get((req, res) =>{
+    console.log('get was hit');
+    Arcade.find({}, (err, arcades)=>{
+      if(err)  res.send(err);
+      // console.log('hit ' + arcades);
+      res.json({data: arcades});
+    });
+  })
    .post((req, res)=>{
      console.log('post was hit');
      var newArcade = new Arcade(req.body);
+    //  console.log('req body '+ req.body);
      newArcade.save((err, arcade)=>{
        if (err) res.send(err);
-       res.json({data: arcade});
+       res.json(arcade);
      });
 
-   })
-   .get((req, res) =>{
-     console.log('get was hit');
-     Arcade.find({}, (err, arcades)=>{
-       if(err)  res.send(err);
-       console.log('hit ' + arcades);
-       res.json({data: arcades});
-     });
    });
   router.route('/arcades/:id')
    .get((req, res)=>{
@@ -35,7 +36,7 @@ module.exports = (router, models)=>{
      console.log('PUT /arcade/:id was hit');
      Arcade.findByIdAndUpdate(req.params.id, req.body,(err, arcade)=>{
        if (err) res.send(err);
-       res.json(arcade);
+       res.json({msg: 'updated'});
      });
    })
     .delete((req, res)=> {
