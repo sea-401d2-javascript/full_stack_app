@@ -49,7 +49,7 @@ angular.module('app',[])
       })
     }
               // doesnt work?
-    this.reset = function(changedG){
+    this.reset = function(){
       return $scope.editConfirmation = false;
       // $scope.changedGhost = {};
       // $scope.editShow = false;
@@ -99,11 +99,15 @@ angular.module('app',[])
         this.humans.push(changedHuman);
       })
     }
-
     this.removeHuman = function(human){
       $http.delete(mainRoute + '/' + human._id)
       .then((res) => {
         this.humans = this.humans.filter((g) => g._id != human._id);
       })
+    }
+    this.reset = function(){
+      return $scope.editConfirmation = false;
+      // $scope.changedGhost = {};
+      // $scope.editShow = false;
     }
   }])
