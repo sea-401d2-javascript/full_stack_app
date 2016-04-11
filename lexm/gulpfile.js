@@ -3,7 +3,8 @@
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
-var webpack = require('gulp-webpack');
+// var webpack = require('gulp-webpack');
+var webpack = require('webpack-stream');
 
 var eslintRules = {
   'rules': {

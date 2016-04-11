@@ -5,7 +5,8 @@
   <title>Document</title>
 </head>
 <body data-ng-app="MovieApp">
-  <main data-ng-init="moviectrl.getMovies()" data-ng-controller="MovieController as moviectrl">
+  <main>
+  <section data-ng-init="moviectrl.getMovies()" data-ng-controller="MovieController as moviectrl">
     <ul>
       <li data-ng-repeat="movie in moviectrl.movies" data-ng-init="movEdit._id=movie._id">
         <p>Movie Title: {{movie.name}}</p>
@@ -29,7 +30,35 @@
       <input type="date" data-ng-model="newMovie.release_date">
       <button type="submit">New Movie</button>
     </form>
-  </main>
+  </section>
+
+  <section data-ng-init="dirctrl.getDirectors()" data-ng-controller="DirectorController as dirctrl">
+    <ul>
+      <li data-ng-repeat="director in dirctrl.directors" data-ng-init="dirEdit._id=director._id">
+        <p>Director Name: {{director.name}}</p>
+        <p>Date of Birth: {{director.date_of_birth | amDateFormat:'MMMM Do YYYY'}}</p>
+        <section data-ng-hide="!director.showEdit">
+          <form data-ng-submit="dirctrl.putDirector(dirEdit)">
+            <input type="text" data-ng-model="dirEdit.name" data-ng-init="dirEdit.name=director.name">
+            <input type="text" data-ng-model="dirEdit.date_of_birth" data-ng-init="dirEdit.date_of_birth=director.date_of_birth">
+            <button type="submit">Submit Edit</button>
+            <button ng-click="dirctrl.cancelEdit(dirEdit, director)">Cancel Edit</button>
+          </form>
+        </section>
+        <p>
+          <button data-ng-click="dirctrl.removeDirector(director)">Delete</button>
+          <button data-ng-click="dirctrl.showEditFlip(director)">Edit</button>
+        </p>
+      </li>
+    </ul>
+    <form data-ng-submit="dirctrl.createDirector(newDirector)">
+      <input type="text" data-ng-model="newDirector.name">
+      <input type="date" data-ng-model="newDirector.date_of_birth">
+      <button type="submit">New Director</button>
+    </form>
+  </section>
+
+</main>
   <script src="./bundle.js" type="text/javascript"></script>
 </body>
 </html>
