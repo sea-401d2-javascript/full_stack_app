@@ -17,7 +17,7 @@ module.exports  = (publicRouter) => {
           name: req.body.name,
           isEvil: req.body.isEvil,
           numEyes: req.body.numEyes,
-          powers: newPowers._id,
+          powers: newPowers._id
           // password: authArr[1]
         });
         newGhost.save((err, ghost) => {

@@ -4,7 +4,7 @@ var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
 var webpack = require('gulp-webpack');
-var paths = ['*.js', 'test/*.js', 'routes/*.js', 'models/*.js','build/*', 'controllers/*', '*.html','css/*'];
+var paths = ['*.js', 'test/*.js', 'routes/*.js', 'models/*.js', 'controllers/*', '*.html','css/*'];
 
 gulp.task('default', ['watch']);
 
@@ -63,13 +63,13 @@ gulp.task('mocha', function() {
 
 gulp.task('build', function() {
   return gulp.src(['./index.html'])
-  .pipe(gulp.dest('./build/'))
+  .pipe(gulp.dest('./build/'));
 });
 
 gulp.task('buildcss', function(){
   return gulp.src(['css/*'])
-  .pipe(gulp.dest('./build/css'))
-})
+  .pipe(gulp.dest('./build/css'));
+});
 
 gulp.task('webpack', function() {
   return gulp.src('./entry.js')
@@ -78,5 +78,5 @@ gulp.task('webpack', function() {
       filename: 'bundle.js'
     }
   }))
-  .pipe(gulp.dest('./build/'))
+  .pipe(gulp.dest('./build/'));
 });

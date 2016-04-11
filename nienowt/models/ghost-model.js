@@ -1,8 +1,8 @@
 'use strict';
 
 const mongoose = require('mongoose');
-let bcrypt = require('bcrypt');
-let jwt = require('jsonwebtoken');
+// let bcrypt = require('bcrypt');
+// let jwt = require('jsonwebtoken');
 
 const ghostSchema = mongoose.Schema({
   name: {type: String, unique: true},
