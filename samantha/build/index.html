@@ -3,14 +3,19 @@
   <head>
     <meta charset="utf-8">
     <title>Chef and Recipe full stack angular app</title>
+    <style>.ng-cloak {
+      display: none !important;
+      }
+    </style>
   </head>
   <body data-ng-app="ChefApp">
     <main data-ng-init="chefctrl.getChefs()" data-ng-controller="ChefController as chefctrl">
+      <h2>See all chef's below:</h2>
       <ul>
-        <li data-ng-repeat="chef in chefctrl.chefs">{{chef.name}}
+        <li class="ng-cloak" ng-cloak data-ng-repeat="chef in chefctrl.chefs">{{chef.name}}
           <button type="submit" data-ng-click="chefctrl.removeChef(chef)">Delete Chef</button>
           <button type="submit" data-ng-click="chefctrl.updateChef.displayed = chef._id">Update Chef</button>
-          <form data-ng-show="chefctrl.updateChef.displayed == chef._id" data-ng-submit="chefctrl.updateChef(chef); chefctrl.updateChef.displayed = null"></form>
+          <form data-ng-show="chefctrl.updateChef.displayed == chef._id" data-ng-submit="chefctrl.updateChef(chef); chefctrl.updateChef.displayed = null">
             <input type="text" placeholder="name" data-ng-model="chef.name"/>
             <input type="text" placeholder="password" data-ng-model="chef.password"/>
             <input type="text" placeholder="fun fact" data-ng-model="chef.funFact"/>
@@ -20,6 +25,7 @@
           </form>
         </li>
       </ul>
+      <h2>Add a new chef:</h2>
       <form data-ng-submit="chefctrl.createChef(newChef)">
         <input type="text" placeholder="Name" data-ng-model="newChef.name"/>
         <input type="text" placeholder="Password" data-ng-model="newChef.password"/>
@@ -30,11 +36,21 @@
       </form>
     </main>
     <main data-ng-init="recipectrl.getRecipes()" data-ng-controller="RecipeController as recipectrl">
+      <h2>See all recipes below:</h2>
       <ul>
-        <li data-ng-repeat="recipe in recipectrl.recipes">{{recipe.name}}
-          <button data-ng-click="recipectrl.remoceRecipe(recipe)">Delete</button>
+        <li class="ng-cloak" ng-cloak data-ng-repeat="recipe in recipectrl.recipes">{{recipe.name}}  id:{{recipe._id}}
+          <button type="submit" data-ng-click="recipectrl.remoceRecipe(recipe)">Delete Recipe</button>
+          <button type="submit" data-ng-click="recipectrl.updateRecipe.displayed = recipe._id">Edit Recipe</button>
+          <form data-ng-show="recipectrl.updateRecipe.displayed == recipe._id" data-ng-submit="recipectrl.updateRecipe(recipe); recipectrl.updateRecipe.display = null">
+            <input type="text" placeholder="name" data-ng-model="recipe.name"/>
+            <input type="text" placeholder="cook time (in min)" data-ng-model="recipe.cookTime"/>
+            <input type="text" placeholder="ingredients" data-ng-model="recipe.ingredients"/>
+            <button type="submit">Save Changes</button>
+            <button type="reset" data-ng-click="recipectrl.reserRecipe(recipe); recipectrl.updateRecipe.displayed=null">Cancel</button>
+          </form>
         </li>
       </ul>
+      <h2>Add a new recipe:</h2>
       <form data-ng-submit="recipectrl.createRecipe(newRecipe)">
         <input type="text" placeholder="Name" data-ng-model="newRecipe.name"/>
         <input type="text" placeholder="Cook Time" data-ng-model="newRecipe.cookTime"/>
