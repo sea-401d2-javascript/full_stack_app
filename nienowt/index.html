@@ -52,23 +52,23 @@
             <button data-ng-click="humanctrl.toggle(human.name)">Edit</button></p>
 
             <form name="editForm" ng-show="humanctrl.editShow == human.name">
-              Name: <input type="text" data-ng-model="changedHuman.name" value=""/>
-              <p>Number of Teeth: <input type="text" data-ng-model="changedHuman.numTeeth" value=""/></p>
+              Name: <input type="text" data-ng-model="humanctrl.changedHuman.name" value=""/>
+              <p>Number of Teeth: <input type="text" data-ng-model="humanctrl.changedHuman.numTeeth" value=""/></p>
 
-              <button data-ng-click="humanctrl.confirmChange(changedHuman, 'edit', human)">Submit</button>
-              <p data-ng-show="editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted</p>
+              <button data-ng-click="humanctrl.confirmChange(humanctrl.changedHuman, 'edit', human)">Submit</button>
+              <p data-ng-show="humanctrl.editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted</p>
 
-              <button data-ng-click="humanctrl.reset(); changedHuman={}" data-ng-show="editConfirmation">Cancel Edit</button>
+              <button data-ng-click="humanctrl.reset(human)" data-ng-show="humanctrl.editConfirmation">Cancel Edit</button>
               <button data-ng-click="humanctrl.confirmChange(human,'delete')">Delete Human</button>
             </form>
 
         </li>
       </ul>
 
-      <form name="humanForm" data-ng-submit="humanctrl.createHuman(newHuman)" ng-show="humanctrl.editShow == 'new'">
+      <form name="humanForm" data-ng-submit="humanctrl.createHuman(humanctrl.newHuman)" ng-show="humanctrl.editShow == 'new'">
         <p>New Human:</p>
-        Name: <input type="text" data-ng-model="newHuman.name" value=""/>
-        <p>Number of Teeth: <input type="text" data-ng-model="newHuman.numTeeth" value=""/></p>
+        Name: <input type="text" data-ng-model="humanctrl.newHuman.name" value=""/>
+        <p>Number of Teeth: <input type="text" data-ng-model="humanctrl.newHuman.numTeeth" value=""/></p>
         <button type="submit">Submit</button>
       </form>
     </section>

@@ -11,7 +11,7 @@ angular.module('app',[])
     this.editConfirmation;
     this.newGhost = {};
     this.changedGhost = {};
-    
+
     this.toggle = function(name){
       if (this.editShow !== 'new') return this.editShow = 'new';
       this.editShow = name;
@@ -73,16 +73,19 @@ angular.module('app',[])
       return this.tab == tab;
     };
   })
-  .controller('HumanController', ['$scope', '$http', function($scope, $http) {
+  .controller('HumanController', ['$http', function($http) {
     const mainRoute = 'http://localhost:3000/api/humans';
     this.humans = ['human'];
     this.editShow = 'new';
+    this.newHuman = {};
+    this.editconfirmation;
+    this.changedHuman = {};
     this.toggle = function(name){
       if (this.editShow !== 'new') return this.editShow = 'new';
       this.editShow = name;
     };
     this.confirmChange = function(human, buttonName, curHuman){
-      if (!$scope.editConfirmation) return $scope.editConfirmation = true;
+      if (!this.editConfirmation) return this.editConfirmation = true;
       if(buttonName === 'delete') return this.removeHuman(human);
       if(buttonName === 'edit') return this.editHuman(human, curHuman);
     };
@@ -101,8 +104,7 @@ angular.module('app',[])
       $http.post(mainRoute, human)
       .then(() => {
         this.humans.push(human);
-        $scope.newHuman = {};
-        $scope.humanForm.$setPristine();
+        this.newHuman = {};
       });
     };
     this.editHuman = function(changedHuman, human){
@@ -120,7 +122,8 @@ angular.module('app',[])
     };
     this.reset = function(){
       this.editShow = 'new';
-      return $scope.editConfirmation = false;
+      this.changedHuman = {};
+      this.editConfirmation = false;
     };
   }]);
 })()
