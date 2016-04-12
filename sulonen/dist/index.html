@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html data-ng-app="RESTApp">
+  <head>
+    <meta charset="utf-8">
+    <title>REST Client</title>
+    <style>
+      .ng-cloak {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body data-ng-cloak class="ng-cloak">
+    <section id="game" data-ng-controller='BarController as bar'>
+      <h1>{{bar.header}}</h1>
+      <form data-ng-submit="bar.createBar(newBar)" ng-init="edit = !edit" ng-show="edit">
+        <p>
+          <label for="barName">Bar Name</label>
+          <input id="barName" class="input" data-ng-model="newBar.name">
+        </p>
+        <p>
+          <label for="barNeighborhood">Bar Neighborhood</label>
+          <input id="barNeighborhood" class="input" data-ng-model="newBar.neighborhood">
+          </p>
+        <p>
+          <label for"barHours">Bar Hours</label>
+          <input id="barHours" class="input" data-ng-model="newBar.hours">
+          </p>
+        <p> 
+          <input class="button" type="submit" value="Create Bar">
+          <input class="button" type="button" value="Cancel" ng-click="edit = !edit">
+        </p>
+      </form>
+    </section>  
+    <script src="./bundle.js"></script>
+  </body>
+</html>
+
+
