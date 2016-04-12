@@ -32,12 +32,12 @@ app.controller('ArcadeController', ['$scope','$http', function($scope, $http){
     });
   };
   this.updateArcade = function(arcEdit){
-    if(arcade._id){
-      $http.put(arcadeRoute + '/' + arcade._id, arcEdit)
+    if(arcEdit._id){
+      $http.put(arcadeRoute + '/' + arcEdit._id, arcEdit)
       .then((res)=>{
         console.log('updating');
         this.arcades = this.arcades.map((a)=>{
-          if(a._id === arcade._id) {
+          if(a._id === arcEdit._id) {
             return arcEdit;
           } else {
             return a;
