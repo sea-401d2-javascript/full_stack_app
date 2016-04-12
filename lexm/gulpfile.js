@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
+var clean = require('gulp-clean');
 var eslint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
 var webpack = require('webpack-stream');
@@ -45,13 +46,11 @@ var eslintRules = {
   'extends': 'eslint:recommended'
 };
 
-var path = ['*.js', 'test/*.js'];
-
 var paths = {
   css:  ['app/*.css'],
   html: ['app/*.html'],
   js:   ['app/js/*.js', 'test/*.js']
-}
+};
 
 gulp.task('lint', function(){
   return gulp.src(paths.js)
@@ -69,35 +68,34 @@ gulp.task('mocha', function(){
 gulp.task('build:html', function() {
   gulp.src('app/*.html')
   .pipe(gulp.dest('public/'));
-})
+});
 
 gulp.task('build:css', function() {
   gulp.src('app/*.css')
   .pipe(gulp.dest('public/'));
-})
+});
 
 gulp.task('build:js', function() {
   return gulp.src('./app/js/index.js')
     .pipe(webpack(require('./webpack.config.js')))
-    .pipe(gulp.dest('./public/'))
-})
-
-// var wpPath = ['*.js', 'app/*.js', 'styles/*.css'];
-//
-// gulp.task('wp-watch',function() {
-//   gulp.watch(wpPath, ['webpack']);
-// })
+    .pipe(gulp.dest('./public/'));
+});
 
 gulp.task('watch:css', function() {
-	gulp.watch(paths.css, ['build:css']);
+  gulp.watch(paths.css, ['build:css']);
 });
 
 gulp.task('watch:html', function() {
-	gulp.watch(paths.html, ['build:html']);
+  gulp.watch(paths.html, ['build:html']);
 });
 
 gulp.task('watch:js', function() {
-	gulp.watch(paths.js, ['build:js']);
+  gulp.watch(paths.js, ['build:js']);
+});
+
+gulp.task('clean', function() {
+  return gulp.src('public', {read: false})
+        .pipe(clean({force: true}));
 });
 
 gulp.task('build:all', ['build:css', 'build:html', 'build:js']);
@@ -106,5 +104,4 @@ gulp.task('watch:all', ['watch:css', 'watch:html', 'watch:js']);
 
 gulp.task('default', ['build:all', 'watch:all']);
 
-
-gulp.task('all', ['lint', 'mocha', 'default']);
+gulp.task('all', ['lint', 'default']);
