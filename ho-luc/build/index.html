@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>doc</title>
+    <script src="./bundle.js"></script>
   </head>
   <body ng-app="TwoResourceApp">
     <main>
@@ -39,11 +40,16 @@
         <ul>
           <li ng-repeat="animal in animalctrl.animals">{{animal.name}}
             <button ng-click="animalctrl.removeAnimal(animal)">Delete</button>
-            <button ng-if="!" ng-click="animalctrl.updateAnimal(animal)">Edit</button>
+            <button ng-if="!animal.editing" ng-click="animal.editing = true">Edit</button>
+            <form name="{{'editing' + animal._id}}" ng-if="animal.editing" ng-submit="peoplectrl.updateAnimal(animal)">
+              <input type="text" placeholder="name" ng-model="animal.name"/>
+              <input type="text" placeholder="favorite-food" ng-model="animal.favoriteFood"/>
+              <input type="text" placeholder="age" ng-model="animal.age"/>
+              <button type="submit">Save Changes</button>
+              <button ng-click="animal.editing=false">Cancel</button>
+            </form>
           </li>
         </ul>
-
-
 
         <form ng-submit="animalctrl.createAnimal(newAnimal)">
           <input type="text" placeholder="name" ng-model="newAnimal.name"/>
@@ -55,6 +61,5 @@
       </section>
     </main>
 
-    <script src="./bundle.js"></script>
   </body>
 </html>

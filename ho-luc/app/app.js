@@ -33,10 +33,7 @@ angular.module('TwoResourceApp', [])
       this.edit = false;
       $http.put(route + '/' + person._id, data)
         .then((res) => {
-          console.log('this is data', data);
-          console.log('this is res', res);
-          // var updatedPerson = this.people.filter((p) => p._id != person._id);
-          // this.people =
+          console.log('person editted');
         }, function(error) {
           console.log(error);
         })
@@ -72,6 +69,7 @@ angular.module('TwoResourceApp', [])
         })
     };
     this.updateAnimal = function(animal, data) {
+      this.edit = false;
       $http.put(route + '/' + animal._id, data)
         .then((res) => {
           console.log('person edited');
