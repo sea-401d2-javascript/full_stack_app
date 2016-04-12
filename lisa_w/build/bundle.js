@@ -50,54 +50,54 @@
 	const app = angular.module('ArcadeApp', []);
 
 	app.controller('ArcadeController', ['$scope','$http', function($scope, $http){
+	  console.log('marker 1');
 	  const arcadeRoute = 'http://localhost:5000/arcades';
 	  $scope.dance = 'Add New Arcade';
 	  this.arcades = ['arcade'];
-	  this.isHidden = true;
 	  this.newArcade = {};
-	  this.cancelEdit = {};
-	  this.updateArcade = {};
-	  this.showItem = function (){
-	    this.isHidden = this.isHidden ? false:true;
-	  };
+
 	  this.getArcades = function(){
 	    $http.get(arcadeRoute)
-	    .then(function(result){
+	    .then((result)=>{
 	      this.arcades = result.data.arcades;
-	      // this.cancelEdit = angular.copy(this.arcades);
 	    }, function(error){
 	      console.log(error);
 	    });
 	  };
 	  this.createArcade = function(arcade){
 	    $http.post(arcadeRoute, arcade)
-	      .then(function(res){
+	      .then((res)=>{
 	        console.log(res.data);
 	        this.arcades.push(res.data);
 	      });
 	  };
 	  this.removeArcade = function(arcade) {
 	    $http.delete(arcadeRoute + '/' + arcade._id)
-	    .then(function(res){
-	      console.log('removing');
-	      console.log(res.data);
+	    .then((res)=>{
 	      this.arcades = this.arcades.filter((a)=> a._id !=arcade._id);
 	    });
 	  };
 	  this.updateArcade = function(arcade){
 	    if(arcade._id){
 	      $http.put(arcadeRoute + '/' + arcade._id, arcade)
-	      .then(function(res){
+	      .then((res)=>{
 	        console.log('updating');
-	        this.arcades = this.arcades.map(res);
-
+	        this.arcades = this.arcades.map((res)=>{
+	          if(res._id === arcade._id) {
+	            return arcade;
+	          } else {
+	            return res;
+	          }
+	        });
 	      });
 	    }
 	  };
-	  this.cancelUpdate = function(arcade){
-	    console.log(this.cancelEdit);
-	    this.arcades = null;
-	    this.arcades = this.arcades.map(arcade);
+	  this.cancelUpdate = function(arcEdit, arcade){
+	    console.log(arcEdit);
+	    arcEdit._id = arcade._id;
+	    arcEdit.name = arcade.name;
+	    arcEdit.address = arcade.address;
+	    arcEdit.hours = arcade.hours;
 	  };
 	}]);
 

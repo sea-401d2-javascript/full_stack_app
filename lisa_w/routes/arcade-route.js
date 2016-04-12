@@ -17,7 +17,6 @@ module.exports = (router, models)=>{
      var newArcade = new Arcade(req.body);
      newArcade.save((err, arcade)=>{
        if (err) return res.send(err);
-       console.log(arcade);
        res.json(arcade);
        res.end();
      });
@@ -27,8 +26,8 @@ module.exports = (router, models)=>{
    .get((req, res)=>{
      console.log(('GET /arcade/:id was hit'));
      Arcade.findById(req.params.id, (err, arcade)=>{
-       if (err) res.send(err);
-
+       if (err) return res.send(err);
+       res.json(arcade);
      });
    })
    .put((req, res)=>{
