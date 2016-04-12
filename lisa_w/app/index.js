@@ -18,7 +18,6 @@ app.controller('ArcadeController', ['$scope','$http', function($scope, $http){
     $http.get(arcadeRoute)
     .then(function(result){
       this.arcades = result.data.arcades;
-      this.cancelEdit = angular.copy(this.arcades);
     }, function(error){
       console.log(error);
     });
@@ -50,6 +49,7 @@ app.controller('ArcadeController', ['$scope','$http', function($scope, $http){
   };
   this.cancelUpdate = function(arcade){
     console.log(this.cancelEdit);
-    this.cancelEdit = arcade;
+    this.arcades = null;
+    this.arcades = this.arcades.map(arcade);
   };
 }]);

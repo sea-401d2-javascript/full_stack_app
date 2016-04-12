@@ -64,7 +64,7 @@
 	    $http.get(arcadeRoute)
 	    .then(function(result){
 	      this.arcades = result.data.arcades;
-	      this.cancelEdit = angular.copy(this.arcades);
+	      // this.cancelEdit = angular.copy(this.arcades);
 	    }, function(error){
 	      console.log(error);
 	    });
@@ -96,7 +96,8 @@
 	  };
 	  this.cancelUpdate = function(arcade){
 	    console.log(this.cancelEdit);
-	    this.cancelEdit = arcade;
+	    this.arcades = null;
+	    this.arcades = this.arcades.map(arcade);
 	  };
 	}]);
 
