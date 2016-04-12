@@ -1,7 +1,7 @@
 'use strict';
 let angular = require('angular');
 
-// require('../build/.css')
+require(__dirname + '/../build/beaut.css')
 
 let app = angular.module('app', []);
 app.controller('BeersController', ['$http', function($http) {
@@ -34,9 +34,6 @@ app.controller('BeersController', ['$http', function($http) {
         console.log(err);
     });
     this.updateBeer.displayed = null;
-    //     this.beers.push(res.data)
-    //     this.newBeer = {};
-    //   })
   };
 
     this.resetBeer = function(beer) {
@@ -70,7 +67,6 @@ app.controller('UsersController', ['$http', function($http) {
     };
 
     this.createUser = function(user) {
-      // user.favBeers = user.favBeers.split(', ')
       console.log('user ', user)
       $http.post(userRoute, user)
       .then((res) => {

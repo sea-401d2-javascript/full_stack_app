@@ -3,8 +3,7 @@ let express = require('express');
 let bodyParser = require('body-parser');
 let app = module.exports = express();
 let mongoose = require('mongoose');
-// let Beers = require('./models/beer_model')
-// let User = require('./models/user_model')
+
 
 let DB_PORT = process.env.MONGOLAB_URI || 'mongodb://localhost/db';
 mongoose.connect(DB_PORT);
@@ -12,7 +11,6 @@ mongoose.connect(DB_PORT);
 app.use(bodyParser.json());
 
 let beerRouter = require(__dirname + '/routes/beer_routes');
-// let drinksRouter = require(__dirname + '/routes/drink_routes');
 let publicRouter = require(__dirname + '/routes/user_routes');
 
 app.use((req, res, next) => {
@@ -24,7 +22,6 @@ app.use((req, res, next) => {
 
 
 app.use('/', beerRouter);
-// app.use('/', drinksRouter);
 app.use('/', publicRouter);
 
 app.listen(3000, () => {

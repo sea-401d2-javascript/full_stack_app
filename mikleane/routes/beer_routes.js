@@ -1,7 +1,6 @@
 'use strict';
 
 let express = require('express');
-// let tokenAuth = require(__dirname + '/../lib/tokenauth');
 let Beers = require(__dirname + '/../models/beer_model');
 
 let beerRouter = module.exports = exports = express.Router();
