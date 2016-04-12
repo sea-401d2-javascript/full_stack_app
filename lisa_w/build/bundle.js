@@ -77,23 +77,22 @@
 	      this.arcades = this.arcades.filter((a)=> a._id !=arcade._id);
 	    });
 	  };
-	  this.updateArcade = function(arcade){
+	  this.updateArcade = function(arcEdit){
 	    if(arcade._id){
-	      $http.put(arcadeRoute + '/' + arcade._id, arcade)
+	      $http.put(arcadeRoute + '/' + arcade._id, arcEdit)
 	      .then((res)=>{
 	        console.log('updating');
-	        this.arcades = this.arcades.map((res)=>{
-	          if(res._id === arcade._id) {
-	            return arcade;
+	        this.arcades = this.arcades.map((a)=>{
+	          if(a._id === arcade._id) {
+	            return arcEdit;
 	          } else {
-	            return res;
+	            return a;
 	          }
 	        });
 	      });
 	    }
 	  };
 	  this.cancelUpdate = function(arcEdit, arcade){
-	    console.log(arcEdit);
 	    arcEdit._id = arcade._id;
 	    arcEdit.name = arcade.name;
 	    arcEdit.address = arcade.address;
