@@ -1,7 +1,6 @@
 module.exports = (app) => {
-  app.controller('MovieController', ['$scope', '$http', function($scope, $http) {
+  app.controller('MovieController', ['$http', function($http) {
     const movieRoute = 'http://localhost:3000/movies';
-    $scope.fnord = 'FNORD FNORD FNORD';
     this.movies = ['movie'];
     this.getMovies = function() {
       $http.get(movieRoute)
@@ -16,7 +15,6 @@ module.exports = (app) => {
   this.createMovie = function(movie) {
     $http.post(movieRoute, movie)
     .then((res) => {
-      console.log(res.data);
       this.movies.push(res.data)
       // this.newMovie = {};
     })
@@ -25,7 +23,6 @@ module.exports = (app) => {
     if(movie._id) {
       $http.delete(movieRoute + '/' + movie._id)
       .then((res) => {
-        console.log('hello!');
         this.movies = this.movies.filter((mov) => mov._id != movie._id);
       })
     } else {
@@ -40,7 +37,6 @@ module.exports = (app) => {
   }
   this.showEditFlip = function(movie) {
     var oldMovie;
-    console.log('showEdit1', movie.showEdit);
     if(movie.showEdit === undefined) {
       oldMovie = this.saveOldMovie(movie, oldMovie);
       movie.showEdit = true;
@@ -49,9 +45,6 @@ module.exports = (app) => {
     } else {
       movie.showEdit = false;
     }
-    console.log('showEdit2', movie.showEdit);
-    console.log('oldMovie: ', oldMovie);
-    console.log('movie: ', movie);
   }
   this.putMovie = function(movEdit) {
     if(movEdit._id) {
@@ -64,21 +57,13 @@ module.exports = (app) => {
             return mov;
           }
         })
-        console.log('res.data: ', res.data);
-        console.log('movEdit: ', movEdit);
-        console.log('this.movies: ', this.movies);
       })
-    } else {
-      console.log('no id!');
-      console.log('movEdit: ', movEdit);
     }
   }
   this.cancelEdit = function(movEdit, movie) {
     movEdit._id = movie._id;
     movEdit.name = movie.name;
     movEdit.release_date = movie.release_date;
-    console.log('cE movEdit: ', movEdit);
-    console.log('cE movie: ', movie);
   }
 }])
 

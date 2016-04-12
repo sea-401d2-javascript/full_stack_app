@@ -1,7 +1,6 @@
 module.exports = (app) => {
-  app.controller('DirectorController', ['$scope', '$http', function($scope, $http) {
+  app.controller('DirectorController', ['$http', function($http) {
     const directorRoute = 'http://localhost:3000/directors';
-    $scope.fnord = 'FNORD FNORD FNORD';
     this.directors = ['director'];
     this.getDirectors = function() {
       $http.get(directorRoute)

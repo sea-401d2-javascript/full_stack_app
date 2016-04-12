@@ -3,10 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+  <style>
+    .data-ng-cloak, .ng-cloak {
+      display: none !important;
+    }
+  </style>
 </head>
-<body data-ng-app="MovieApp">
+<body class="ng-cloak" data-ng-app="MovieApp">
   <main>
   <section data-ng-init="moviectrl.getMovies()" data-ng-controller="MovieController as moviectrl">
+    <h1>Movies</h1>
     <ul>
       <li data-ng-repeat="movie in moviectrl.movies" data-ng-init="movEdit._id=movie._id">
         <p>Movie Title: {{movie.name}}</p>
@@ -26,13 +32,14 @@
       </li>
     </ul>
     <form data-ng-submit="moviectrl.createMovie(newMovie)">
-      <input type="text" data-ng-model="newMovie.name">
+      <input type="text" data-ng-model="newMovie.name" required>
       <input type="date" data-ng-model="newMovie.release_date">
       <button type="submit">New Movie</button>
     </form>
   </section>
 
   <section data-ng-init="dirctrl.getDirectors()" data-ng-controller="DirectorController as dirctrl">
+    <h1>Directors</h1>
     <ul>
       <li data-ng-repeat="director in dirctrl.directors" data-ng-init="dirEdit._id=director._id">
         <p>Director Name: {{director.name}}</p>
@@ -52,7 +59,7 @@
       </li>
     </ul>
     <form data-ng-submit="dirctrl.createDirector(newDirector)">
-      <input type="text" data-ng-model="newDirector.name">
+      <input type="text" data-ng-model="newDirector.name" required>
       <input type="date" data-ng-model="newDirector.date_of_birth">
       <button type="submit">New Director</button>
     </form>

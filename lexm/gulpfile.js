@@ -67,7 +67,7 @@ gulp.task('webpack', function() {
     .pipe(gulp.dest('./public/'))
 })
 
-var wpPath = ['*.js', 'app/*.js'];
+var wpPath = ['*.js', 'app/*.js', 'styles/*.css'];
 
 gulp.task('wp-watch',function() {
   gulp.watch(wpPath, ['webpack']);
