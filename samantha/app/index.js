@@ -23,10 +23,7 @@ app.controller('ChefController', ['$http', function($http) {
   };
 
   this.updateChef = function(chef) {
-    $http.put(mainRoute + '/' + chef._id)
-    .then((res) => {
-      this.chefs.push(res.data);
-    })
+    $http.put(mainRoute + '/' + chef._id, chef)
     .catch((err) => {
       console.log(err);
     });
@@ -74,9 +71,6 @@ app.controller('RecipeController', ['$http', function($http) {
 
   this.updateRecipe = function(recipe) {
     $http.put(mainRecipesRoute + '/' + recipe._id, recipe)
-    .then((res) => {
-      this.recipes.push(res.data);
-    })
     .catch((err) => {
       console.log(err);
     });

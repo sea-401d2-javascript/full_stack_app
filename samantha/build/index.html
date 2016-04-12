@@ -15,13 +15,13 @@
         <li class="ng-cloak" ng-cloak data-ng-repeat="chef in chefctrl.chefs">{{chef.name}}
           <button type="submit" data-ng-click="chefctrl.removeChef(chef)">Delete Chef</button>
           <button type="submit" data-ng-click="chefctrl.updateChef.displayed = chef._id">Update Chef</button>
-          <form data-ng-show="chefctrl.updateChef.displayed == chef._id" data-ng-submit="chefctrl.updateChef(chef); chefctrl.updateChef.displayed = null">
+          <form data-ng-show="chefctrl.updateChef.displayed == chef._id" data-ng-submit="chefctrl.updateChef(chef)">
             <input type="text" placeholder="name" data-ng-model="chef.name"/>
             <input type="text" placeholder="password" data-ng-model="chef.password"/>
             <input type="text" placeholder="fun fact" data-ng-model="chef.funFact"/>
             <input type="text" placeholder="recipes" data-ng-model="chef.recipes"/>
             <button type="submit">Save Changes</button>
-            <button type="reset" data-ng-click="chefctrl.reserChef(chef); chefctrl.updateChef.displayed=null">Cancel</button>
+            <button type="reset" data-ng-click="chefctrl.resetChef(chef); chefctrl.updateChef.displayed=null">Cancel</button>
           </form>
         </li>
       </ul>
@@ -41,7 +41,7 @@
         <li class="ng-cloak" ng-cloak data-ng-repeat="recipe in recipectrl.recipes">{{recipe.name}}  id:{{recipe._id}}
           <button type="submit" data-ng-click="recipectrl.remoceRecipe(recipe)">Delete Recipe</button>
           <button type="submit" data-ng-click="recipectrl.updateRecipe.displayed = recipe._id">Edit Recipe</button>
-          <form data-ng-show="recipectrl.updateRecipe.displayed == recipe._id" data-ng-submit="recipectrl.updateRecipe(recipe); recipectrl.updateRecipe.display = null">
+          <form data-ng-show="recipectrl.updateRecipe.displayed == recipe._id" data-ng-submit="recipectrl.updateRecipe(recipe)">
             <input type="text" placeholder="name" data-ng-model="recipe.name"/>
             <input type="text" placeholder="cook time (in min)" data-ng-model="recipe.cookTime"/>
             <input type="text" placeholder="ingredients" data-ng-model="recipe.ingredients"/>
