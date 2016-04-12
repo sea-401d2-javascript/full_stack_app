@@ -19,26 +19,26 @@
           <button data-ng-click="ghostctrl.toggle(ghost.name)">Edit</button></p>
 
           <form name="editForm" ng-show="ghostctrl.editShow == ghost.name">
-            Name: <input type="text" data-ng-model="changedGhost.ghost.name" value=""/>
-            <p>Primary Power: <input type="text" data-ng-model="changedGhost.powers.primary" value=""/></p>
-            <p>Secondary Power: <input type="text" data-ng-model="changedGhost.powers.secondary" value=""/></p>
-            <p>Weakness: <input type="text" data-ng-model="changedGhost.powers.weakness" value=""/></p>
+            Name: <input type="text" data-ng-model="ghostctrl.changedGhost.ghost.name" value=""/>
+            <p>Primary Power: <input type="text" data-ng-model="ghostctrl.changedGhost.powers.primary" value=""/></p>
+            <p>Secondary Power: <input type="text" data-ng-model="ghostctrl.changedGhost.powers.secondary" value=""/></p>
+            <p>Weakness: <input type="text" data-ng-model="ghostctrl.changedGhost.powers.weakness" value=""/></p>
 
-            <button data-ng-click="ghostctrl.confirmChange(changedGhost, 'edit', ghost)">Submit</button>
-            <p data-ng-show="editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted</p>
+            <button data-ng-click="ghostctrl.confirmChange(ghostctrl.changedGhost, 'edit', ghost)">Submit</button>
+            <p data-ng-show="ghostctrl.editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted</p>
 
-            <button form="editForm" data-ng-click="ghostctrl.reset(); changedGhost={}" data-ng-show="editConfirmation">Cancel Edit</button>
+            <button form="editForm" data-ng-click="ghostctrl.reset(ghost)" data-ng-show="ghostctrl.editConfirmation">Cancel Edit</button>
             <button data-ng-click="ghostctrl.confirmChange(ghost,'delete')">Delete Ghost</button>
           </form>
 
         </li>
       </ul>
 
-      <form name="newForm" data-ng-submit="ghostctrl.createGhost(newGhost)" ng-show="ghostctrl.editShow == 'new'">
-        Name: <input type="text" data-ng-model="newGhost.name" value=""/>
-        <p>Primary Power: <input type="text" data-ng-model="newGhost.powers.primary" value=""/></p>
-        <p>Secondary Power: <input type="text" data-ng-model="newGhost.powers.secondary" value=""/></p>
-        <p>Weakness: <input type="text" data-ng-model="newGhost.powers.weakness" value=""/></p>
+      <form name="newForm" data-ng-submit="ghostctrl.createGhost(ghostctrl.newGhost)" ng-show="ghostctrl.editShow == 'new'">
+        Name: <input type="text" data-ng-model="ghostctrl.newGhost.name" value=""/>
+        <p>Primary Power: <input type="text" data-ng-model="ghostctrl.newGhost.powers.primary" value=""/></p>
+        <p>Secondary Power: <input type="text" data-ng-model="ghostctrl.newGhost.powers.secondary" value=""/></p>
+        <p>Weakness: <input type="text" data-ng-model="ghostctrl.newGhost.powers.weakness" value=""/></p>
         <button type="submit">Submit</button>
       </form>
 

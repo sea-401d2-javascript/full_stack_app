@@ -1,18 +1,24 @@
 'use strict';
+(function(){
+
 require('angular');
 
 angular.module('app',[])
-  .controller('GhostController',['$scope','$http', function($scope, $http) {
+  .controller('GhostController',['$http', function($http) {
     const mainRoute = 'http://localhost:3000/api/ghosts';
     this.ghosts = ['ghost'];
     this.editShow = 'new';
+    this.editConfirmation;
+    this.newGhost = {};
+    this.changedGhost = {};
+    
     this.toggle = function(name){
       if (this.editShow !== 'new') return this.editShow = 'new';
       this.editShow = name;
     };
 
     this.confirmChange = function(ghost, buttonName, curGhost){
-      if (!$scope.editConfirmation) return $scope.editConfirmation = true;
+      if (!this.editConfirmation) return this.editConfirmation = true;
 
       if(buttonName === 'delete') return this.removeGhost(ghost);
       if(buttonName === 'edit') return this.editGhost(ghost, curGhost);
@@ -33,8 +39,7 @@ angular.module('app',[])
       $http.post('http://localhost:3000/pub/new-ghost', ghost)
       .then(() => {
         this.ghosts.push(ghost);
-        $scope.newGhost = {};
-        $scope.newForm.$setPristine();
+        this.newGhost = {};
       });
     };
 
@@ -55,7 +60,8 @@ angular.module('app',[])
               // doesnt work?
     this.reset = function(){
       this.editShow = 'new';
-      return $scope.editConfirmation = false;
+      this.editconfirmation = !this.editconfirmation;
+      this.changedGhost = {};
     };
   }])
   .controller('TabController', function(){
@@ -117,3 +123,4 @@ angular.module('app',[])
       return $scope.editConfirmation = false;
     };
   }]);
+})()
