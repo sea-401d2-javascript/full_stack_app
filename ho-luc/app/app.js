@@ -5,6 +5,7 @@ angular.module('TwoResourceApp', [])
   .controller('PeopleController', ['$http', function($http) {
     const route = 'http://localhost:3000/api/people';
     this.people = [];
+    this.edit = null;
     this.getPeople = function() {
       $http.get(route)
         .then((result) => {
@@ -28,7 +29,8 @@ angular.module('TwoResourceApp', [])
           this.people = this.people.filter((p) => p._id != person._id);
         })
     };
-    this.updatePerson = function(person, data) {
+    this.updatePerson = function(person) {
+      this.edit = false;
       $http.put(route + '/' + person._id, data)
         .then((res) => {
           console.log('this is data', data);
@@ -45,6 +47,7 @@ angular.module('TwoResourceApp', [])
 .controller('AnimalController', ['$http', function($http) {
     const route = 'http://localhost:3000/api/animals';
     this.animals = [];
+    this.edit = null;
     this.getAnimal = function() {
       $http.get(route)
         .then((result) => {
@@ -68,12 +71,10 @@ angular.module('TwoResourceApp', [])
           this.animals = this.animals.filter((p) => p._id != animal._id);
         })
     };
-    this.updatePerson = function(animal, data) {
+    this.updateAnimal = function(animal, data) {
       $http.put(route + '/' + animal._id, data)
         .then((res) => {
-          console.log(res);
-          // var updatedPerson = this.people.filter((p) => p._id != animal._id);
-          // this.people =
+          console.log('person edited');
         }, function(error) {
           console.log(error);
         })

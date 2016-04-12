@@ -51,6 +51,7 @@
 	  .controller('PeopleController', ['$http', function($http) {
 	    const route = 'http://localhost:3000/api/people';
 	    this.people = [];
+	    this.edit = null;
 	    this.getPeople = function() {
 	      $http.get(route)
 	        .then((result) => {
@@ -74,7 +75,8 @@
 	          this.people = this.people.filter((p) => p._id != person._id);
 	        })
 	    };
-	    this.updatePerson = function(person, data) {
+	    this.updatePerson = function(person) {
+	      this.edit = false;
 	      $http.put(route + '/' + person._id, data)
 	        .then((res) => {
 	          console.log('this is data', data);
