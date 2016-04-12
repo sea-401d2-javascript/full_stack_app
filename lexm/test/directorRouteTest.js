@@ -22,9 +22,9 @@ describe('testing Director API', function() {
     request('localhost:3000')
     .post('/admin')
     .send(userParams)
-    .end(function(err, res) {
+    .end(function(err) {
       if(err) {
-        console.error(err);;
+        console.error(err);
       } else {
         request('localhost:3000')
         .post('/login')
@@ -35,14 +35,14 @@ describe('testing Director API', function() {
           } else if (!res.body.token){
             console.log('no token');
           } else {
-            token = req.body.token;
+            token = res.body.token;
             console.log('token is' + token);
           }
-      })
-      };
-    })
+        });
+      }
+    });
     done();
-  })
+  });
   // var token = res.body.token;
 
   after(function(done) {

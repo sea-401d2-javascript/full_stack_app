@@ -57,11 +57,11 @@ describe('testing login', function() {
           console.log(res.text);
 
           done();
-        })
+        });
 
       }
     });
-  })
+  });
   it('should be able to login with new user/password', function(done) {
     request('localhost:3000')
     .post('/login')
