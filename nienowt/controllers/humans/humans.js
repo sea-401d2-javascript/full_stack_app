@@ -45,6 +45,7 @@
       $http.delete(mainRoute + '/' + human._id)
       .then(() => {
         this.humans = this.humans.filter((g) => g._id != human._id);
+        this.editShow = 'new';
       });
     };
     this.reset = function(){
