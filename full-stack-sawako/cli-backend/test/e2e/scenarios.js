@@ -1,6 +1,6 @@
 // const controllers = require(__dirname + '/app/index.js');
 
-describe('e2e testing on my homepage', function(){
+describe('e2e testing on my homepage -continents', function(){
   var countryForm;
   var regionForm;
   var mineralForm;
@@ -46,11 +46,40 @@ describe('e2e testing on my homepage', function(){
 
   it('should submit the data being input by clicking the button', function(){
     var form = element(by.tagName('form'));
-    debugger;
     buttonClicker.click();
     expect(browser.getCurrentUrl()).toBe('http://127.0.0.1:8080/');
     // expect(countryForm.getAttribute('value')).toEqual('null');
     // expect(regionForm.getAttribute('value')).toEqual('null');
     // expect(mineralForm.getAttribute('value')).toEqual('null');
   });
+});
+
+describe('e2e testing on my homepage -continents', function(){
+  var nameForm;
+  var colorForm;
+  var densityForm;
+  var buttonClicker;
+  var pName;
+  var pColor;
+  var pDensity;
+  beforeEach(function(){
+    browser.get('http://127.0.0.1:8080/');
+    nameForm = element(by.model('gems.newGem.name'));
+    colorForm = element(by.model('gems.newGem.color'));
+    densityForm = element(by.model('gems.newGem.density'));
+    buttonClicker = element(by.buttonText('Create New Gem!'));
+
+    pName = element(by.binding('gems.newGem.name'));
+    pColor = element(by.binding('gems.newGem.color'));
+    pDensity = element(by.binding('gems.newGem.density'));
+
+    nameForm.clear();
+    nameForm.sendKeys('Ruby');
+    colorForm.clear();
+    nameForm.sendKeys('red');
+    densityForm.clear();
+    nameForm.sendKeys(5);
+  });
+
+  it('should take text and number')
 });
