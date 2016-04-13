@@ -34,7 +34,7 @@ module.exports = (router, models)=>{
      console.log('PUT /arcade/:id was hit');
      Arcade.findByIdAndUpdate(req.params.id, req.body,(err, arcade)=>{
        if (err) res.send(err);
-       res.json({msg: 'updated'});
+       res.json(arcade);
      });
    })
     .delete((req, res)=> {

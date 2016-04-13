@@ -5,8 +5,13 @@
   <title>App</title>
 </head>
 <body data-ng-app="ArcadeApp">
+ <section class="arcadeSection">
+
+
+  </div>
   <h1>Arcades</h1>
   <main data-ng-init="arcadectrl.getArcades()" data-ng-controller="ArcadeController as arcadectrl">
+<div>
 
   <h2>{{dance}}</h2>
   <form data-ng-submit="arcadectrl.createArcade(newArcade)">
@@ -15,27 +20,54 @@
     Hours<input type="text" data-ng-model="newArcade.hours">
     <button type="submit">Add New Arcade</button>
   </form>
+</div>
 ----------------------------------------------------------------------------
+
     <div data-ng-repeat="arcade in arcadectrl.arcades">
-      <h2><em> Name:</em> {{arcade.name}} </h2>
+      <!-- <div data-ng-hide="editorOn"> -->
+      <h2><em> Name:</em> {{arcade.name}}</h2>
       <h2><em>Address:</em>  {{arcade.address}}</h2>
       <h2><em>Hours:</em> {{arcade.hours}}</h2>
-    <button data-ng-click="arcadectrl.removeArcade(arcade)">Delete</button>
+
+      <!-- <a href="#" data-ng-click="showEdit(arcade)">Edit Arcade</a> -->
+    <!-- <div data-ng-show="editorOn">
+    Name <input data-ng-model="arcade.name" data-ng-show="editorOn"><a href="#" data-ng-click="saveEdit()">Save</a>
+    or
+    <a href="#" data-ng-click="hideEdit()">Cancel</a>
+    Address <input data-ng-model="arcade.address"data-ng-show="editorOn" >
+    <a href="#" data-ng-click="saveEdit()">Save</a>
+    or
+    <a href="#" data-ng-click="hideEdit()">Cancel</a> -->
 
 
-    <form data-ng-submit="arcadectrl.updateArcade(arcEdit)">
-      Name<input type="text" data-ng-model="arcEdit.name">
-      Address<input type="text" data-ng-model="arcEdit.address">
-      Hours<input type="text" data-ng-model="arcEdit.hours">
-      <button type="submit">Edit Arcade</button>
-      <button type="submit" data-ng-click="arcadectrl.cancelUpdate(arcEdit, arcade)">Cancel Edit</button>
+  <button data-ng-click="arcadectrl.removeArcade(arcade)">Delete</button>
 
-    </form>
+
+
+    <!-- <button data-ng-click="arcadectrl.showEdit(arcade)">Edit</button> -->
+
+
+  <form data-ng-submit="arcadectrl.showEdit(arcade)" >
+    Name<input type="text" data-ng-model="arcade.name" >
+    Address<input type="text" data-ng-model="arcade.address">
+    Hours<input type="text" data-ng-model="arcade.hours">
+    <button type="submit" data-ng-click="arcadectrl.saveEdit()">Save</button>
+    <button type="submit" data-ng-click="arcadectrl.hideEdit(arcade)">Cancel</button>
+
+  </form>
+
+
+  <!-- </div> -->
+
+
 
   </div>
+
+
     _________________________________________________________________________
 
 
+  <!-- </section> -->
 
 
   </main>
