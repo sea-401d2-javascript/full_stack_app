@@ -73,16 +73,11 @@
 	    this.updateBeer = function(beer) {
 	      $http.put(mainRoute + '/' + beer._id, beer)
 	      .then((res) => {
-	        console.log(res.data)
-	        this.beers.push(res.data)
 	      })
 	      .catch((err) => {
 	        console.log(err);
 	    });
 	    this.updateBeer.displayed = null;
-	    //     this.beers.push(res.data)
-	    //     this.newBeer = {};
-	    //   })
 	  };
 
 	    this.resetBeer = function(beer) {
@@ -116,7 +111,6 @@
 	    };
 
 	    this.createUser = function(user) {
-	      // user.favBeers = user.favBeers.split(', ')
 	      console.log('user ', user)
 	      $http.post(userRoute, user)
 	      .then((res) => {
@@ -128,8 +122,6 @@
 	    this.updateUser = function(user) {
 	      $http.put(userRoute + '/' + user._id, user)
 	      .then((res) => {
-	        console.log(res.data)
-	        this.users.push(res.data)
 	      })
 	      .catch((err) => {
 	        console.log(err);
@@ -30919,7 +30911,7 @@
 
 
 	// module
-	exports.push([module.id, "#userarray, #beerarray {\n  background-color: #6BA099;\n  max-width: 900px;\n}\n#userlist, #beerlist {\n  background-color: #9FC6C1;\n  max-width: 860px;\n}\n\n.form {\n  /*font-size: 20px;*/\n  background-color: #D1E6E3;\n  max-width: 900px;\n}\n\ninput {\n  font-size: 13px;\n}\n\nfooter {\n  height: 30px;\n}\n", ""]);
+	exports.push([module.id, "#userarray, #beerarray {\n  background-color: #6BA099;\n  max-width: 900px;\n}\n#userlist, #beerlist {\n  background-color: #9FC6C1;\n  max-width: 860px;\n}\n\n.form {\n  background-color: #D1E6E3;\n  max-width: 900px;\n}\n\ninput {\n  font-size: 13px;\n}\n\nfooter {\n  height: 30px;\n}\n", ""]);
 
 	// exports
 

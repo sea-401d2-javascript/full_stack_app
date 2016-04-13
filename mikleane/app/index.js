@@ -27,8 +27,6 @@ app.controller('BeersController', ['$http', function($http) {
     this.updateBeer = function(beer) {
       $http.put(mainRoute + '/' + beer._id, beer)
       .then((res) => {
-        console.log(res.data)
-        this.beers.push(res.data)
       })
       .catch((err) => {
         console.log(err);
@@ -78,8 +76,6 @@ app.controller('UsersController', ['$http', function($http) {
     this.updateUser = function(user) {
       $http.put(userRoute + '/' + user._id, user)
       .then((res) => {
-        console.log(res.data)
-        this.users.push(res.data)
       })
       .catch((err) => {
         console.log(err);
