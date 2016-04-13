@@ -2,7 +2,7 @@
 
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
-const mocha = require('gulp-mocha');
+// const mocha = require('gulp-mocha');
 const exec = require('child_process').exec;
 const webpack = require('webpack-stream');
 
@@ -24,13 +24,13 @@ gulp.task('lint', () => {
     .pipe(eslint.format());
 });
 
-gulp.task('test', () => {
-  return gulp.src(paths)
-  .pipe(mocha());
-});
+// gulp.task('test', () => {
+//   return gulp.src(paths)
+//   .pipe(mocha());
+// });
 
 gulp.task('watch', () => {
-  gulp.watch(['server.js', 'test/**'], ['test', 'lint']);
+  gulp.watch([paths], ['lint']);
 });
 
 gulp.task('mongo-start', () => {
@@ -60,5 +60,5 @@ gulp.task('webpack', () => {
     .pipe(gulp.dest('./dist/'));
 });
           
-gulp.task('default', ['webpack', 'lint', 'test']);
+gulp.task('default', ['webpack', 'lint']);
 

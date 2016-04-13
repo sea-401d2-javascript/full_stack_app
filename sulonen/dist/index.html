@@ -10,29 +10,97 @@
     </style>
   </head>
   <body data-ng-cloak class="ng-cloak">
-    <section id="game" data-ng-controller='BarController as bar'>
-      <h1>{{bar.header}}</h1>
-      <form data-ng-submit="bar.createBar(newBar)" ng-init="edit = !edit" ng-show="edit">
-        <p>
-          <label for="barName">Bar Name</label>
-          <input id="barName" class="input" data-ng-model="newBar.name">
-        </p>
-        <p>
-          <label for="barNeighborhood">Bar Neighborhood</label>
-          <input id="barNeighborhood" class="input" data-ng-model="newBar.neighborhood">
+    <main>
+      <section id="bars" data-ng-controller="BarController as barctrl"
+        data-ng-init="barctrl.getBars()">
+        <h1>{{barctrl.header}}
+            <input class="button" type="button" value="Create Bar" data-ng-click="newBar = !newBar">
+        </h1>
+        <form name="newBarForm" data-ng-init="!newBar" data-ng-show="newBar" action="">
+          <p>
+            <label for="barName">Bar Name</label>
+            <input id="barName" class="input" data-ng-model="newBar.name">
           </p>
-        <p>
-          <label for"barHours">Bar Hours</label>
-          <input id="barHours" class="input" data-ng-model="newBar.hours">
+          <p>
+            <label for="barNeighborhood">Bar Neighborhood</label>
+            <input id="barNeighborhood" class="input" data-ng-model="newBar.neighborhood">
+            </p>
+          <p>
+            <label for="barHours">Bar Hours</label>
+            <input id="barHours" class="input" data-ng-model="newBar.hours">
           </p>
-        <p> 
-          <input class="button" type="submit" value="Create Bar">
-          <input class="button" type="button" value="Cancel" ng-click="edit = !edit">
-        </p>
-      </form>
-    </section>  
+          <p>
+            <input class="button" type="button" value="Cancel" data-ng-click="barctrl.resetForm(bar)">
+            <input class="button" type="button" value="Save" data-ng-click="barctrl.createBar(bar);edit = !edit">
+            <input class="button" type="button" value="Delete" data-ng-click="barctrl.deleteBar(bar);edit = !edit">
+          </p>
+        </form>
+        <ul>
+          <li data-ng-repeat="bar in barctrl.bars">{{bar.name}}
+            <input class="button" type="button" value="Edit" data-ng-click="edit = !edit">
+            <form name="barForm" data-ng-init="!edit" data-ng-show="edit" action="">
+              <p>
+                <label for="barName">Bar Name</label>
+                <input id="barName" class="input" data-ng-model="bar.name">
+              </p>
+              <p>
+                <label for="barNeighborhood">Bar Neighborhood</label>
+                <input id="barNeighborhood" class="input" data-ng-model="bar.neighborhood">
+                </p>
+              <p>
+                <label for="barHours">Bar Hours</label>
+                <input id="barHours" class="input" data-ng-model="bar.hours">
+              </p>
+              <p>
+                <input class="button" type="button" value="Cancel" data-ng-click="barctrl.resetForm(bar)">
+                <input class="button" type="button" value="Save" data-ng-click="barctrl.updateBar(bar);edit = !edit">
+                <input class="button" type="button" value="Delete" data-ng-click="barctrl.deleteBar(bar);edit = !edit">
+              </p>
+            </form>
+          </li>
+        </ul>
+      </section>
+      <section id="bands" data-ng-controller="BandController as bandctrl"
+        data-ng-init="bandctrl.getBands()">
+        <h1>{{bandctrl.header}}
+            <input class="button" type="button" value="Create Band" data-ng-click="bandctrl.createBand(band)">
+        </h1>
+        <ul>
+          <li data-ng-repeat="band in bandctrl.bands">{{band.name}}
+            <input class="button" type="button" value="Edit" data-ng-click="edit = !edit">
+            <form name="bandForm" data-ng-init="!edit" data-ng-show="edit" action="">
+              <p>
+                <label for="bandName">Band Name</label>
+                <input id="bandName" class="input" data-ng-model="band.name">
+              </p>
+              <p>
+                <label for="bandCity">Band City</label>
+                <input id="bandCity" class="input" data-ng-model="band.city">
+                </p>
+              <p>
+                <label for="bandCountry">Band Country</label>
+                <input id="bandCountry" class="input" data-ng-model="band.country">
+              </p>
+              <p>
+                <label for="bandGenre">Band Genre</label>
+                <input id="bandGenre" class="input" data-ng-model="band.genre">
+              </p>
+              <p>
+                <label for="bandBar">Band Bar</label>
+                <input id="bandBar" class="input" data-ng-model="band.bar">
+              </p>
+              <p>
+                <input class="button" type="button" value="Cancel" data-ng-click="bandctrl.resetForm(band)">
+                <input class="button" type="button" value="Save" data-ng-click="bandctrl.updateBand(band);edit = !edit">
+                <input class="button" type="button" value="Delete" data-ng-click="bandctrl.deleteBand(band);edit = !edit">
+              </p>
+            </form>
+          </li>
+        </ul>
+      </section>
+
+    </main>
     <script src="./bundle.js"></script>
   </body>
 </html>
-
 
