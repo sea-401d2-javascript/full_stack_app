@@ -13,10 +13,14 @@
       </nav>
     </header>
     <section data-ng-init="ghostctrl.getGhosts()" data-ng-controller='GhostController as ghostctrl' data-ng-show="tabctrl.active('ghosts')">
-      <ul id="ghostList">
-        <li data-ng-repeat="ghost in ghostctrl.ghosts">
-          <p>{{ghost.name}}
-          <button data-ng-click="ghostctrl.toggle(ghost.name)">Edit</button></p>
+      <!-- <ul id="ghostList"> -->
+        <section data-ng-repeat="ghost in ghostctrl.ghosts">
+          <p>Name: {{ghost.name}}</p>
+          <p>Powers:</p>
+          <p>Primary: {{ghost.powers[0].primary}}</p>
+          <p>Secondary: {{ghost.powers[0].secondary}}</p>
+          <p>Weakness: {{ghost.powers[0].weakness}}</p>
+          <button data-ng-click="ghostctrl.toggle(ghost.name)">Edit</button>
 
           <form name="editForm" ng-show="ghostctrl.editShow == ghost.name">
             Name: <input type="text" data-ng-model="ghostctrl.changedGhost.ghost.name" value=""/>
@@ -31,8 +35,8 @@
             <button data-ng-click="ghostctrl.confirmChange(ghost,'delete')">Delete Ghost</button>
           </form>
 
-        </li>
-      </ul>
+        </section>
+      <!-- </ul> -->
 
       <form name="newForm" data-ng-submit="ghostctrl.createGhost(ghostctrl.newGhost)" ng-show="ghostctrl.editShow == 'new'">
         Name: <input type="text" data-ng-model="ghostctrl.newGhost.name" value=""/>

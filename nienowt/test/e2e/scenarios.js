@@ -8,6 +8,6 @@ describe('ghost routes / really should have picked a less absurd set of resouces
     // ghostctrl.newGhost.name.sendKeys('TestGhostA');
     // ghostctrl.newGhost.powers.primary.sendKeys('profound sadness');
     element(by.id('ghost')).click()
-    expect(element.all(by.repeater('ghost in ghostctrl.ghosts')).last().getText()).toEqual('TestGhostA Edit')
+    expect(element.all(by.repeater('ghost in ghostctrl.ghosts')).last().element(by.binding('ghost.name')).getText()).toEqual('Name: TestGhostA')
   })
 })
