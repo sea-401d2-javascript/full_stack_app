@@ -43,6 +43,11 @@ gulp.task('mongo-stop', () => {
   runCommand(command);
 });
 
+gulp.task('static', function() {
+  return gulp.src(['src/*.html', 'src/*.ico'])
+    .pipe(gulp.dest('dist'));
+});
+
 gulp.task('webpack', () => {
   return gulp.src('./entry.js')
     .pipe(webpack({
@@ -59,6 +64,8 @@ gulp.task('webpack', () => {
     }))
     .pipe(gulp.dest('./dist/'));
 });
+
+gulp.task('push', ['static', 'webpack']);
           
 gulp.task('default', ['webpack', 'lint']);
 
