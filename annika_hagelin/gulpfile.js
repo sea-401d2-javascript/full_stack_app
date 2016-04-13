@@ -2,11 +2,15 @@
 const gulp = require('gulp');
 const lint = require('gulp-eslint');
 const mocha = require('gulp-mocha');
-const webpack = require('gulp-webpack');
+const webpack = require('webpack-stream');
 
 const fs = require('fs');
 
 const paths = ['*.js', 'test/*.js'];
+
+const sources = {
+  test: __dirname + '/test/unit/*.js'
+};
 
 gulp.task('default', ['build']);
 
@@ -28,24 +32,15 @@ gulp.task('build', () => {
       .pipe(webpack({
         entry: './src/index.js',
         output: {
-          filename: 'bundle.js',
+          filename: 'bundle.js'
         }
     }))
       .pipe(gulp.dest('./build/'));
   });
 });
 
-//http://stackoverflow.com/questions/8496212/node-js-fs-unlink-function-causes-eperm-error
-function deleteFolderRecursive(path) {
-  if( fs.existsSync(path) ) {
-      fs.readdirSync(path).forEach(function(file) {
-        var curPath = path + "/" + file;
-          if(fs.statSync(curPath).isDirectory()) { // recurse
-              deleteFolderRecursive(curPath);
-          } else { // delete file
-              fs.unlinkSync(curPath);
-          }
-      });
-      fs.rmdirSync(path);
-    }
-};
+gulp.task('bundle:test', () => {
+  return gulp.src(sources.test)
+    .pipe(webpack({output: {filename: 'test_bundle.js'}}))
+    .pipe(gulp.dest('./test'));
+});
