@@ -16,6 +16,7 @@ module.exports = (app) => {
       $http.get(arcadeRoute)
       .then((result)=>{
         this.arcades = result.data.arcades;
+          this.cancelEdit = angular.copy(this.arcades);
       }, function(error){
         console.log(error);
       });
@@ -46,34 +47,29 @@ module.exports = (app) => {
       this.arcades = this.cancelEdit;
     };
 
-    this.saveEdit = function(arcade){
-      arcade.name = this.editArcade;
-      this.arcades.address = this.editArcadeAddress;
-      this.arcades.hours = this.editArcadeAHours;
-      // this.hideEdit();
+    // this.saveEdit = function(arcade){
+    //   this.arcades.name = this.editArcadeName;
+    //   this.arcades.address = this.editArcadeAddress;
+    //   this.arcades.hours = this.editArcadeAHours;
+    //   // this.hideEdit();
+    // };
+
+
+    this.updateArcade = function(arcadeEdit){
+      $http.put(arcadeRoute + '/' + arcadeEdit._id, arcadeEdit)
+      .then((res)=>{
+        this.arcades = this.arcades.map((a) =>{
+          if(a._id === arcadeEdit._id){
+            return arcadeEdit;
+          } else {
+            return a;
+          }
+        });
+      });
     };
+    this.cancelUpdate = function(){
+      this.arcades = this.cancelEdit;
 
-
-    // this.updateArcade = function(arcadeEdit){
-    //   $http.put(arcadeRoute + '/' + arcadeEdit._id, arcadeEdit)
-    //   .then((res)=>{
-    //     this.arcades = this.arcades.map((a) =>{
-    //       if(a._id === arcadeEdit._id){
-    //         return arcadeEdit;
-    //       } else {
-    //         return a;
-    //       }
-    //     });
-    //   });
-    // };
-    // this.cancelUpdate = function(arcade){
-    //   console.log(arcade);
-    //   arcade = this.cancelEdit;
-    //   arcade.address = this.cancelEdit.address;
-    //   arcade.hours = this.cancelEdit.hours;
-    //   // this.editArcadeName = this.arcades.name;
-    //   // this.editArcadeAddress = this.arcades.address;
-    //   // this.editArcadeAHours = this.arcades.hours;
-    // };
+    };
   }]);
 };

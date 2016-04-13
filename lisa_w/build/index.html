@@ -23,36 +23,26 @@
 </div>
 ----------------------------------------------------------------------------
 
-    <div data-ng-repeat="arcade in arcadectrl.arcades">
-      <!-- <div data-ng-hide="editorOn"> -->
+    <div data-ng-repeat="arcade in arcadectrl.arcades" data-ng-hide="editorOn">
+
       <h2><em> Name:</em> {{arcade.name}}</h2>
       <h2><em>Address:</em>  {{arcade.address}}</h2>
       <h2><em>Hours:</em> {{arcade.hours}}</h2>
-
-      <!-- <a href="#" data-ng-click="showEdit(arcade)">Edit Arcade</a> -->
-    <!-- <div data-ng-show="editorOn">
-    Name <input data-ng-model="arcade.name" data-ng-show="editorOn"><a href="#" data-ng-click="saveEdit()">Save</a>
-    or
-    <a href="#" data-ng-click="hideEdit()">Cancel</a>
-    Address <input data-ng-model="arcade.address"data-ng-show="editorOn" >
-    <a href="#" data-ng-click="saveEdit()">Save</a>
-    or
-    <a href="#" data-ng-click="hideEdit()">Cancel</a> -->
 
 
   <button data-ng-click="arcadectrl.removeArcade(arcade)">Delete</button>
 
 
 
-    <!-- <button data-ng-click="arcadectrl.showEdit(arcade)">Edit</button> -->
+    <button data-ng-click="arcadectrl.showEdit(arcade)">Edit</button>
 
   <form data-ng-submit="arcadectrl.showEdit(arcade)" >
     <h3>Update Arcade</h3>
     Name<input type="text" data-ng-model="arcade.name" placeholder="name" >
-    Address<input type="text" data-ng-model="arcade.address">
-    Hours<input type="text" data-ng-model="arcade.hours">
-    <button type="submit" data-ng-click="arcadectrl.saveEdit(arcade)">Save</button>
-    <button type="submit" data-ng-click="arcadectrl.hideEdit()">Cancel</button>
+    Address<input type="text" data-ng-model="arcade.address"placeholder="address">
+    Hours<input type="text" data-ng-model="arcade.hours" placeholder="hours">
+    <button type="submit" data-ng-click="arcadectrl.updateArcade(arcade)">Save</button>
+    <button type="submit" data-ng-click="arcadectrl.cancelUpdate()">Cancel</button>
 
   </form>
 
@@ -67,7 +57,7 @@
     _________________________________________________________________________
 
 
-  <!-- </section> -->
+
 
 
   </main>
