@@ -20,7 +20,7 @@
           <p>Primary: {{ghost.powers[0].primary}}</p>
           <p>Secondary: {{ghost.powers[0].secondary}}</p>
           <p>Weakness: {{ghost.powers[0].weakness}}</p>
-          <button data-ng-click="ghostctrl.toggle(ghost.name)">Edit</button>
+          <button id="ghostEdit" data-ng-click="ghostctrl.toggle(ghost.name)">Edit</button>
 
           <form name="editForm" ng-show="ghostctrl.editShow == ghost.name">
             Name: <input type="text" data-ng-model="ghostctrl.changedGhost.ghost.name" value=""/>
@@ -28,7 +28,7 @@
             <p>Secondary Power: <input type="text" data-ng-model="ghostctrl.changedGhost.powers.secondary" value=""/></p>
             <p>Weakness: <input type="text" data-ng-model="ghostctrl.changedGhost.powers.weakness" value=""/></p>
 
-            <button data-ng-click="ghostctrl.confirmChange(ghostctrl.changedGhost, 'edit', ghost)">Submit</button>
+            <button id="ghostEditSubmit" data-ng-click="ghostctrl.confirmChange(ghostctrl.changedGhost, 'edit', ghost)">Submit</button>
             <p data-ng-show="ghostctrl.editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted</p>
 
             <button form="editForm" data-ng-click="ghostctrl.reset(ghost)" data-ng-show="ghostctrl.editConfirmation">Cancel Edit</button>

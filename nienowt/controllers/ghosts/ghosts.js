@@ -13,11 +13,11 @@
       this.editShow = name;
     };
 
-    this.confirmChange = function(ghost, buttonName, curGhost){
+    this.confirmChange = function(ghost, buttonName, oldGhost){
       if (!this.editConfirmation) return this.editConfirmation = true;
 
       if(buttonName === 'delete') return this.removeGhost(ghost);
-      if(buttonName === 'edit') return this.editGhost(ghost, curGhost);
+      if(buttonName === 'edit') return this.editGhost(ghost, oldGhost);
     };
 
     this.getGhosts = function() {
@@ -43,7 +43,9 @@
       $http.put(mainRoute + '/' + ghost._id, changedGhost)
       .then(() => {
         this.ghosts = this.ghosts.filter((g) => g._id != ghost._id);
-        this.ghosts.push(changedGhost);
+        console.log(changedGhost)
+        this.ghosts.push(changedGhost.ghost);
+        console.log(this.ghosts)
       });
     };
 
