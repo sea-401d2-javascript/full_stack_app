@@ -23,7 +23,8 @@
     "chai-http": "^2.0.1",
     "gulp": "^3.9.1",
     "gulp-eslint": "^2.0.0",
-    "gulp-mocha": "^2.2.0"
+    "gulp-mocha": "^2.2.0",
+    "protractor": "^3.2.2"
   },
   "eslintConfig": {
     "rules": {
@@ -35,11 +36,11 @@
       "linebreak-style": [
         2,
         "unix"
-          ],
-          "semi": [
-            2,
-            "always"
-          ]
+      ],
+      "semi": [
+        2,
+        "always"
+      ]
     },
     "env": {
       "es6": true,
