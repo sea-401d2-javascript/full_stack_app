@@ -13,9 +13,9 @@
       </nav>
     </header>
     <section data-ng-init="ghostctrl.getGhosts()" data-ng-controller='GhostController as ghostctrl' data-ng-show="tabctrl.active('ghosts')">
-      <ul>
+      <ul id="ghostList">
         <li data-ng-repeat="ghost in ghostctrl.ghosts">
-          <p>{{ghost}}
+          <p>{{ghost.name}}
           <button data-ng-click="ghostctrl.toggle(ghost.name)">Edit</button></p>
 
           <form name="editForm" ng-show="ghostctrl.editShow == ghost.name">
@@ -39,7 +39,7 @@
         <p>Primary Power: <input type="text" data-ng-model="ghostctrl.newGhost.powers.primary" value=""/></p>
         <p>Secondary Power: <input type="text" data-ng-model="ghostctrl.newGhost.powers.secondary" value=""/></p>
         <p>Weakness: <input type="text" data-ng-model="ghostctrl.newGhost.powers.weakness" value=""/></p>
-        <button type="submit">Submit</button>
+        <button id="ghost" type="submit">Submit</button>
       </form>
 
     </section>
@@ -72,6 +72,13 @@
         <button type="submit">Submit</button>
       </form>
     </section>
-    <script src="./bundle.js"></script>
+    <script src="./node_modules/angular/angular.js"></script>
+    <script src="./controllers/ghosts/ghost-module.js"></script>
+    <script src="./controllers/ghosts/ghosts.js"></script>
+    <script src="./controllers/humans/human-module.js"></script>
+    <script src="./controllers/humans/humans.js"></script>
+    <script src="./controllers/tabs/tab-module.js"></script>
+    <script src="./controllers/tabs/tabs.js"></script>
+    <script src="./controllers/app.js"></script>
   </body>
 </html>
