@@ -46,13 +46,13 @@
 
     <!-- <button data-ng-click="arcadectrl.showEdit(arcade)">Edit</button> -->
 
-
   <form data-ng-submit="arcadectrl.showEdit(arcade)" >
-    Name<input type="text" data-ng-model="arcade.name" >
+    <h3>Update Arcade</h3>
+    Name<input type="text" data-ng-model="arcade.name" placeholder="name" >
     Address<input type="text" data-ng-model="arcade.address">
     Hours<input type="text" data-ng-model="arcade.hours">
-    <button type="submit" data-ng-click="arcadectrl.saveEdit()">Save</button>
-    <button type="submit" data-ng-click="arcadectrl.hideEdit(arcade)">Cancel</button>
+    <button type="submit" data-ng-click="arcadectrl.saveEdit(arcade)">Save</button>
+    <button type="submit" data-ng-click="arcadectrl.hideEdit()">Cancel</button>
 
   </form>
 

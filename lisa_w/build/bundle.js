@@ -44,79 +44,13 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
 	'use strict';
 
 	const angular = __webpack_require__(1);
 	const app = angular.module('ArcadeApp', []);
 
-	app.controller('ArcadeController', ['$scope','$http', function($scope, $http){
-	  console.log('marker 1');
-	  const arcadeRoute = 'http://localhost:5000/arcades';
-	  $scope.dance = 'Add New Arcade';
-	  this.arcades = ['arcade'];
-	  this.newArcade = {};
-	  this.editorOn = false;
-
-	  this.getArcades = function(){
-	    $http.get(arcadeRoute)
-	    .then((result)=>{
-	      this.arcades = result.data.arcades;
-	    }, function(error){
-	      console.log(error);
-	    });
-	  };
-	  this.createArcade = function(arcade){
-	    $http.post(arcadeRoute, arcade)
-	    .then((res)=>{
-	      console.log(res.data);
-	      this.arcades.push(res.data);
-	    });
-	  };
-	  this.removeArcade = function(arcade) {
-	    $http.delete(arcadeRoute + '/' + arcade._id)
-	    .then((res)=>{
-	      this.arcades = this.arcades.filter((a)=> a._id !=arcade._id);
-	    });
-	  };
-
-	    this.showEdit = function(){
-	      this.editorOn = true;
-	      this.editArcade = this.arcades;
-	    };
-	    this.hideEdit = function(arcade){
-	      // this.editorOn = false;
-	      arcade = null;
-
-
-
-	    };
-
-	    this.saveEdit = function(){
-	      this.arcades = this.editArcade;
-	      this.hideEdit();
-	    };
-
-
-	  // this.updateArcade = function(arcadeEdit){
-	  //   $http.put(arcadeRoute + '/' + arcadeEdit._id, arcadeEdit)
-	  //   .then((res)=>{
-	  //     this.arcades = this.arcades.map((a) =>{
-	  //       if(a._id === arcadeEdit._id){
-	  //         return arcadeEdit;
-	  //       } else {
-	  //         return a;
-	  //       }
-	  //     });
-	  //   });
-	  // };
-	  this.cancelUpdate = function(arcadeEdit, arcade){
-	    // arcadeEdit = this.arcades;
-	    arcadeEdit.name = arcade.name;
-	    arcadeEdit.address = arcade.address;
-	    arcadeEdit.hours = arcade.hours;
-	  };
-	}]);
+	__webpack_require__(3)(app);
+	__webpack_require__(4)(app);
 
 
 /***/ },
@@ -30845,6 +30779,173 @@
 	})(window, document);
 
 	!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	
+	'use strict';
+
+	module.exports = (app) => {
+
+	  app.controller('ArcadeController', ['$scope','$http', function($scope, $http){
+	    console.log('marker 1');
+	    const arcadeRoute = 'http://localhost:5000/arcades';
+	    $scope.dance = 'Add New Arcade';
+	    this.arcades = ['arcade'];
+	    this.newArcade = {};
+	    // this.cancelEdit = {};
+	    this.editorOn = false;
+
+	    this.getArcades = function(){
+	      $http.get(arcadeRoute)
+	      .then((result)=>{
+	        this.arcades = result.data.arcades;
+	      }, function(error){
+	        console.log(error);
+	      });
+	    };
+	    this.createArcade = function(arcade){
+	      $http.post(arcadeRoute, arcade)
+	      .then((res)=>{
+	        console.log(res.data);
+	        this.arcades.push(res.data);
+	      });
+	    };
+	    this.removeArcade = function(arcade) {
+	      $http.delete(arcadeRoute + '/' + arcade._id)
+	      .then((res)=>{
+	        this.arcades = this.arcades.filter((a)=> a._id !=arcade._id);
+	      });
+	    };
+
+	    this.showEdit = function(){
+	      this.editorOn = true;
+	      this.cancelEdit = angular.copy(this.arcades);
+
+
+	    };
+
+	    this.hideEdit = function(){
+	      this.editorOn = false;
+	      this.arcades = this.cancelEdit;
+	    };
+
+	    this.saveEdit = function(arcade){
+	      arcade.name = this.editArcade;
+	      this.arcades.address = this.editArcadeAddress;
+	      this.arcades.hours = this.editArcadeAHours;
+	      // this.hideEdit();
+	    };
+
+
+	    // this.updateArcade = function(arcadeEdit){
+	    //   $http.put(arcadeRoute + '/' + arcadeEdit._id, arcadeEdit)
+	    //   .then((res)=>{
+	    //     this.arcades = this.arcades.map((a) =>{
+	    //       if(a._id === arcadeEdit._id){
+	    //         return arcadeEdit;
+	    //       } else {
+	    //         return a;
+	    //       }
+	    //     });
+	    //   });
+	    // };
+	    // this.cancelUpdate = function(arcade){
+	    //   console.log(arcade);
+	    //   arcade = this.cancelEdit;
+	    //   arcade.address = this.cancelEdit.address;
+	    //   arcade.hours = this.cancelEdit.hours;
+	    //   // this.editArcadeName = this.arcades.name;
+	    //   // this.editArcadeAddress = this.arcades.address;
+	    //   // this.editArcadeAHours = this.arcades.hours;
+	    // };
+	  }]);
+	};
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	
+	'use strict';
+
+	module.exports = (app) => {
+
+	app.controller('GameController', ['$scope','$http', function($scope, $http){
+	  console.log('marker 1');
+	  const gameRoute = 'http://localhost:5000/games';
+	  this.games = ['game'];
+	  this.newGame = {};
+	  this.cancelGame = {};
+	  this.editorOn = false;
+
+	  this.getGames = function(){
+	    $http.get(gameRoute)
+	    .then((result)=>{
+	      this.games = result.data.games;
+	    }, function(error){
+	      console.log(error);
+	    });
+	  };
+	  this.createGame = function(game){
+	    $http.post(gameRoute, game)
+	    .then((res)=>{
+	      console.log(res.data);
+	      this.games.push(res.data);
+	    });
+	  };
+	  this.removeGame = function(game) {
+	    $http.delete(gameRoute + '/' + game._id)
+	    .then((res)=>{
+	      this.games = this.games.filter((g)=> g._id !=game._id);
+	    });
+	  };
+
+	    this.showEdit = function(){
+	      this.editorOn = true;
+	      this.editGame = this.games;
+	      this.editGameTitle = this.games.title;
+	      this.editGameGenre = this.games.genre;
+	      this.editGameHours = this.arcades.hours;
+	    };
+
+	    this.hideEdit = function(){
+	      this.editorOn = false;
+	      // this.editArcade = this.arcades;
+	    };
+
+	    this.saveEdit = function(){
+	      this.arcades.name = this.editArcadeName;
+	      this.arcades.address = this.editArcadeAddress;
+	      this.arcades.hours = this.editArcadeAHours;
+	      this.hideEdit();
+	    };
+
+
+	  this.updateArcade = function(arcadeEdit){
+	    $http.put(arcadeRoute + '/' + arcadeEdit._id, arcadeEdit)
+	    .then((res)=>{
+	      this.arcades = this.arcades.map((a) =>{
+	        if(a._id === arcadeEdit._id){
+	          return arcadeEdit;
+	        } else {
+	          return a;
+	        }
+	      });
+	    });
+	  };
+	  // this.cancelUpdate = function(){
+	  //   // arcadeEdit = this.arcades;
+	  //   this.editArcadeName = this.arcades.name;
+	  //   this.editArcadeAddress = this.arcades.address;
+	  //   this.editArcadeAHours = this.arcades.hours;
+	  // };
+	}]);
+	};
+
 
 /***/ }
 /******/ ]);

@@ -2,6 +2,7 @@
 
 var gulp = require('gulp');
 var webpack = require('webpack-stream');
+
 var paths = [ 'server.js', 'client-server.js','build/*.js', 'build/*.html'];
 
 gulp.task('build:html', function(){
