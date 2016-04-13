@@ -13,28 +13,7 @@
     <main>
       <section id="bars" data-ng-controller="BarController as barctrl"
         data-ng-init="barctrl.getBars()">
-        <h1>{{barctrl.header}}
-            <input class="button" type="button" value="Create Bar" data-ng-click="newBar = !newBar">
-        </h1>
-        <form name="newBarForm" data-ng-init="!newBar" data-ng-show="newBar" action="">
-          <p>
-            <label for="barName">Bar Name</label>
-            <input id="barName" class="input" data-ng-model="newBar.name">
-          </p>
-          <p>
-            <label for="barNeighborhood">Bar Neighborhood</label>
-            <input id="barNeighborhood" class="input" data-ng-model="newBar.neighborhood">
-            </p>
-          <p>
-            <label for="barHours">Bar Hours</label>
-            <input id="barHours" class="input" data-ng-model="newBar.hours">
-          </p>
-          <p>
-            <input class="button" type="button" value="Cancel" data-ng-click="barctrl.resetForm(bar)">
-            <input class="button" type="button" value="Save" data-ng-click="barctrl.createBar(bar);edit = !edit">
-            <input class="button" type="button" value="Delete" data-ng-click="barctrl.deleteBar(bar);edit = !edit">
-          </p>
-        </form>
+        <h1>{{barctrl.header}}</h1>
         <ul>
           <li data-ng-repeat="bar in barctrl.bars">{{bar.name}}
             <input class="button" type="button" value="Edit" data-ng-click="edit = !edit">
@@ -53,6 +32,7 @@
               </p>
               <p>
                 <input class="button" type="button" value="Cancel" data-ng-click="barctrl.resetForm(bar)">
+                <input class="button" type="button" value="Create" data-ng-click="barctrl.createBar(bar);edit = !edit">
                 <input class="button" type="button" value="Save" data-ng-click="barctrl.updateBar(bar);edit = !edit">
                 <input class="button" type="button" value="Delete" data-ng-click="barctrl.deleteBar(bar);edit = !edit">
               </p>
@@ -62,9 +42,7 @@
       </section>
       <section id="bands" data-ng-controller="BandController as bandctrl"
         data-ng-init="bandctrl.getBands()">
-        <h1>{{bandctrl.header}}
-            <input class="button" type="button" value="Create Band" data-ng-click="bandctrl.createBand(band)">
-        </h1>
+        <h1>{{bandctrl.header}}</h1>
         <ul>
           <li data-ng-repeat="band in bandctrl.bands">{{band.name}}
             <input class="button" type="button" value="Edit" data-ng-click="edit = !edit">
@@ -91,6 +69,7 @@
               </p>
               <p>
                 <input class="button" type="button" value="Cancel" data-ng-click="bandctrl.resetForm(band)">
+                <input class="button" type="button" value="Create" data-ng-click="bandctrl.createBand(band);edit = !edit">
                 <input class="button" type="button" value="Save" data-ng-click="bandctrl.updateBand(band);edit = !edit">
                 <input class="button" type="button" value="Delete" data-ng-click="bandctrl.deleteBand(band);edit = !edit">
               </p>
