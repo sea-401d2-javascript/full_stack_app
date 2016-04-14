@@ -2,7 +2,6 @@ describe('end to end testing', function() {
 
   describe('speciess testing', function() {
     var resource = element(by.binding('speciessCtrl.resource'));
-    var speciessRepeater = element.all(by.repeater('species in speciessCtrl.speciess')); //by.repeater('species in speciessCtrl.speciess');
 
     beforeEach(function() {
       browser.get('http://localhost:8080');
@@ -13,13 +12,24 @@ describe('end to end testing', function() {
     });
 
     it('species have column genus', function() {
-      var species0 = element.all(by.repeater('species in speciessCtrl.speciess').column('species.genus')).getText();
-      species0.then(function(genera) {
-        genera.forEach(function(genus) {
-          expect(genus).toBeDefined();
+      element.all(by.repeater('species in speciessCtrl.speciess').column('species.genus')).getText()
+        .then(function(genera) {
+          genera.forEach(function(genus) {
+            expect(genus).toBeDefined();
+          });
         });
-      });
     });
+
+    it('can update species', function() {
+      element.all(by.repeater('species in speciessCtrl.speciess'))
+        .then(function(species) {
+          species[0].element(by.buttonText('update')).click();
+
+        });
+
+    });
+
+
 
   });
 

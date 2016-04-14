@@ -14,7 +14,6 @@
 
     <ul>
       <li data-ng-repeat="species in speciessCtrl.speciess">
-        <span>{{species.genus}}</span>
         <big>{{species.genus}} {{species.species}}</big> <small>commonly</small> <big>{{species.cmnName}}</big> <small>[id:{{species._id}}]</small>
 
           <button type="submit" data-ng-click="speciessCtrl.update.displayed = species._id">update</button>
