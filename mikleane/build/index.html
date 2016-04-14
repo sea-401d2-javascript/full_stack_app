@@ -18,7 +18,7 @@
         <li class="ng-cloak" ng-cloak data-ng-repeat="beer in beersctrl.beers">{{beer.name}}
           <button type"submit" ng-click="beersctrl.removeBeer(beer)">Delete Beer</button>
           <button type="submit" ng-click="beersctrl.updateBeer.displayed = beer._id">Edit Beer</button>
-          <form class="form" data-ng-show="beersctrl.updateBeer.displayed == beer._id" data-ng-submit="beersctrl.updateBeer(beer); beersctrl.updateBeer.displayed = null">
+          <form id="beerupdate" class="form" data-ng-show="beersctrl.updateBeer.displayed == beer._id" data-ng-submit="beersctrl.updateBeer(beer); beersctrl.updateBeer.displayed = null">
             <input type="text" placeholder="name" data-ng-model="beer.name"/>
             <input type="text" placeholder="type" data-ng-model="beer.type"/>
             <input type="text" placeholder="style" data-ng-model="beer.style"/>
@@ -44,11 +44,11 @@
         <li class="ng-cloak" data-ng-repeat="user in usersctrl.users">{{user.firstName}}
         <button type="submit" data-ng-click="usersctrl.removeUser(user)">Delete User</button>
         <button type="submit" data-ng-click="usersctrl.updateUser.displayed = user._id">Update User</button>
-        <form class="form" data-ng-show="usersctrl.updateUser.displayed == user._id" data-ng-submit="usersctrl.updateUser(user); usersctrl.updateUser.displayed = null">
+        <form id="userupdate" class="form" data-ng-show="usersctrl.updateUser.displayed == user._id" data-ng-submit="usersctrl.updateUser(user); usersctrl.updateUser.displayed = null">
           <input type="text" placeholder="first name" data-ng-model="user.firstName"/>
           <input type="text" placeholder="last name" data-ng-model="user.lastName"/>
           <input type="text" placeholder="favorite beer" data-ng-model="user.favBeers"/>
-          <button type="submit">Make Changes</button>
+          <button type="submit">Change User</button>
           <button type="reset" data-ng-click="usersctrl.resetUser(user); usersctrl.updateUser.displayed = null">Cancel Changes</button>
         </form>
         </li>

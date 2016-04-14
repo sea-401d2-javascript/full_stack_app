@@ -13,7 +13,7 @@
         };
 
         this.createUser = function(user) {
-          console.log('user ', user)
+          // console.log('user ', user)
           $http.post(userRoute, user)
           .then((res) => {
             this.users.push(res.data);
@@ -24,8 +24,6 @@
         this.updateUser = function(user) {
           $http.put(userRoute + '/' + user._id, user)
           .then((res) => {
-            console.log(res.data)
-            this.users.push(res.data)
           })
           .catch((err) => {
             console.log(err);
