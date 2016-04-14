@@ -1,0 +1,32 @@
+@import url(//fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400);
+
+body {
+  margin: 40px;
+  background: black;
+  color: limegreen;
+  font-family: 'Source Code Pro', monospace;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+ul {
+  list-style: none;
+  padding-left: 1em; 
+}
+
+li {
+  margin-bottom: 1em;
+}
+
+.input {
+  font-family: 'Source Code Pro', monospace;
+  font-weight: 200;
+  background: lightyellow;
+}
+
+.button {
+  font-weight: bold;
+  border-radius: 3px;
+  background-color: limegreen;
+}
+
