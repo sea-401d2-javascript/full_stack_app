@@ -11,6 +11,7 @@ module.exports = (router, models) => {
          newGame.save((err, game)=>{
            if (err) res.send(err);
            res.json(game);
+            res.end();
          });
        })
        .get((req, res) =>{
@@ -18,6 +19,7 @@ module.exports = (router, models) => {
          Game.find({},(err, games)=>{
            if(err) res.send(err);
            res.json({games});
+            res.end();
          });
        });
 

@@ -1,4 +1,3 @@
-
 'use strict';
 
 module.exports = (app) => {
@@ -9,14 +8,13 @@ module.exports = (app) => {
     $scope.dance = 'Add New Arcade';
     this.arcades = ['arcade'];
     this.newArcade = {};
-    // this.cancelEdit = {};
     this.editorOn = false;
 
     this.getArcades = function(){
       $http.get(arcadeRoute)
       .then((result)=>{
         this.arcades = result.data.arcades;
-          this.cancelEdit = angular.copy(this.arcades);
+        this.cancelEdit = angular.copy(this.arcades);
       }, function(error){
         console.log(error);
       });
@@ -34,26 +32,15 @@ module.exports = (app) => {
         this.arcades = this.arcades.filter((a)=> a._id !=arcade._id);
       });
     };
-
     this.showEdit = function(){
       this.editorOn = true;
       this.cancelEdit = angular.copy(this.arcades);
-
-
     };
 
     this.hideEdit = function(){
       this.editorOn = false;
       this.arcades = this.cancelEdit;
     };
-
-    // this.saveEdit = function(arcade){
-    //   this.arcades.name = this.editArcadeName;
-    //   this.arcades.address = this.editArcadeAddress;
-    //   this.arcades.hours = this.editArcadeAHours;
-    //   // this.hideEdit();
-    // };
-
 
     this.updateArcade = function(arcadeEdit){
       $http.put(arcadeRoute + '/' + arcadeEdit._id, arcadeEdit)
@@ -67,9 +54,9 @@ module.exports = (app) => {
         });
       });
     };
+
     this.cancelUpdate = function(){
       this.arcades = this.cancelEdit;
-
     };
   }]);
 };
