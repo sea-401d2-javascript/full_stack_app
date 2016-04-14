@@ -1,0 +1,21 @@
+body {
+  background-color: #7AADC2;
+  color: #333300;
+}
+
+.conts-repeat {
+  display: inline-block;
+
+}
+
+label {
+  font-weight: bold;
+}
+
+input.ng-invalid {
+  background-color: yellow;
+}
+
+input.ng-valid {
+  background-color: lightgreen;
+}
