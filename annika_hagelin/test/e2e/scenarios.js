@@ -23,8 +23,13 @@ describe('end to end testing', function() {
     it('can update species', function() {
       element.all(by.repeater('species in speciessCtrl.speciess'))
         .then(function(species) {
-          species[0].element(by.buttonText('update')).click();
-
+          species[0].element(by.buttonText('update')).click()
+            .then(function() {
+              species[0].element(by.buttonText('ok')).isDisplayed()
+                .then(function(isDisplayed) {
+                  expect(isDisplayed).toBe(true);
+                });
+            });
         });
 
     });
