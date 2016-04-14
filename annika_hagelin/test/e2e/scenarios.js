@@ -20,16 +20,32 @@ describe('end to end testing', function() {
         });
     });
 
-    it('can update species', function() {
+    it('can cancel update species', function() {
       element.all(by.repeater('species in speciessCtrl.speciess'))
         .then(function(species) {
-          species[0].element(by.buttonText('update')).click()
-            .then(function() {
-              species[0].element(by.buttonText('ok')).isDisplayed()
-                .then(function(isDisplayed) {
-                  expect(isDisplayed).toBe(true);
-                });
+          species[0].element(by.buttonText('update')).click();
+          expect(species[0].element(by.buttonText('ok')).isDisplayed()).toBe(true);
+
+          var originalSpecies = {
+            genus: species[0].element(by.model('species.genus')).getAttribute('value'),
+            species: species[0].element(by.model('species.species')).getAttribute('value'),
+            cmnName: species[0].element(by.model('species.cmnName')).getAttribute('value')
+          };
+
+          species[0].element(by.model('species.genus')).clear().sendKeys('updatadus');
+          species[0].element(by.model('species.species')).clear().sendKeys('miga');
+          species[0].element(by.model('species.cmnName')).clear().sendKeys('updated me');
+
+          expect(species[0].element(by.binding('species.cmnName')).getText()).toBe('updated me');
+
+          species[0].element(by.buttonText('cancel')).click();
+
+          element.all(by.repeater('species in speciessCtrl.speciess'))
+            .then(function(species) {
+              expect(species[0].element(by.model('species.cmnName')).getAttribute('value')).toBe(originalSpecies.cmnName);
+
             });
+
         });
 
     });
