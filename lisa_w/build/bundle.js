@@ -30787,7 +30787,6 @@
 	'use strict';
 
 	module.exports = (app) => {
-	  // const angular = require('angular');
 
 	  app.controller('ArcadeController', ['$scope','$http', function($scope, $http){
 	    console.log('marker 1');
@@ -30829,14 +30828,6 @@
 	      this.arcades = this.cancelEdit;
 	    };
 
-	    // this.saveEdit = function(arcade){
-	    //   this.arcades.name = this.editArcadeName;
-	    //   this.arcades.address = this.editArcadeAddress;
-	    //   this.arcades.hours = this.editArcadeAHours;
-	    //   // this.hideEdit();
-	    // };
-
-
 	    this.updateArcade = function(arcadeEdit){
 	      $http.put(arcadeRoute + '/' + arcadeEdit._id, arcadeEdit)
 	      .then((res)=>{
@@ -30864,7 +30855,6 @@
 	'use strict';
 
 	module.exports = (app) => {
-	  // const angular = require('angular');
 
 	  app.controller('GameController', ['$scope','$http', function($scope, $http){
 	    console.log('marker 1');
@@ -30906,13 +30896,6 @@
 	      this.editorOn = false;
 	      this.games = this.cancelEdit;
 	    };
-
-	    // this.saveEdit = function(){
-	    //   this.arcades.name = this.editArcadeName;
-	    //   this.arcades.address = this.editArcadeAddress;
-	    //   this.arcades.hours = this.editArcadeAHours;
-	    //   this.hideEdit();
-	    // };
 
 
 	    this.updateGame = function(gameEdit){
