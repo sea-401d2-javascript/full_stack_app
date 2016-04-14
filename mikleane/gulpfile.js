@@ -3,7 +3,7 @@
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var webpack = require('webpack-stream');
-require('css-loader');
+
 
 var sources = {
   html: __dirname + '/build/index.html',
