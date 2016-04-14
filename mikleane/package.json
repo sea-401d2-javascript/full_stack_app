@@ -1,0 +1,33 @@
+{
+  "name": "mikleane",
+  "version": "0.1.0",
+  "description": "Full Stack Application",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mikleane/full_stack_app.git"
+  },
+  "keywords": [],
+  "author": "Mikleane Chouinard",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.11"
+  },
+  "devDependencies": {
+    "angular": "^1.5.3",
+    "css-loader": "^0.23.1",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0",
+    "style-loader": "^0.13.1",
+    "webpack-stream": "^3.1.0"
+  }
+}
