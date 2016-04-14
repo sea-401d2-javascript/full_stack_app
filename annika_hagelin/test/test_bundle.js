@@ -104,7 +104,18 @@
 	      $httpBackend.flush();
 
 	      expect(speciessCtrl.speciess.length).toBe(0);
-	    })
+	    });
+
+	    it('update a person', function() {
+	      $httpBackend.expectPUT(server+'/speciess/5')
+	        .respond(200);
+	      speciessCtrl.speciess.push({genus:'updatus', species:'miga', cmnName:'update me', _id:'5'});
+	      speciessCtrl.update({genus:'updatadus', species:'miga', cmnName:'update me', _id:'5'});
+	      $httpBackend.flush();
+
+	      expect(speciessCtrl.speciess.length).toBe(1);
+	      expect(speciessCtrl.update.displayed).toEqual(null);
+	    });
 
 	  });
 
