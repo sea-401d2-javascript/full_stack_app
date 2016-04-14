@@ -60,8 +60,8 @@ app.controller('ContinentCtrl',['$http', function($http){
   this.createContinents = function(){
     $http.post(mainRoute, this.newConts)
     .then((result)=>{
-      this.continents = angular.toJson(result.data);
-      console.log('Here is fromDB : ' + this.continents);
+      this.continents.push(result.data);
+      console.log('Here is fromDB : ' + angular.toJson(this.continents));
     },function(err){
       console.log('err : ' + err);
     })

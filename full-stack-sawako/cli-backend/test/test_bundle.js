@@ -101,6 +101,24 @@
 	        expect(typeof continentCtrl.getCont).toBe('object');
 	        expect(continentCtrl.getCont.country).toBe('Brazil');
 	      });
+
+	      it('should create one continent', function(){
+	        $httpBackend.expectPOST('http://localhost:3000/continents', {country: 'Brazil!!'})
+	          .respond(200, {_id: 12345, country: 'Brazil!!'})
+	        continentCtrl.newConts = {
+	          country: 'Brazil!!'
+	        }
+	        continentCtrl.createContinents();
+	        $httpBackend.flush();
+	        expect(continentCtrl.continents.length).toBe(1);
+	        expect(continentCtrl.continents[1].country).toBe('Brazil!!');
+	      });
+
+	      it('should delete a continent by id', function(){
+	        $httpBackend.expectPUT('http://localhost:3000/continents/12345')
+	          .respond(200, {_id: 12345, country: 'Japan'})
+	        // continentCtrl.
+	      });
 	  });
 	});
 
@@ -171,8 +189,8 @@
 	  this.createContinents = function(){
 	    $http.post(mainRoute, this.newConts)
 	    .then((result)=>{
-	      this.continents = angular.toJson(result.data);
-	      console.log('Here is fromDB : ' + this.continents);
+	      this.continents.push(result.data);
+	      console.log('Here is fromDB : ' + angular.toJson(this.continents));
 	    },function(err){
 	      console.log('err : ' + err);
 	    })
