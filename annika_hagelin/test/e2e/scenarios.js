@@ -51,17 +51,15 @@ describe('end to end testing', function() {
 
     it('create species', function() {
       var createForm = $('#speciess').$('#create-species');
-      createForm.element(by.model('species.genus')).sendKeys('mcgardius');
-      createForm.element(by.model('species.genus')).sendKeys('mcgardius');
-      createForm.element(by.model('species.species')).sendKeys('hildica');
-      createForm.element(by.model('species.cmnName')).sendKeys('hilda mcgard');
+      createForm.element(by.model('species.genus')).clear().sendKeys('mcgardius');
+      createForm.element(by.model('species.species')).clear().sendKeys('hildica');
+      createForm.element(by.model('species.cmnName')).clear().sendKeys('hilda mcgard');
       createForm.element(by.buttonText('create species')).click()
         .then(function() {
-          element.all(by.repeater('species in speciessCtrl.speciess').column('species.genus')).getText()
+          element.all(by.repeater('species in speciessCtrl.speciess').column('species.species')).getText()
             .then(function(speciess) {
-              console.log(speciess);
-              // var newSpecies = speciess[speciess.length-1];
-              // expect(newSpecies.element(by.binding('species.cmnName')).getAttribute('value')).toBe('hilda mcgard');
+              var newSpecies = speciess[speciess.length-1];
+              expect(newSpecies).toBe('mcgardius hildica')
             });
         });
     });
