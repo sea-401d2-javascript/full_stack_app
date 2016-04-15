@@ -73,7 +73,7 @@
         <!-- <div data-ng-mode="gems.newGem" data-ng-bind="gems.newGem"></div> -->
         <button type="submit">Create New Gem!</button>
       </form>
-      <form name="myForm2" data-ng-submit="gems.getGemById()" novalidate="">
+      <form name="myForm2" data-ng-submit="gems.getGemById()" novalidate>
         <label>*****Search by ID *****</label>
         <p data-ng-hide="editing" data-ng-model="gems.getGem" data-ng-bind="gems.getGem._id"></p>
         <label data-ng-show="gems.editing">id:</label>

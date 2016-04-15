@@ -151,13 +151,13 @@ describe('e2e testing on my homepage -continents', function(){
   });
 
   it('should show all the p tags when clicked search by id button', function(){
-    var editInputId = element(by.model('conts.id'));
-    var editInputName = element(by.model('conts.getCont.name'));
-    var editInputColor = element(by.model('conts.getCont.color'));
-    var editInputDensity = element(by.model('conts.getCont.density'));
-    var edditPId = element(by.model('conts.id'));
+    var editInputId = element(by.model('gems.id'));
+    var editInputName = element(by.model('gems.getGem.name'));
+    var editInputColor = element(by.model('gems.getGem.color'));
+    var editInputDensity = element(by.model('gems.getGem.density'));
+    var edditPId = element(by.model('gems.id'));
     var searchButton = element(by.buttonText('Search Gem by Id'));
-    var allNgShow = element.all(by.css('conts.editing'));
+    var allNgShow = element.all(by.css('gems.editing'));
     var editButton = element(by.css('[value="EditGem"]'));
     editInputId.sendKeys('12345')
     editPId.sendKeys('12345')
