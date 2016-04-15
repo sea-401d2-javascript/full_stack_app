@@ -303,9 +303,9 @@
 	    })
 	  }
 	  this.getByIdContinents = function(){
+	      this.buttonShow = true;
 	      $http.get(mainRoute + '/'+ this.id)
 	      .then((result)=>{
-	        this.buttonShow = true;
 	        this.getCont = result.data;
 	        this.fetchedData = angular.copy(result.data);
 	        console.log('Fetched data : ' + angular.toJson(this.fetchedData));

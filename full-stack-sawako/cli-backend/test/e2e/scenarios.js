@@ -63,7 +63,26 @@ describe('e2e testing on my homepage -continents', function(){
     editPId.sendKeys('12345');
     searchButton.click();
     expect(browser.getCurrentUrl()).toBe('http://127.0.0.1:8080/');
-    expect(editPId.isDisplayed()).toBe(true);
+    expect(searchButton.isDisplayed()).toBe(true);
+  });
+
+  it('should show all the p tags when clicked search by id button', function(){
+    var editInputId = element(by.model('conts.id'));
+    var editInputCountry = element(by.model('conts.getCont.country'));
+    var editInputRegion = element(by.model('conts.getCont.region'));
+    var editInputMineral = element(by.model('conts.getCont.mineral'));
+    var edditPId = element(by.model('conts.id'));
+    var editPCountry = element(by.binding('conts.getCont.country'));
+    var editPRegion = element(by.binding('conts.getCont.region'));
+    var editPMineral = element(by.binding('conts.getCont.mineral'));
+    var searchButton = element(by.buttonText('Search Continent by Id'));
+    var allNgShow = element.all(by.css('conts.editing'));
+    var editButton = element(by.css('[value="EditCont"]'));
+    editInputId.sendKeys('12345')
+    editPId.sendKeys('12345')
+    searchButton.click().then(function(){
+      expect(editButton.isDisplayed()).toBe(true);
+    });
   });
 });
 
@@ -122,9 +141,10 @@ describe('e2e testing on my homepage -continents', function(){
     editPColor = element(by.model('gems.newGem.color'));
     editPDensity = element(by.model('gems.newGem.density'));
     searchButton = element(by.buttonText('Search Gem by Id'));
+
     editPId.sendKeys('12345');
     searchButton.click();
     expect(browser.getCurrentUrl()).toBe('http://127.0.0.1:8080/');
-    expect(editPId.isDisplayed()).toBe(true);
+    expect(searchButton.isDisplayed()).toBe(true);
   });
 });
