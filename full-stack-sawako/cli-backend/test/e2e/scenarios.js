@@ -81,5 +81,5 @@ describe('e2e testing on my homepage -continents', function(){
     nameForm.sendKeys(5);
   });
 
-  it('should take text and number')
+  it('should take text and numbe')
 });

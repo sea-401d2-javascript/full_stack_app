@@ -106,8 +106,8 @@
 	  this.createContinents = function(){
 	    $http.post(mainRoute, this.newConts)
 	    .then((result)=>{
-	      this.continents = angular.toJson(result.data);
-	      console.log('Here is fromDB : ' + this.continents);
+	      this.continents.push(result.data);
+	      console.log('Here is fromDB : ' + angular.toJson(this.continents));
 	    },function(err){
 	      console.log('err : ' + err);
 	    })
@@ -189,7 +189,7 @@
 	  this.createGems = function(){
 	    $http.post(mainRoute, this.newGem)
 	    .then((result)=>{
-	      this.gems = result.data;
+	      this.gems.push(result.data);
 	      console.log('Here is new Gem! : ' + this.gems);
 	    }, function(err){
 	      console.log('Err : ' + err);

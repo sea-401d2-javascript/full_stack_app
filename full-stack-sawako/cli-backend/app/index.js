@@ -84,7 +84,7 @@ app.controller('ContinentCtrl',['$http', function($http){
     console.log(this.deleting);
     $http.delete(mainRoute + '/'+ this.id, this.getCont)
     .then((result)=>{
-      this.getCont = this.data;
+      this.getCont = result.data;
       this.status = 'Successfully deleted : ' + angular.toJson(this.getCont);
     })
   }
@@ -143,7 +143,7 @@ app.controller('gemsController',['$http',function($http){
   this.createGems = function(){
     $http.post(mainRoute, this.newGem)
     .then((result)=>{
-      this.gems = result.data;
+      this.gems.push(result.data);
       console.log('Here is new Gem! : ' + this.gems);
     }, function(err){
       console.log('Err : ' + err);
@@ -153,7 +153,7 @@ app.controller('gemsController',['$http',function($http){
   this.editGem = function(){
     $http.put(mainRoute + '/' + this.id, this.getGem)
     .then((result)=>{
-      this.getGem = this.data;
+      this.getGem = result.data;
       this.status = 'Successfully updated : ' + angular.toJson(this.getGem);
     }, function(err){
       console.log('Here is err : ' + err);
