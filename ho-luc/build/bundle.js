@@ -50,40 +50,41 @@
 	angular.module('TwoResourceApp', [])
 	  .controller('PeopleController', ['$http', function($http) {
 	    const route = 'http://localhost:3000/api/people';
-	    this.people = [];
-	    this.edit = null;
-	    this.getPeople = function() {
+	    const main = this;
+
+	    main.people = [];
+	    main.edit = null;
+	    main.getPeople = function() {
 	      $http.get(route)
-	        .then((result) => {
-	          this.people = result.data.data;
-	        }, function(error) {
-	          console.log(error);
-	        })
+	        .then(function(result) {
+	          main.people = result.data.data;
+	        }, (error) => console.log(error));
 	    };
-	    this.createPerson = function(person) {
+
+	    main.createPerson = function(person) {
 	      $http.post(route, person)
-	        .then((res) => {
-	          this.people.push(person);
-	          this.newPerson = {};
-	        }, function(error) {
-	          console.log(error);
-	        })
+	        .then(function(res){
+	          console.log(res);
+	          main.people.push(res.data);
+	          main.newPerson = {};
+	        }, (error) => console.log(error));
 	    };
-	    this.removePerson = function(person) {
-	      $http.delete(route + '/' + person._id)
-	        .then((res) => {
-	          this.people = this.people.filter((p) => p._id != person._id);
-	        })
+
+	    main.removePerson = function(person) {
+	      console.log('client : ' + person);
+	      $http.delete(route + '/' + person)
+	        .then(function(res) {
+	          main.people = main.people.filter((p) => p._id != person._id);
+	        }, (error) => console.log(error));
 	    };
-	    this.updatePerson = function(person) {
-	      this.edit = false;
+
+	    main.updatePerson = function(person) {
+	      main.edit = false;
 	      $http.put(route + '/' + person._id, data)
-	        .then((res) => {
+	        .then(function(res) {
 	          console.log('person editted');
-	        }, function(error) {
-	          console.log(error);
-	        })
-	    }
+	        }, (error) => console.log(error));
+	    };
 
 	}])
 
@@ -103,7 +104,7 @@
 	      $http.post(route, animal)
 	        .then((res) => {
 	          this.animals.push(animal);
-	          this.newAnimal = {};
+	          this.animal = {};
 	        }, function(error) {
 	          console.log(error);
 	        })

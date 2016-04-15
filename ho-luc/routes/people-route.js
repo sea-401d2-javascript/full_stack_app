@@ -9,7 +9,6 @@ module.exports = (apiRouter) => {
           status: 200,
           data: people
         })
-        res.end();
       })
     })
     .post((req, res) => {
@@ -19,7 +18,6 @@ module.exports = (apiRouter) => {
           status: 200,
           data: person
         })
-        res.end();
       })
     })
 
@@ -30,7 +28,6 @@ module.exports = (apiRouter) => {
           status: 200,
           data: person
         })
-        res.end();
       })
     })
     .put((req, res) => {
@@ -39,17 +36,14 @@ module.exports = (apiRouter) => {
           status: 200,
           data: req.body
         })
-        res.end();
       })
     })
     .delete((req, res) => {
-      People.findById(req.params.id, (err, person) => {
-        person.remove((err, person) => {
-          res.json({
-            status: 200,
-            message: 'person removed'
-          })
-          res.end();
+      console.log('this is an ID: ', req.params.id);
+      People.findByIdAndRemove(req.params.id, (err, person) => {
+        res.json({
+          status: 200,
+          message: 'person removed'
         })
       })
     })
