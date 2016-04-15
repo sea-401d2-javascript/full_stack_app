@@ -40,9 +40,9 @@
         <label data-ng-model="conts.status" data-ng-bind="conts.status"></label>
         <button data-ng-click="conts.buttonShow = true" data-ng-show="myForm.id.$valid" type="submit">Search Continent by Id</button>
         <input data-ng-hide="!conts.editing" data-ng-click="conts.cancelEdits()" type="button" value="Cxl Edit">
-        <input data-ng-hide="!conts.buttonShow" data-ng-click="conts.editing = !conts.editing" type="button" value="EditCont">
+        <input data-ng-show="conts.buttonShow" data-ng-click="conts.editing = !conts.editing" type="button" value="EditCont">
         <input data-ng-hide="!conts.editing" data-ng-click="conts.deleteContinentById()" type="button" value="Delete">
-        <input data-ng-show="buttonToggle" type="submit" data-ng-click="conts.editContinents()" value="Save Edit">
+        <input data-ng-hide="!conts.editng" type="submit" data-ng-click="conts.editContinents()" value="Save Edit">
       </form>
       <!-- Getting all data via GET route -->
       <form data-ng-submit="conts.getContinents()">
@@ -91,7 +91,7 @@
         <label data-ng-model="gems.status" data-ng-bind="gems.status"></label>
         <button data-ng-click="gems.buttonShow = true" data-ng-show="myForm2.id2.$valid" type="submit">Search Gem by Id</button>
         <input data-ng-hide="!gems.editing" data-ng-click="gems.cancelEdits()" type="button" value="Cxl Edit">
-        <input data-ng-show="gems.buttonShow" data-ng-click="gems.editing = !gems.editing" type="button" value="Edit">
+        <input data-ng-show="gems.buttonShow" data-ng-click="gems.editing = !gems.editing" type="button" value="EditGem">
         <input data-ng-hide="!gems.editing" data-ng-click="gems.deleteGemById()" type="button" value="Delete">
         <input data-ng-hide="!gems.editing" type="submit" data-ng-click="gems.editGem()" value="Save Edit">
       </form>

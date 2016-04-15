@@ -72,9 +72,6 @@ describe('e2e testing on my homepage -continents', function(){
     var editInputRegion = element(by.model('conts.getCont.region'));
     var editInputMineral = element(by.model('conts.getCont.mineral'));
     var edditPId = element(by.model('conts.id'));
-    var editPCountry = element(by.binding('conts.getCont.country'));
-    var editPRegion = element(by.binding('conts.getCont.region'));
-    var editPMineral = element(by.binding('conts.getCont.mineral'));
     var searchButton = element(by.buttonText('Search Continent by Id'));
     var allNgShow = element.all(by.css('conts.editing'));
     var editButton = element(by.css('[value="EditCont"]'));
@@ -82,6 +79,11 @@ describe('e2e testing on my homepage -continents', function(){
     editPId.sendKeys('12345')
     searchButton.click().then(function(){
       expect(editButton.isDisplayed()).toBe(true);
+      editButton.click().then(function(){
+        expect(editInputCountry.isDisplayed()).toBe(true);
+        expect(editInputRegion.isDisplayed()).toBe(true);
+        expect(editInputMineral.isDisplayed()).toBe(true);
+      });
     });
   });
 });
@@ -146,5 +148,26 @@ describe('e2e testing on my homepage -continents', function(){
     searchButton.click();
     expect(browser.getCurrentUrl()).toBe('http://127.0.0.1:8080/');
     expect(searchButton.isDisplayed()).toBe(true);
+  });
+
+  it('should show all the p tags when clicked search by id button', function(){
+    var editInputId = element(by.model('conts.id'));
+    var editInputName = element(by.model('conts.getCont.name'));
+    var editInputColor = element(by.model('conts.getCont.color'));
+    var editInputDensity = element(by.model('conts.getCont.density'));
+    var edditPId = element(by.model('conts.id'));
+    var searchButton = element(by.buttonText('Search Gem by Id'));
+    var allNgShow = element.all(by.css('conts.editing'));
+    var editButton = element(by.css('[value="EditGem"]'));
+    editInputId.sendKeys('12345')
+    editPId.sendKeys('12345')
+    searchButton.click().then(function(){
+      expect(editButton.isDisplayed()).toBe(true);
+      editButton.click().then(function(){
+        expect(editInputName.isDisplayed()).toBe(true);
+        expect(editInputColor.isDisplayed()).toBe(true);
+        expect(editInputDensity.isDisplayed()).toBe(true);
+      });
+    });
   });
 });
