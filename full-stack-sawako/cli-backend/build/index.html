@@ -38,7 +38,7 @@
         <input name="mineral" data-ng-show="conts.editing" data-ng-model="conts.getCont.mineral" type="text" required>
         <p data-ng-model="conts.getCont" data-ng-bind="conts.getCont.mineral"></p>
         <label data-ng-model="conts.status" data-ng-bind="conts.status"></label>
-        <button data-ng-show="myForm.id.$valid" type="submit">Search by Id</button>
+        <button data-ng-show="myForm.id.$valid" type="submit">Search Continent by Id</button>
         <input data-ng-hide="!conts.editing" data-ng-click="conts.cancelEdits()" type="button" value="Cxl Edit">
         <input data-ng-hide="!conts.buttonShow" data-ng-click="conts.editing = !conts.editing" type="button" value="Edit">
         <input data-ng-hide="!conts.editing" data-ng-click="conts.deleteContinentById()" type="button" value="Delete">
@@ -89,7 +89,7 @@
         <p data-ng-model="gems.getGem" data-ng-bind="gems.getGem.density"></p>
         <input name="mineral" data-ng-show="gems.editing" data-ng-model="gems.getGem.mineral" type="text" required>
         <label data-ng-model="gems.status" data-ng-bind="gems.status"></label>
-        <button data-ng-show="myForm2.id2.$valid" type="submit">Search by Id</button>
+        <button data-ng-show="myForm2.id2.$valid" type="submit">Search Gem by Id</button>
         <input data-ng-hide="!gems.editing" data-ng-click="gems.cancelEdits()" type="button" value="Cxl Edit">
         <input data-ng-hide="!gems.buttonShow" data-ng-click="gems.editing = !gems.editing" type="button" value="Edit">
         <input data-ng-hide="!gems.editing" data-ng-click="gems.deleteGemById()" type="button" value="Delete">

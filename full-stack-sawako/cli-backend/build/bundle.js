@@ -130,7 +130,7 @@
 	    console.log(this.deleting);
 	    $http.delete(mainRoute + '/'+ this.id, this.getCont)
 	    .then((result)=>{
-	      this.getCont = this.data;
+	      this.getCont = result.data;
 	      this.status = 'Successfully deleted : ' + angular.toJson(this.getCont);
 	    })
 	  }
@@ -199,7 +199,7 @@
 	  this.editGem = function(){
 	    $http.put(mainRoute + '/' + this.id, this.getGem)
 	    .then((result)=>{
-	      this.getGem = this.data;
+	      this.getGem = result.data;
 	      this.status = 'Successfully updated : ' + angular.toJson(this.getGem);
 	    }, function(err){
 	      console.log('Here is err : ' + err);

@@ -47,10 +47,23 @@ describe('e2e testing on my homepage -continents', function(){
   it('should submit the data being input by clicking the button', function(){
     var form = element(by.tagName('form'));
     buttonClicker.click();
+
     expect(browser.getCurrentUrl()).toBe('http://127.0.0.1:8080/');
-    // expect(countryForm.getAttribute('value')).toEqual('null');
-    // expect(regionForm.getAttribute('value')).toEqual('null');
-    // expect(mineralForm.getAttribute('value')).toEqual('null');
+    expect(countryForm.getText('value')).toEqual('');
+    expect(regionForm.getText('value')).toEqual('');
+    expect(mineralForm.getText('value')).toEqual('');
+  });
+
+  it('should show search by id button when field is input', function(){
+    editPId = element(by.model('conts.id'));
+    editPCountry = element(by.model('conts.getCont.country'));
+    editPRegion = element(by.model('conts.getCont.country'));
+    editPMineral = element(by.model('conts.getCont.mineral'));
+    searchButton = element(by.buttonText('Search Continent by Id'));
+    editPId.sendKeys('12345');
+    searchButton.click();
+    expect(browser.getCurrentUrl()).toBe('http://127.0.0.1:8080/');
+    expect(editPId.isDisplayed()).toBe(true);
   });
 });
 
@@ -76,10 +89,42 @@ describe('e2e testing on my homepage -continents', function(){
     nameForm.clear();
     nameForm.sendKeys('Ruby');
     colorForm.clear();
-    nameForm.sendKeys('red');
+    colorForm.sendKeys('red');
     densityForm.clear();
-    nameForm.sendKeys(5);
+    densityForm.sendKeys(5);
   });
 
-  it('should take text and numbe')
+  it('forms should take data input', function(){
+    expect(nameForm.getAttribute('value')).toEqual('Ruby');
+    expect(colorForm.getAttribute('value')).toEqual('red');
+    expect(densityForm.getAttribute('value')).toEqual('5');
+  });
+
+  it('should have p tag that has the same data as input models', function(){
+    expect(pName.getText('value')).toEqual('Ruby');
+    expect(pColor.getText('value')).toEqual('red');
+    expect(pDensity.getText('value')).toEqual('5');
+  });
+
+  it('should submit the data being input by clicking the button', function(){
+    var form = element(by.tagName('form'));
+    buttonClicker.click();
+
+    expect(browser.getCurrentUrl()).toBe('http://127.0.0.1:8080/');
+    expect(nameForm.getText('value')).toEqual('');
+    expect(colorForm.getText('value')).toEqual('');
+    expect(densityForm.getText('value')).toEqual('');
+  });
+
+  it('should show search by id button when field is input', function(){
+    editPId = element(by.model('gems.id'));
+    editPName = element(by.model('gems.newGem.name'));
+    editPColor = element(by.model('gems.newGem.color'));
+    editPDensity = element(by.model('gems.newGem.density'));
+    searchButton = element(by.buttonText('Search Gem by Id'));
+    editPId.sendKeys('12345');
+    searchButton.click();
+    expect(browser.getCurrentUrl()).toBe('http://127.0.0.1:8080/');
+    expect(editPId.isDisplayed()).toBe(true);
+  });
 });
