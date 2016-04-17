@@ -3,10 +3,16 @@ const gulp = require('gulp');
 const mocha = require('gulp-mocha');
 const eslint = require('gulp-eslint');
 const webpack = require('gulp-webpack');
+const webpackS = require('webpack-stream');
 
 var files = ['gulpfile.js', 'server.js', __dirname + '/lib/**/*.js', __dirname + '/test/**/*.js',
             __dirname + '/models/**/*.js', __dirname + '/routes/**/*.js'];
 var client = [__dirname + '/app/js/*.js', __dirname + '/app/css/*.css', __dirname + '/app/index.html'];
+const sources = {
+  html: __dirname + '/app/index.html',
+  js: __dirname + '/app/index.js',
+  test: __dirname + '/test/*_spec.js'
+};
 //Run mocha for tests
 gulp.task('mocha', function() {
   return gulp.src(__dirname +'/test/rest_test.js', {read: false})
@@ -68,6 +74,11 @@ gulp.task('build:css', function() {
   .pipe(gulp.dest('build/css/'));
 });
 
+gulp.task('bundle:test', () => {
+  return gulp.src(sources.test)
+    .pipe(webpackS({output: {filename: 'test_bundle.js'}}))
+    .pipe(gulp.dest('./test'));
+});
 
 gulp.task('webpack', function() {
   return gulp.src(__dirname + '/app/js/index.js')
@@ -76,8 +87,8 @@ gulp.task('webpack', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(client, ['webpack', 'build:html', 'build:css']);
+  gulp.watch(client, ['webpack', 'build:html', 'build:css', 'bundle:test']);
 })
-
+gulp.task('build',['build:html', 'build:css', 'bundle:test', 'webpack']);
 //Run tasks on changes to files
 gulp.task('default',['mocha', 'lint']);
