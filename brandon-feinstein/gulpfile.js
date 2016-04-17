@@ -2,8 +2,15 @@ var gulp = require('gulp');
 var lint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
 var webpack = require('gulp-webpack');
+var webpack2 = require('webpack-stream');
 
 var paths = ['lib/*.js', 'test/*.js'];
+
+const sources = {
+  html: __dirname + '/app/index.html',
+  js: __dirname + '/app/index.js',
+  test: __dirname + '/test/*_spec.js'
+};
 
 gulp.task('lint', function(){
   return gulp.src(paths)
@@ -75,4 +82,10 @@ gulp.task('build', function() {
       }
     }))
     .pipe(gulp.dest(__dirname + '/build'));
+});
+
+gulp.task('bundle:test', () => {
+  return gulp.src(sources.test)
+    .pipe(webpack2({output: {filename: 'test_bundle.js'}}))
+    .pipe(gulp.dest('./test'));
 });
