@@ -9,7 +9,7 @@ var paths = ['lib/*.js', 'test/*.js'];
 const sources = {
   html: __dirname + '/app/index.html',
   js: __dirname + '/app/index.js',
-  test: __dirname + '/test/*_spec.js'
+  test: __dirname + '/test/unit/*_spec.js'
 };
 
 gulp.task('lint', function(){

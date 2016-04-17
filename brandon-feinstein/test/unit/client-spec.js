@@ -1,4 +1,4 @@
-require('/../../app/index.js');
+require(__dirname + '/../../app/index.js');
 const angular = require('angular');
 require('angular-mocks');
 
