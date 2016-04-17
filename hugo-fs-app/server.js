@@ -1,15 +1,14 @@
 'use strict';
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
-const config = require('./config/env');
+const express       = require('express');
+const bodyParser    = require('body-parser');
+const app           = express();
+const config        = require('./config/env');
+const mongoose      = require('mongoose');
+const customers     = require(__dirname + '/models/customers-model');
+const products      = require('./models/products-model');
 
-const mongoose = require('mongoose');
-const customers = require(__dirname + '/models/customers-model');
-const products = require('./models/products-model');
-
-const DB_PORT = process.env.MONGOLAB_URI || 'mongodb://localhost/db';
+const DB_PORT       = process.env.MONGOLAB_URI || 'mongodb://localhost/db';
 mongoose.connect(DB_PORT);
 
 app.use(bodyParser.json());

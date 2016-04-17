@@ -1,10 +1,11 @@
 'use strict';
 
-const gulp = require('gulp');
-const lint = require('gulp-eslint');
-const mocha = require('gulp-mocha');
-const webpack = require('gulp-webpack');
-const del = require('del');
+const gulp      = require('gulp');
+const lint      = require('gulp-eslint');
+const mocha     = require('gulp-mocha');
+const webpack   = require('gulp-webpack');
+const del       = require('del');
+
 
 let paths = ['*.js', 'models/*.js', 'routes/*.js', 'test/*.js', 'public/js/*.js'];
 
