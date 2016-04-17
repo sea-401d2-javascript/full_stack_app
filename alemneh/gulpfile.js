@@ -8,9 +8,10 @@ const webpackS = require('webpack-stream');
 var files = ['gulpfile.js', 'server.js', __dirname + '/lib/**/*.js', __dirname + '/test/**/*.js',
             __dirname + '/models/**/*.js', __dirname + '/routes/**/*.js'];
 var client = [__dirname + '/app/js/*.js', __dirname + '/app/css/*.css', __dirname + '/app/index.html'];
+var temp = [__dirname + '/test/*_spec.js',  __dirname + '/app/js/index.js', __dirname + '/app/index.html'];
 const sources = {
   html: __dirname + '/app/index.html',
-  js: __dirname + '/app/index.js',
+  js: __dirname + '/app/js/index.js',
   test: __dirname + '/test/*_spec.js'
 };
 //Run mocha for tests
@@ -87,7 +88,7 @@ gulp.task('webpack', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(client, ['webpack', 'build:html', 'build:css', 'bundle:test']);
+  gulp.watch(temp, ['webpack', 'build:html', 'build:css', 'bundle:test']);
 })
 gulp.task('build',['build:html', 'build:css', 'bundle:test', 'webpack']);
 //Run tasks on changes to files

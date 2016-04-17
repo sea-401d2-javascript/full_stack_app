@@ -50,10 +50,103 @@
 
 
 	describe('it should test something', () => {
-	  var peopleController, scope;
+	  var studentController;
 	  it('should have a test', () => {
 	    expect(false).toBe(false);
 	  });
+	  beforeEach(angular.mock.module('IdeaApp'))
+	  beforeEach(angular.mock.inject(function($controller) {
+	    studentController = $controller('StudentController');
+	  }))
+	  it('should construct a controller', () => {
+	    expect(typeof studentController).toBe('object');
+	    expect(studentController.students[0]).toBe('student');
+	    expect(typeof studentController.getStudents).toBe('function')
+	  })
+	  describe('REST tests', () => {
+	    var $httpBackend;
+	    beforeEach(angular.mock.inject(function(_$httpBackend_) {
+	      $httpBackend = _$httpBackend_;
+	    }));
+	    afterEach(() => {
+	      $httpBackend.verifyNoOutstandingExpectation();
+	      $httpBackend.verifyNoOutstandingRequest();
+	    })
+	    it('should get all students', () => {
+	      $httpBackend.expectGET('http://localhost:3000/students')
+	        .respond(200, {data: [{name: 'test person'}]});
+	      studentController.getStudents();
+	      $httpBackend.flush();
+	      expect(studentController.students.length).toBeGreaterThan(0);
+	      expect(studentController.students[0].name).toBe('test person');
+	    })
+	    it('should create a new student', () => {
+	      $httpBackend.expectPOST('http://localhost:3000/signup', {name: 'test person'})
+	        .respond(200, {name: 'test person', track: 'Java', password:'password', _id:'uniqueId'});
+	      studentController.createStudent({name:'test person'});
+	      $httpBackend.flush();
+	      expect(studentController.students.length).toBe(2);
+	      expect(studentController.students[1].name).toBe('test person');
+	      expect(studentController.newStudent).toBeNull();
+	    })
+	    it('should delete a student', () => {
+	      $httpBackend.expectDELETE('http://localhost:3000/5')
+	        .respond(200, 'deleted');
+	      studentController.students.push({name: 'test person', _id: 5});
+	      studentController.removeStudent({name: 'test person', _id: 5});
+	      $httpBackend.flush();
+	      expect(studentController.students.length).toBe(1);
+	      expect(studentController.students.every((s) => s._id != 5)).toBe(true);
+	    })
+	    it('should update a student', () => {
+	      var updateStudent = {name: 'test person', _id: 5};
+	      $httpBackend.expectPUT('http://localhost:3000/5')
+	        .respond(200, 'updated');
+	      studentController.students.push(updateStudent);
+	      studentController.updateStudent(updateStudent);
+	      $httpBackend.flush();
+	      expect(updateStudent.editing).toBe(false);
+	    })
+	    it('should create idea for a student', () => {
+	      var student = {name:'test student', _id: 5, ideas:[]};
+	      $httpBackend.expectPOST('http://localhost:3000/5/ideas', {sector: 'sports'})
+	        .respond(200, {data: [{sector: 'sports'}]});
+	      studentController.createNewIdea(student, {sector: 'sports'});
+	      $httpBackend.flush();
+	      expect(student.ideas.length).toBe(1);
+	      expect(student.ideas[0].sector).toBe('sports');
+	    })
+	    it('should get idea for a student', () => {
+	      var student = {name:'test student', _id: 5, ideas:[]};
+	      $httpBackend.expectGET('http://localhost:3000/5/ideas')
+	        .respond(200, {data: [{sector: 'sports'}]});
+	      studentController.getStudentIdeas(student);
+	      $httpBackend.flush();
+	      expect(student.ideas.length).toBeGreaterThan(0);
+	      expect(student.ideas[0].sector).toBe('sports')
+	    })
+	    it('should update idea', () => {
+	      var student = {name:'test student', _id: 5, ideas:[]};
+	      var idea = {sector:'sports', _id: 6};
+	      $httpBackend.expectPUT('http://localhost:3000/5/ideas/6', idea)
+	        .respond(200, 'updated');
+	      studentController.updateIdea(student, idea);
+	      $httpBackend.flush();
+	      expect(student.ideaEditing).toEqual(false);
+	    })
+	    it('should delete an idea of a student', () => {
+	      var student = {name:'test student', _id: 5, ideas:[{sector:'sports'}]};
+	      var idea = {sector:'sports', _id: 6};
+	      $httpBackend.expectDELETE('http://localhost:3000/5/ideas/6')
+	        .respond(200, 'deleted')
+	      // student.ideas.push({})
+	      studentController.removeIdea(student, idea);
+	      $httpBackend.flush();
+	      expect(student.ideas.length).toBe(1);
+	      expect(student.ideas.every((i) => i._id != 5)).toBe(true);
+
+	    })
+	  })
 
 	});
 
@@ -65,78 +158,79 @@
 	__webpack_require__(2);
 
 	const app = angular.module('IdeaApp', []);
-	app.controller('StudentController', ['$scope','$http', function($scope, $http) {
+	app.controller('StudentController', ['$http', function($http) {
 	  const route = 'http://localhost:3000';
-	  $scope.students = [];
+	  const vm = this;
+	  vm.students = ['student'];
 	  var oldIdea = {};
 	  var oldStudent = {}
-	  $scope.setStudent = function (student) {
+	  vm.setStudent = function (student) {
 	    oldStudent = {
 	      name: student.name,
 	      track: student.track
 	    };
 	  }
-	  $scope.cancelStudent = function(student) {
+	  vm.cancelStudent = function(student) {
 
 	    student.name = oldStudent.name;
 	    student.track = oldStudent.track;
 	  }
-	  $scope.setIdea = function (idea) {
+	  vm.setIdea = function (idea) {
 	    oldIdea = {
 	      sector: idea.sector,
 	      lang: idea.lang,
 	      teamSize: idea.teamSize
 	    };
 	  }
-	  $scope.cancelIdea = function(idea) {
+	  vm.cancelIdea = function(idea) {
 
 	    idea.sector = oldIdea.sector;
 	    idea.lang = oldIdea.lang;
 	    idea.teamSize = oldIdea.teamSize;
 	  }
 
-	  $scope.getStudents = function() {
+	  vm.getStudents = function() {
 	    $http.get(route+'/students')
 	      .then((res) => {
 	        console.log(res.data.data);
 
-	        $scope.students = res.data.data;
+	        vm.students = res.data.data;
 	      }, function(error) {
 	        console.error(error);
 	      })
 	  }
-	  $scope.createStudent = function(newStudent) {
+	  vm.createStudent = function(newStudent) {
 	    $http.post(route+'/signup', newStudent)
 	      .then((res) => {
 	        console.log(res);
 
-	        $scope.students.push(newStudent);
-	        $scope.newStudent = {};
+	        vm.students.push(newStudent);
+	        vm.newStudent = null;
 	      }, function(error) {
 	        console.log(error);
 	      })
 	  }
-	  $scope.removeStudent = function(student) {
+	  vm.removeStudent = function(student) {
 	    $http.delete(route+'/'+student._id)
 	      .then((res) => {
 	        console.log(res);
 
-	        $scope.students = $scope.students.filter((s) => s._id != student._id);
+	        vm.students = vm.students.filter((s) => s._id != student._id);
 	      }, function(error) {
 	        console.log(error);
 	      })
 	  }
-	  $scope.updateStudent = function(student) {
-	    console.log(student._id);
-	    $http.put(route + '/' + student._id, student)
+	  vm.updateStudent = function(updateStudent) {
+	    console.log(updateStudent._id);
+	    $http.put(route + '/' + updateStudent._id, updateStudent)
 	      .then((res) => {
 	        console.log(res);
-	        $scope.editing = false;
+	        updateStudent.editing = false;
 	      }, function(error) {
 	        console.log(error);
 	      })
 	  }
-	  $scope.getStudentIdeas = function(student) {
+	  vm.getStudentIdeas = function(student) {
 	    $http.get(route + '/' + student._id + '/ideas')
 	      .then((res) => {
 	        student.showIdeas = false;
@@ -148,14 +242,15 @@
 	        console.log(error);
 	      })
 	  }
-	  $scope.createNewIdea = function(student, newIdea) {
+	  vm.createNewIdea = function(student, newIdea) {
 	    $http.post(route+ '/' + student._id + '/ideas', newIdea)
 	      .then((res) => {
 	        console.log(res)
 	        student.ideas.push(newIdea);
 	      })
 	  }
-	  $scope.removeIdea = function(student, idea) {
+	  vm.removeIdea = function(student, idea) {
+	    console.log(student._id);
 	    $http.delete(route + '/' + student._id + '/ideas/' + idea._id)
 	      .then((res) => {
 	        console.log(res);
@@ -164,7 +259,7 @@
 	        console.log(error);
 	      })
 	  }
-	  $scope.updateIdea = function(student, idea) {
+	  vm.updateIdea = function(student, idea) {
 	    $http.put(route + '/' + student._id + '/ideas/' + idea._id, idea)
 	      .then((res) => {
 	        console.log(res);

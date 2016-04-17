@@ -15,7 +15,10 @@ module.exports = (ideaRouter, db) => {
          });
     })
     .post((req, res) => {
+      console.log(req.body);
+      console.log(req.params.student);
       Student.findById(req.params.student, (err, student) => {
+        console.log(student);
         var newIdea = new Idea(req.body);
         newIdea._owner.push(student.name);
         student.ideas.push(newIdea._id);
