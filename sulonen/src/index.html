@@ -16,7 +16,7 @@
         <h1>{{barctrl.header}}</h1>
         <ul>
           <li data-ng-repeat="bar in barctrl.bars">{{bar.name}}
-            <input class="button" type="button" value="Edit" data-ng-click="edit = !edit">
+            <input class="button bar-edit" type="button" value="Edit" data-ng-click="edit = !edit">
             <form name="barForm" data-ng-init="!edit" data-ng-show="edit" action="">
               <p>
                 <label for="barName">Bar Name</label>
@@ -31,10 +31,10 @@
                 <input id="barHours" class="input" data-ng-model="bar.hours">
               </p>
               <p>
-                <input class="button" type="button" value="Cancel" data-ng-click="barctrl.resetForm(bar)">
-                <input class="button" type="button" value="Create" data-ng-click="barctrl.createBar(bar);edit = !edit">
-                <input class="button" type="button" value="Save" data-ng-click="barctrl.updateBar(bar);edit = !edit">
-                <input class="button" type="button" value="Delete" data-ng-click="barctrl.deleteBar(bar);edit = !edit">
+                <input class="button bar-cancel" type="button" value="Cancel" data-ng-click="barctrl.resetForm(bar)">
+                <input class="button bar-create" type="button" value="Create" data-ng-click="barctrl.createBar(bar);edit = !edit">
+                <input class="button bar-save" type="button" value="Save" data-ng-click="barctrl.updateBar(bar);edit = !edit">
+                <input class="button bar-delete" type="button" value="Delete" data-ng-click="barctrl.deleteBar(bar);edit = !edit">
               </p>
             </form>
           </li>
@@ -45,7 +45,7 @@
         <h1>{{bandctrl.header}}</h1>
         <ul>
           <li data-ng-repeat="band in bandctrl.bands">{{band.name}}
-            <input class="button" type="button" value="Edit" data-ng-click="edit = !edit">
+            <input class="button band-edit" type="button" value="Edit" data-ng-click="edit = !edit">
             <form name="bandForm" data-ng-init="!edit" data-ng-show="edit" action="">
               <p>
                 <label for="bandName">Band Name</label>
@@ -68,10 +68,10 @@
                 <input id="bandBar" class="input" data-ng-model="band.bar">
               </p>
               <p>
-                <input class="button" type="button" value="Cancel" data-ng-click="bandctrl.resetForm(band)">
-                <input class="button" type="button" value="Create" data-ng-click="bandctrl.createBand(band);edit = !edit">
-                <input class="button" type="button" value="Save" data-ng-click="bandctrl.updateBand(band);edit = !edit">
-                <input class="button" type="button" value="Delete" data-ng-click="bandctrl.deleteBand(band);edit = !edit">
+                <input class="button band-cancel" type="button" value="Cancel" data-ng-click="bandctrl.resetForm(band)">
+                <input class="button band-create" type="button" value="Create" data-ng-click="bandctrl.createBand(band);edit = !edit">
+                <input class="button band-save" type="button" value="Save" data-ng-click="bandctrl.updateBand(band);edit = !edit">
+                <input class="button band-delete" type="button" value="Delete" data-ng-click="bandctrl.deleteBand(band);edit = !edit">
               </p>
             </form>
           </li>

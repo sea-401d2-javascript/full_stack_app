@@ -75,9 +75,9 @@
 	      expect(barController.bars[0].name).toBe('Create a new bar!');
 	    });
 	    it('should create a bar', () => {
-	      $httpBackend.expectPOST('http://localhost:3000/bars', {name: 'test bar', neighborhood: 'test', hours: 'test'})
-	        .respond(200, {name: 'test bar', neighborhood: 'test', hours: 'test'});
-	      barController.createBar({name: 'test bar', neighborhood: 'test', hours: 'test'});
+	      $httpBackend.expectPOST('http://localhost:3000/bars', {name: 'test bar'})
+	        .respond(200, {name: 'test bar'});
+	      barController.createBar({name: 'test bar'});
 	      console.log(barController.bars);
 	      expect(barController.bars.length).toBeGreaterThan(0);
 	      expect(barController.bars[0].name).toBe('Create a new bar!');
@@ -182,7 +182,7 @@
 	        'Content-type': 'application/json'
 	      }
 	    }).then(function successCallback(response) {
-	      if (response.data.data) {
+	      if (response.data.data.length) {
 	        vm.bars = response.data.data;
 	      }
 	    }, function errorCallback(response) {
@@ -284,7 +284,7 @@
 	        'Content-type': 'application/json'
 	      }
 	    }).then(function successCallback(response) {
-	      if (response.data.data) {
+	      if (response.data.data.length) {
 	        vm.bands = response.data.data;
 	      }
 	    }, function errorCallback(response) {
