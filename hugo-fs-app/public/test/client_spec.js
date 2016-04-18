@@ -6,10 +6,15 @@ require('angular-mocks');
 
 describe('testing customer REST routes', () => {
   var $httpBackend;
+  var CustomerController;
   var customerRoute = 'http://localhost:3000/customers';
+  beforeEach(angular.mock.module('app'))
   beforeEach(angular.mock.inject(function(_$httpBackend_) {
     $httpBackend = _$httpBackend_;
   }));
+  beforeEach(angular.mock.inject(function($controller) {
+    CustomerController = $controller('CustomerController');
+  }))
   afterEach(() => {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
@@ -57,10 +62,15 @@ describe('testing customer REST routes', () => {
 
 describe('REST tests for products', () => {
   var $httpBackend;
+  var ProductController;
   var productsRoute = 'http://localhost:3000/products';
+  beforeEach(angular.mock.module('app'))
   beforeEach(angular.mock.inject(function(_$httpBackend_) {
     $httpBackend = _$httpBackend_;
   }));
+  beforeEach(angular.mock.inject(function($controller) {
+    ProductController = $controller('ProductController');
+  }))
   afterEach(() => {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();

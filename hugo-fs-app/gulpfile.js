@@ -53,8 +53,21 @@ gulp.task('webpack', () => {
   .pipe(gulp.dest(__dirname + '/public/build'));
 });
 
+gulp.task('bundle:test', () => {
+  return gulp.src('./public/test/client_spec.js')
+  .pipe(webpack({output: {filename: 'test_bundle.js'},
+  watch: true,
+  module: {
+    loaders: [
+      { test: /\.css$/, loader: 'style!css'}
+    ]
+  }
+}))
+  .pipe(gulp.dest(__dirname + '/public/test'));
+})
+
 gulp.task('watch', () => {
   gulp.watch(paths);
 });
 
-gulp.task('default', ['eslint', 'del-build', 'webpack', 'copy-html', 'copy-css']);
+gulp.task('default', ['eslint', 'del-build', 'webpack', 'copy-html', 'copy-css', 'bundle:test']);
