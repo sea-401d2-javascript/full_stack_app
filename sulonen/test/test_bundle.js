@@ -103,7 +103,6 @@
 	  });
 	});
 
-
 	describe('Unit tests for fullstack application: bands', () => {
 	  var bandController;
 	  beforeEach(angular.mock.module('RESTApp'));

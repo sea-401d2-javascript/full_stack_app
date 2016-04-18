@@ -57,7 +57,6 @@ describe('Unit tests for fullstack application: bars', () => {
   });
 });
 
-
 describe('Unit tests for fullstack application: bands', () => {
   var bandController;
   beforeEach(angular.mock.module('RESTApp'));
