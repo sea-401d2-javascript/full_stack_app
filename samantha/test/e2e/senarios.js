@@ -1,3 +1,6 @@
+// start all servers (client-server and server) in terminal
+// along with mongod (for testdb) and selenium 
+
 process.env.MONGOLAB_URI = 'mongodb://localhost/testdb';
 
 // require(__dirname + '/../../server.js');
@@ -55,12 +58,10 @@ describe('first e2e tests for full stack angular app', function(){
 
     expect(name.getAttribute('value')).toEqual('Brownies');
     expect(cookTime.getAttribute('value')).toEqual('30');
-    // console.log(recipes.get(0));
     expect(ingredients.getAttribute('value')).toEqual('chocolate');
     expect(recipes.get(0).getText()).toContain('Brownies');
     expect(recipes.get(0).getText()).toContain('30');
     expect(recipes.get(0).getText()).toContain('chocolate');
-
   });
 
 });
