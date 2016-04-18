@@ -6,7 +6,7 @@ const eslint = require('gulp-eslint');
 const exec = require('child_process').exec;
 const webpack = require('webpack-stream');
 
-var paths = ['*.js', 'src/*.js', 'test/*.js', 'models/*.js'];
+const paths = ['*.js', 'src/*.js', 'test/*_spec.js', 'models/*.js'];
 
 var runCommand = function(command) {
   exec(command, (err, stdout, stderr) => {
@@ -48,13 +48,12 @@ gulp.task('static', function() {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('webpack', () => {
+gulp.task('webpack:dist', () => {
   return gulp.src('./entry.js')
     .pipe(webpack({
       output: {
         filename: 'bundle.js'
       },
-      watch: true,
       module: {
         loaders: [{
           test: /\.css$/,
@@ -65,7 +64,13 @@ gulp.task('webpack', () => {
     .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('push', ['static', 'webpack']);
+gulp.task('webpack:test', () => {
+  return gulp.src('./test/*_spec.js')
+    .pipe(webpack({output: {filename: 'test_bundle.js'}}))
+    .pipe(gulp.dest('./test'));
+});
+
+gulp.task('push', ['static', 'webpack:dist']);
           
-gulp.task('default', ['webpack', 'lint']);
+gulp.task('default', ['lint', 'static', 'webpack:dist', 'webpack:test']);
 

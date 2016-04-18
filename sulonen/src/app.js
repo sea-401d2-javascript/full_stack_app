@@ -18,7 +18,7 @@ app.controller('BarController', ['$http', function($http) {
         'Content-type': 'application/json'
       }
     }).then(function successCallback(response) {
-      if (response.data.data.length) {
+      if (response.data.data) {
         vm.bars = response.data.data;
       }
     }, function errorCallback(response) {
@@ -120,7 +120,7 @@ app.controller('BandController', ['$http', function($http) {
         'Content-type': 'application/json'
       }
     }).then(function successCallback(response) {
-      if (response.data.data.length) {
+      if (response.data.data) {
         vm.bands = response.data.data;
       }
     }, function errorCallback(response) {
