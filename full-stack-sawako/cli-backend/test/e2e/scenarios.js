@@ -66,7 +66,7 @@ describe('e2e testing on my homepage -continents', function(){
     expect(searchButton.isDisplayed()).toBe(true);
   });
 
-  it('should show all the p tags when clicked search by id button', function(){
+  it('should show all the input fields when clicked edit button', function(){
     var editInputId = element(by.model('conts.id'));
     var editInputCountry = element(by.model('conts.getCont.country'));
     var editInputRegion = element(by.model('conts.getCont.region'));
@@ -86,6 +86,14 @@ describe('e2e testing on my homepage -continents', function(){
       });
     });
   });
+
+  it('should show data in repeated tags', function(){
+    var repeatedTags = element(by.repeater('contData in conts.allContinents').row(0));
+    var getAllButton = element(by.buttonText('Get All Continents Data'));
+    getAllButton.click();
+    expect(repeatedTags.getText()).toBe('id: 570e8bb9ad3727da26297568 Country: japan Region: osaka Mineral: coal');
+  })
+
 });
 
 describe('e2e testing on my homepage -continents', function(){
@@ -170,4 +178,11 @@ describe('e2e testing on my homepage -continents', function(){
       });
     });
   });
+
+  it('should show data in repeated tags', function(){
+    var repeatedTags = element(by.repeater('gemsData in gems.allGems').row(0));
+    var getAllButton = element(by.buttonText('Get All Gems Data'));
+    getAllButton.click();
+    expect(repeatedTags.getText()).toBe('id: 57152ddce1c3f18f2e57577e Name: Ruby Color: red Density: 5');
+  })
 });

@@ -8,7 +8,7 @@ let router = express.Router();
 let mongoose = require('mongoose');
 
 let DB_PORT = process.env.MONGOLAB_URI || 'mongodb://localhost/db';
-mongoose.connect(DB_PORT);
+mongoose.connect('mongodb://localhost/test');
 
 //body-parser needs to be before header and mounting router needs to happen after header!!
 app.use(bodyParser.json());
