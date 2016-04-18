@@ -7,6 +7,7 @@ module.exports = (mongoose, models)=>{
     title: String,
     genre: String,
     year: Number,
+    highScore: Number,
     updated: {type: Date, default: Date.now},
     players: Number
 
