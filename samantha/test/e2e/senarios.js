@@ -42,6 +42,7 @@ describe('first e2e tests for full stack angular app', function(){
     var name = element(by.model('newRecipe.name'));
     var cookTime = element(by.model('newRecipe.cookTime'));
     var ingredients = element(by.model('newRecipe.ingredients'));
+    // console.log(ingredients)
     var button = element(by.buttonText('Add New Recipe'));
 
     name.clear();
@@ -49,15 +50,16 @@ describe('first e2e tests for full stack angular app', function(){
     cookTime.clear();
     cookTime.sendKeys(30);
     ingredients.clear();
-    ingredients.sendKeys(['flour', 'sugar', 'chocolate']);
+    ingredients.sendKeys('chocolate');
     button.click();
 
     expect(name.getAttribute('value')).toEqual('Brownies');
-    expect(cookTime.getAttribute('value')).toEqual(30);
-    expect(ingredients.getAttribute('value')).toEqual(['flour', 'sugar', 'chocolate']);
+    expect(cookTime.getAttribute('value')).toEqual('30');
+    // console.log(recipes.get(0));
+    expect(ingredients.getAttribute('value')).toEqual('chocolate');
     expect(recipes.get(0).getText()).toContain('Brownies');
-    expect(recipes.get(0).getText()).toContain(30);
-    expect(recipes.get(0).getText()).toContain(['flour', 'sugar', 'chocolate']);
+    expect(recipes.get(0).getText()).toContain('30');
+    expect(recipes.get(0).getText()).toContain('chocolate');
 
   });
 

@@ -75,6 +75,7 @@
 	    });
 	    this.updateChef.displayed = null;
 	  };
+	  
 	  this.resetChef = function(chef) {
 	    $http.get(mainRoute + '/' + chef._id)
 	    .then((res) => {

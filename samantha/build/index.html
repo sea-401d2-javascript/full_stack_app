@@ -38,7 +38,7 @@
     <main data-ng-init="recipectrl.getRecipes()" data-ng-controller="RecipeController as recipectrl">
       <h2>See all recipes below:</h2>
       <ul>
-        <li class="ng-cloak" data-ng-cloak data-ng-repeat="recipe in recipectrl.recipes">{{recipe.name}}  id:{{recipe._id}}
+        <li class="ng-cloak" data-ng-cloak data-ng-repeat="recipe in recipectrl.recipes">{{recipe}}
           <button type="submit" data-ng-click="recipectrl.removeRecipe(recipe)">Delete Recipe</button>
           <button type="submit" data-ng-click="recipectrl.updateRecipe.displayed = recipe._id">Edit Recipe</button>
           <form data-ng-show="recipectrl.updateRecipe.displayed == recipe._id" data-ng-submit="recipectrl.updateRecipe(recipe)">
@@ -54,7 +54,7 @@
       <form data-ng-submit="recipectrl.createRecipe(newRecipe)">
         <input type="text" placeholder="Name" data-ng-model="newRecipe.name"/>
         <input type="text" placeholder="Cook Time" data-ng-model="newRecipe.cookTime"/>
-        <input type="text" placeholder="Ingredients" data-ng-model="newRecipe.Ingredients"/>
+        <input type="text" placeholder="Ingredients" data-ng-model="newRecipe.ingredients"/>
         <input type="reset"/>
         <button type="submit">Add New Recipe</button>
       </form>
