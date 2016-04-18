@@ -3,8 +3,16 @@ describe('my arcadeapp homepage', function(){
   var inputName = element(by.model('newArcade.name'));
   var inputAddress = element(by.model('newArcade.address'));
   var inputHours = element(by.model('newArcade.hours'));
+  var inputTitle = element(by.model('newGame.title'));
+  var inputGenre = element(by.model('newGame.genre'));
+  var inputPlayers = element(by.model('newGame.players'));
+  var inputYear = element(by.model('newGame.year'));
   var updateButton = element(by.buttonText('Save Arcade'));
-  var deleteButton = element(by.buttonText('Delete'));
+  var deleteButton = element(by.buttonText('Delete Arcade'));
+  var cancelButton = element(by.buttonText('Cancel Update'));
+  var updateGame = element(by.buttonText('Save Game'));
+  var deleteGame = element(by.buttonText('Delete'));
+  var cancelGame = element(by.buttonText('Cancel'));
 
 beforeEach(function(){
   browser.get('http://localhost:8080');
@@ -12,6 +20,7 @@ beforeEach(function(){
 it('should have same title as in header', function(){
   expect(browser.getTitle()).toEqual('Arcade App');
 });
+
 it('should get create a new arcade', function(){
   inputName.sendKeys('Test Arcade');
   expect(inputName.getAttribute('value')).toBe('Test Arcade');
@@ -32,41 +41,71 @@ it('should update the arcade', function(){
   expect(inputName.getAttribute('value')).toBe('Freddy');
   expect(inputAddress.getAttribute('value')).toBe('9867');
   expect(inputHours.getAttribute('value')).toBe('Mon-Weds 9-8');
-
-
-})
+});
+it('should clear the arcade', function(){
+  inputName.clear();
+  inputAddress.clear();
+  inputHours.clear();
+  cancelButton.click();
+  expect(inputName.getAttribute('value')).toBe('');
+  expect(inputAddress.getAttribute('value')).toBe('');
+  expect(inputHours.getAttribute('value')).toBe('');
 
 });
 
-// describe('our first angular test homepage', function() {
-//   var firstName = element(by.model('namectrl.firstName'))
-//   var lastName = element(by.model('namectrl.lastName'))
-//   var updateButton = element(by.buttonText('Update Name'))
-//
-//   beforeEach(function() {
-//     browser.get('http://127.0.0.1:8080/')
-//   })
-//
-//   it('should have the correct title', function() {
-//     expect(browser.getTitle()).toEqual('My First Angular Test')
-//   })
-//
-//   it('should have a default name', function() {
-//     expect(firstName.getAttribute('value')).toEqual('Peggy')
-//     expect(lastName.getAttribute('value')).toEqual('Hill')
-//     expect(element(by.binding('namectrl.fullName')).getText()).toEqual('Peggy Hill')
-//   })
-//
-//   it('can update the name', function() {
-//     firstName.clear()
-//     firstName.sendKeys('Bobby')
-//     lastName.clear()
-//     lastName.sendKeys('UstaHill')
-//     updateButton.click()
-//
-//     expect(firstName.getAttribute('value')).toEqual('Bobby')
-//     expect(lastName.getAttribute('value')).toEqual('UstaHill')
-//     expect(element(by.binding('namectrl.fullName')).getText()).toEqual('Bobby UstaHill')
-//   })
-//
-// })
+it('should delete an arcade', function(){
+  deleteButton.click();
+  expect(inputName.getAttribute('value')).toBe('');
+  expect(inputAddress.getAttribute('value')).toBe('');
+  expect(inputHours.getAttribute('value')).toBe('');
+
+});
+it('should get create a new game', function(){
+  inputTitle.sendKeys('Test Game');
+  expect(inputTitle.getAttribute('value')).toBe('Test Game');
+  inputGenre.sendKeys('multi');
+  expect(inputGenre.getAttribute('value')).toBe('multi');
+  inputPlayers.sendKeys('4');
+  expect(inputPlayers.getAttribute('value')).toBe('4');
+  inputYear.sendKeys('1987');
+  expect(inputYear.getAttribute('value')).toBe('1987');
+
+});
+it('should update the game', function(){
+  inputTitle.clear();
+  inputTitle.sendKeys('Freddy Frights');
+  inputGenre.clear();
+  inputGenre.sendKeys('fighter');
+  inputPlayers.clear();
+  inputPlayers.sendKeys('3');
+  inputYear.clear();
+  inputYear.sendKeys('1987');
+  updateGame.click();
+  expect(inputTitle.getAttribute('value')).toBe('Freddy Frights');
+  expect(inputGenre.getAttribute('value')).toBe('fighter');
+  expect(inputPlayers.getAttribute('value')).toBe('3');
+  expect(inputYear.getAttribute('value')).toBe('1987');
+});
+it('should clear the game', function(){
+  inputTitle.clear();
+  inputGenre.clear();
+  inputPlayers.clear();
+  inputYear.clear();
+  cancelButton.click();
+  expect(inputTitle.getAttribute('value')).toBe('');
+  expect(inputGenre.getAttribute('value')).toBe('');
+  expect(inputPlayers.getAttribute('value')).toBe('');
+  expect(inputYear.getAttribute('value')).toBe('');
+
+});
+
+it('should delete an arcade', function(){
+  deleteGame.click();
+  expect(inputTitle.getAttribute('value')).toBe('');
+  expect(inputGenre.getAttribute('value')).toBe('');
+  expect(inputPlayers.getAttribute('value')).toBe('');
+  expect(inputYear.getAttribute('value')).toBe('');
+
+});
+
+});
