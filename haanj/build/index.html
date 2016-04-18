@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>List</title>
 
   <style>
     .ng-cloak {
@@ -27,11 +27,11 @@
       </ul>
       <button data-ng-show="snackctrl.isActive(snack._id)" data-ng-click="snackctrl.toggleEdit()">Edit</button>
     </div>
-    <h1 data-ng-click="snackctrl.makeActive('new')">Add New Snack</h1>
+    <h1 id="addSnack" data-ng-click="snackctrl.makeActive('new')">Add New Snack</h1>
     <div data-ng-show="snackctrl.isActive('new')">
-      <input data-ng-model="newName" placeholder="Snack Name"></br>
-      <input data-ng-model="newIngredients" placeholder="Ingredients, separated by comma"></br>
-      <input data-ng-model="newTags" placeholder="Tags, separated by comma"></br>
+      <input id="newName" data-ng-model="newName" placeholder="Snack Name"></br>
+      <input id="newIngredients" data-ng-model="newIngredients" placeholder="Ingredients, separated by comma"></br>
+      <input id="newTags" data-ng-model="newTags" placeholder="Tags, separated by comma"></br>
       <button data-ng-click="snackctrl.addSnack(newName, newIngredients, newTags)">Add Snack</button>
     </div>
   </main>

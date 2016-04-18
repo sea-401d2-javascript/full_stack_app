@@ -1,5 +1,5 @@
 'use strict';
-require(__dirname + '/../index');
+require(__dirname + '/../../index');
 
 // var fs = require('fs');
 let chai = require('chai');

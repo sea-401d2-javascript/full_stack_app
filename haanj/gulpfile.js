@@ -6,9 +6,9 @@ const mocha   = require('gulp-mocha');
 const webpack = require('gulp-webpack');
 
 var jsPaths = ['*.js', 'test/*js', 'lib/*js', 'app/*js', 'test/*js'];
-var tests   = ['test/*js'];
 var build   = 'build/';
 var entry   = ['app/index.js'];
+var serverTests   = ['test/mocha/*js'];
 
 gulp.task('lint', function() {
   return gulp.src(jsPaths)
@@ -29,7 +29,7 @@ gulp.task('webpack', function() {
 });
 
 gulp.task('mocha', function() {
-  return gulp.src(tests)
+  return gulp.src(serverTests)
     .pipe(mocha({reporter: 'nyan'}));
 });
 
