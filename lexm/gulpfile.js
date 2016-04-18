@@ -49,7 +49,8 @@ var eslintRules = {
 var paths = {
   css:  ['app/*.css'],
   html: ['app/*.html'],
-  js:   ['app/js/*.js', 'test/*.js']
+  js:   ['app/js/*.js', 'test/*.js'],
+  test: ['test/*_spec.js']
 };
 
 gulp.task('lint', function(){
@@ -79,6 +80,12 @@ gulp.task('build:js', function() {
   return gulp.src('./app/js/index.js')
     .pipe(webpack(require('./webpack.config.js')))
     .pipe(gulp.dest('./public/'));
+});
+
+gulp.task('build:test', () => {
+  return gulp.src('test/*_spec.js')
+    .pipe(webpack({output: {filename: 'test_bundle.js'}}))
+    .pipe(gulp.dest('./test'));
 });
 
 gulp.task('watch:css', function() {
