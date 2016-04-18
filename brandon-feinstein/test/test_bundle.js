@@ -52,36 +52,36 @@
 	describe('it should test something', () => {
 	  var userController;
 	  it('should have a test', () => {
-	    expect(false).toBe(false);
+	    expect(true).toBe(true);
 	  });
 	  beforeEach(angular.mock.module('UserApp'))
 	  beforeEach(angular.mock.inject(function($controller) {
-	    userController = $controller('userController');
+	    userController = $controller('UserController');
 	  }))
 	  it('should construct a controller', () => {
 	    expect(typeof userController).toBe('object');
-	    // expect(peopleController.people[0]).toBe('person');
-	    // expect(typeof peopleController.getPeople).toBe('function');
+	    expect(typeof userController.getUser).toBe('function');
 	  })
-	  // describe('REST tests', () => {
-	  //   var $httpBackend;
-	  //   beforeEach(angular.mock.inject(function(_$httpBackend_) {
-	  //     $httpBackend = _$httpBackend_;
-	  //   }));
-	  //   afterEach(() => {
-	  //     $httpBackend.verifyNoOutstandingExpectation();
-	  //     $httpBackend.verifyNoOutstandingRequest();
-	  //   })
-	  //
-	  //   it('should get all people', () => {
-	  //     $httpBackend.expectGET('http://localhost:3000/people')
-	  //       .respond(200, {people: [{name: 'test person'}]});
-	  //     peopleController.getPeople();
-	  //     $httpBackend.flush();
-	  //     expect(peopleController.people.length).toBeGreaterThan(0);
-	  //     expect(peopleController.people[0].name).toBe('test person');
-	  //   });
-	    //
+	  describe('REST tests', () => {
+	    var $httpBackend;
+	    beforeEach(angular.mock.inject(function(_$httpBackend_) {
+	      $httpBackend = _$httpBackend_;
+	    }));
+	    afterEach(() => {
+	      $httpBackend.verifyNoOutstandingExpectation();
+	      $httpBackend.verifyNoOutstandingRequest();
+	    })
+
+	    it('should get all users', () => {
+	      $httpBackend.expectGET('http://localhost:3000/users')
+	        .respond(200, {data: [{name: 'test user'}]});
+	      userController.getUser();
+	      $httpBackend.flush();
+	      // console.log(userController.user);
+	      expect(userController.user.length).toBeGreaterThan(0);
+	      expect(userController.user[0].name).toBe('test user');
+	    });
+
 	    // it('should create a new person', () => {
 	    //   $httpBackend.expectPOST('http://localhost:3000/people', {name: 'test person'})
 	    //     .respond(200, {name: 'test person', age: 18, _id:'uniqueid'});
@@ -111,7 +111,7 @@
 	    //   $httpBackend.flush();
 	    //   expect(updatePerson.editing).toBe(false);
 	    // });
-	  // });
+	  });
 	});
 
 
