@@ -77,39 +77,37 @@
 	        .respond(200, {data: [{name: 'test user'}]});
 	      userController.getUser();
 	      $httpBackend.flush();
-	      // console.log(userController.user);
 	      expect(userController.user.length).toBeGreaterThan(0);
 	      expect(userController.user[0].name).toBe('test user');
 	    });
 
-	    // it('should create a new person', () => {
-	    //   $httpBackend.expectPOST('http://localhost:3000/people', {name: 'test person'})
-	    //     .respond(200, {name: 'test person', age: 18, _id:'uniqueid'});
-	    //   peopleController.createPerson({name: 'test person'})
-	    //   $httpBackend.flush();
-	    //   expect(peopleController.people.length).toBe(2);
-	    //   expect(peopleController.people[1].name).toBe('test person');
-	    //   expect(peopleController.newPerson).toBeNull();
-	    // });
-	    //
-	    // it('should delete a person', () => {
-	    //   $httpBackend.expectDELETE('http://localhost:3000/people/5')
-	    //     .respond(200, 'deleted');
-	    //   peopleController.people.push({name: 'test person', _id: 5});
-	    //   peopleController.removePerson({name: 'test person', _id: 5});
-	    //   $httpBackend.flush();
-	    //   expect(peopleController.people.length).toBe(1);
-	    //   expect(peopleController.people.every((p) => p._id != 5)).toBe(true);
-	    // });
-	    //
+	    it('should create a new person', () => {
+	      $httpBackend.expectPOST('http://localhost:3000/users', {name: 'test person'})
+	        .respond(200, {name: 'test person', _id:'uniqueid'});
+	      userController.createUser({name: 'test person'})
+	      $httpBackend.flush();
+	      expect(userController.user.length).toBe(2);
+	      expect(userController.user[1].name).toBe('test person');
+	    });
+
+	    it('should delete a person', () => {
+	      $httpBackend.expectDELETE('http://localhost:3000/users/5')
+	        .respond(200, 'deleted');
+	      userController.user.push({name: 'test person', _id: 5});
+	      userController.removeUser({name: 'test person', _id: 5});
+	      $httpBackend.flush();
+	      expect(userController.user.length).toBe(1);
+	      expect(userController.user.every((u) => u._id != 5)).toBe(true);
+	    });
+
 	    // it('should update a person', () => {
-	    //   var updatePerson = {name: 'test person', _id: 5};
-	    //   $httpBackend.expectPUT('http://localhost:3000/people/5')
+	    //   var updateUser = {name: 'test personup', _id: 5};
+	    //   $httpBackend.expectPUT('http://localhost:3000/users/5')
 	    //     .respond(200, 'updated');
-	    //   peopleController.people.push(updatePerson);
-	    //   peopleController.updatePerson(updatePerson);
-	    //   $httpBackend.flush();
-	    //   expect(updatePerson.editing).toBe(false);
+	    //   userController.user.push(updateUser);
+	    //   userController.updateUser(updateUser);
+	    //   // $httpBackend.flush();
+	    //   // expect(updateUser.editing).toBe(false);
 	    // });
 	  });
 	});
