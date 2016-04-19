@@ -25,7 +25,6 @@ describe('testing customer REST routes', () => {
       .respond(200, [{name: 'test larry'}]);
       CustomerController.getCustomers();
       $httpBackend.flush();
-      debugger;
       expect(CustomerController.customers.length).toBeGreaterThan(0);
       expect(CustomerController.customers[0].name).toBe('test larry');
   });

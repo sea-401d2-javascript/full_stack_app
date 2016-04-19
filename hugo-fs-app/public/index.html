@@ -27,7 +27,7 @@
 
         <section ng-repeat="customer in custctrl.customers" ng-cloak>
           <ul>
-            <li class="info-line"><span>Name: </span>{{customer.name}}</li><br>
+            <li class="info-line" ng-bind:><span>Name: </span>{{customer.name}}</li><br>
             <li class="info-line"><span>Age: </span>{{customer.age}}</li><br>
             <li class="info-line"><span>Email: </span>{{customer.email}}</li><br>
           </ul>

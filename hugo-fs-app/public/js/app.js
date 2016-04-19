@@ -1,3 +1,5 @@
+'use strict';
+
 require(__dirname + '/../../bower_components/angular/angular.js');
 require(__dirname + '/../css/normalize.css');
 require(__dirname + '/../css/main.css');

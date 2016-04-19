@@ -71,7 +71,6 @@
 	      .respond(200, [{name: 'test larry'}]);
 	      CustomerController.getCustomers();
 	      $httpBackend.flush();
-	      debugger;
 	      expect(CustomerController.customers.length).toBeGreaterThan(0);
 	      expect(CustomerController.customers[0].name).toBe('test larry');
 	  });
@@ -163,6 +162,8 @@
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
 
 	__webpack_require__(2);
 	__webpack_require__(3);
