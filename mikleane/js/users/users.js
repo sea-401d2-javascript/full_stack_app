@@ -13,7 +13,6 @@
         };
 
         this.createUser = function(user) {
-          // console.log('user ', user)
           $http.post(userRoute, user)
           .then((res) => {
             this.users.push(res.data);

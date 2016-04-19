@@ -41,7 +41,7 @@ describe('it should test something', ()=> {
         $httpBackend.flush();
         expect(beerController.beers.length).toBeGreaterThan(0);
         expect(beerController.beers[1].name).toBe('test beer');
-        // expect(beerController.newBeer).toBeNull();
+
     })
     it('should update a beer record', () => {
       $httpBackend.expectPUT('http://localhost:3000/beers/3')
@@ -51,7 +51,7 @@ describe('it should test something', ()=> {
         $httpBackend.flush();
         expect(beerController.beers.length).toBe(2);
         expect(beerController.beers.every((b) => b._id=3)).toBe(true);
-        // expect(beerController.beers[1].name).toBe('updated beer');
+      
     })
     it('should delete a beer', () => {
       $httpBackend.expectDELETE('http://localhost:3000/beers/5')
@@ -61,7 +61,7 @@ describe('it should test something', ()=> {
         $httpBackend.flush();
         expect(beerController.beers.length).toBe(1);
         expect(beerController.beers.every((b) => b._id != 5)).toBe(true);
-        
+
     })
   })
 })

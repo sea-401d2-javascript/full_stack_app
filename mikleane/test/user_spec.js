@@ -42,7 +42,7 @@ describe('it should test something', ()=> {
         expect(userController.users.length).toBeGreaterThan(0);
         expect(userController.users[1].firstName).toBe('test Jane');
         expect(userController.users[1].lastName).toBe('Doe');
-        // expect(userController.newUser).toBeNull();
+
     })
     it('should update a user record', () => {
       $httpBackend.expectPUT('http://localhost:3000/users/7')
@@ -52,7 +52,7 @@ describe('it should test something', ()=> {
         $httpBackend.flush();
         expect(userController.users.length).toBe(3);
         expect(userController.users.every((b) => b._id=7)).toBe(true);
-        // expect(userController.users[1].firstName).toBe('new Cathy');
+        
     })
     it('should delete a user', () => {
       $httpBackend.expectDELETE('http://localhost:3000/users/5')

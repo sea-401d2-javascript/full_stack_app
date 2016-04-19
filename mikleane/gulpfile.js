@@ -19,18 +19,12 @@ gulp.task('eslint', function() {
     .pipe(eslint.format());
 });
 
-// gulp.task('mocha', function(){
-//   return gulp.src('test/*.js')
-//     .pipe(mocha({reporter: 'nyan'}));
-// });
-
 gulp.task('webpack', function() {
   return gulp.src(__dirname + '/js/index.js')
   .pipe(webpack({
     watch: true,
     module: {
       loaders: [
-        // {test: /\.css$/, loader: 'style!css'}
         { test: /\.css$/, loader: "style-loader!css-loader" },
         { test: /\.png$/, loader: "url-loader?limit=100000" },
         { test: /\.jpg$/, loader: "file-loader" }
@@ -59,10 +53,5 @@ gulp.task('bundle:test', () => {
   .pipe(webpack({output: {filename:'test_bundle.js'}}))
   .pipe(gulp.dest('./test'))
 });
-// gulp.task('watch', function() {
-//   gulp.watch('*.js', ['eslint']);
-//   gulp.watch('models/*.js', ['eslint']);
-//   gulp.watch('test/*.js', ['eslint','mocha']);
-// });
 
 gulp.task('default', ['eslint', 'webpack', 'bundle:dev', 'copy']);
