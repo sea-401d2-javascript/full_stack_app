@@ -11,8 +11,7 @@
   </head>
   <body data-ng-cloak class="ng-cloak">
     <main>
-      <section id="bars" data-ng-controller="BarController as barctrl"
-        data-ng-init="barctrl.getBars()">
+    <section id="bars" data-ng-controller="BarController as barctrl" data-ng-init="barctrl.getBars()">
         <h1>{{barctrl.header}}</h1>
         <ul>
           <li data-ng-repeat="bar in barctrl.bars">{{bar.name}}
