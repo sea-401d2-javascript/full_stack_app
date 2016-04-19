@@ -7,6 +7,11 @@ module.exports = (ideaRouter, db) => {
 
   ideaRouter.route('/:student/ideas')
     .get((req, res) => {
+      console.log(req.body);
+      console.log(req.params.student);
+      if(!req.params.student) {
+        return res.json({data: 'No Ideas'})
+      }
       Student.findOne({_id: req.params.student})
          .populate('ideas')
          .exec((err, student) => {
@@ -15,8 +20,7 @@ module.exports = (ideaRouter, db) => {
          });
     })
     .post((req, res) => {
-      console.log(req.body);
-      console.log(req.params.student);
+
       Student.findById(req.params.student, (err, student) => {
         console.log(student);
         var newIdea = new Idea(req.body);

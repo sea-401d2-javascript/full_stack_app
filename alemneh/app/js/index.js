@@ -74,6 +74,13 @@ app.controller('StudentController', ['$http', function($http) {
       })
   }
   vm.getStudentIdeas = function(student) {
+    if(!student._id) {
+      return;
+    }
+
+    if(typeof student == 'string' || student._id == 'undefined') {
+      return;
+    }
     $http.get(route + '/' + student._id + '/ideas')
       .then((res) => {
         student.showIdeas = false;

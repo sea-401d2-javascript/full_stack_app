@@ -6,7 +6,7 @@ const webpack = require('gulp-webpack');
 const webpackS = require('webpack-stream');
 
 var files = ['gulpfile.js', 'server.js', __dirname + '/lib/**/*.js', __dirname + '/test/**/*.js',
-            __dirname + '/models/**/*.js', __dirname + '/routes/**/*.js'];
+            __dirname + '/models/**/*.js', __dirname + '/routes/**/*.js',  __dirname + '/test/e2e/*.js'];
 var client = [__dirname + '/app/js/*.js', __dirname + '/app/css/*.css', __dirname + '/app/index.html'];
 var temp = [__dirname + '/test/*_spec.js',  __dirname + '/app/js/index.js', __dirname + '/app/index.html'];
 const sources = {
@@ -88,7 +88,7 @@ gulp.task('webpack', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(temp, ['webpack', 'build:html', 'build:css', 'bundle:test']);
+  gulp.watch(temp, files, ['webpack', 'build:html', 'build:css', 'bundle:test']);
 })
 gulp.task('build',['build:html', 'build:css', 'bundle:test', 'webpack']);
 //Run tasks on changes to files

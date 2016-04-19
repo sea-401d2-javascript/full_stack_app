@@ -24,7 +24,7 @@
           <button data-ng-click="studentctrl.removeIdea(student, idea)">Delete Idea</button>
           <button data-ng-click="student.ideaEditing = true; setIdea(idea)">Edit Idea</button>
           <form data-ng-if="student.ideaEditing" data-ng-submit="studentctrl.updateIdea(student, idea)">
-            Sector: <input type="text" data-ng-model="idea.sector" />
+            Sector: <input type="text"  data-ng-model="idea.sector" />
             Track: <input type="text" data-ng-model="idea.lang" />
             <button data-ng-click="student.ideaEditing = false; studentctrl.cancelIdea(idea)">Cancel</button>
             <button type="submit">Update Idea</button>
@@ -40,7 +40,7 @@
           Language: <input type="text" name="lang" value="" data-ng-model="newIdea.lang"/><br />
           Team Size: <input type="text" name="teamSize" value="" data-ng-model="newIdea.teamSize"/><br />
           <button type="submit">Add Idea</button>
-          <button data-ng-click="student.addIdea = false">Cancle</button>
+          <button data-ng-click="student.addIdea = false">Cancel</button>
         </form>
         <form data-ng-if="student.editing" data-ng-submit="studentctrl.updateStudent(student)">
           Name: <input type="text" data-ng-model="student.name" />
