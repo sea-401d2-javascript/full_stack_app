@@ -10,9 +10,7 @@ module.exports = (apiRouter) => {
           status: 200,
           data: animal
         })
-        res.end();
       })
-
     })
     .get((req, res) => {
       Animal.find({}, (err, animal) => {
@@ -20,7 +18,6 @@ module.exports = (apiRouter) => {
           status: 200,
           data: animal
         })
-        res.end()
       })
     })
 
@@ -31,27 +28,22 @@ module.exports = (apiRouter) => {
           status: 200,
           data: animal
         })
-        res.end();
       })
     })
-    .put((req, res) => {      
+    .put((req, res) => {
       Animal.update({_id: req.params.id}, req.body, (err, animal) => {
         res.json({
           status: 200,
           data: req.body
         })
-        res.end();
       })
 
     })
     .delete((req, res) => {
-      Animal.findById(req.params.id, (err, animal) => {
-        animal.remove((err, animal) => {
-          res.json({
-            status: 200,
-            message: 'animal removed'
-          })
-          res.end();
+      Animal.findByIdAndRemove(req.params.id, (err, animal) => {
+        res.json({
+          status: 200,
+          message: 'animal removed'
         })
       })
     })

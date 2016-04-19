@@ -1,19 +1,29 @@
 'use strict'
 
-var gulp = require('gulp');
-var webpack = require('gulp-webpack');
+const gulp = require('gulp');
+const webpack = require('webpack-stream');
 
-gulp.task('ang', function(){
-  return gulp.src('./app/app.js')
-  .pipe(webpack({
-    watch: true,
-    module: {
-      loaders: [
-        {test: /\.css$/, loader: 'style!css'}
-      ]
-    }
-  }))
-  .pipe(gulp.dest('./build'))
+const sources = {
+  html: __dirname + '/build/index.html',
+  js: __dirname + '/app/app.js',
+  test: __dirname + '/test/app_spec.js'
+};
+
+gulp.task('bundle:dev', () => {
+  return gulp.src(sources.js)
+  .pipe(webpack({output: {filename: 'bundle.js'}}))
+  .pipe(gulp.dest('./build'));
 });
 
-gulp.task('default', ['ang']);
+gulp.task('copy', () => {
+  return gulp.src(sources.html)
+    .pipe(gulp.dest('./build'));
+});
+
+gulp.task('bundle:test', () => {
+  return gulp.src(sources.test)
+    .pipe(webpack({output: {filename: 'test_bundle.js'}, watch: true}))
+    .pipe(gulp.dest('./test'));
+});
+
+gulp.task('default', ['bundle:dev', 'copy']);

@@ -5,78 +5,94 @@ angular.module('TwoResourceApp', [])
   .controller('PeopleController', ['$http', function($http) {
     const route = 'http://localhost:3000/api/people';
     const main = this;
-
     main.people = [];
-    main.edit = null;
+
     main.getPeople = function() {
       $http.get(route)
-        .then(function(result) {
+        .then((result) => {
           main.people = result.data.data;
         }, (error) => console.log(error));
     };
 
     main.createPerson = function(person) {
       $http.post(route, person)
-        .then(function(res){
-          console.log(res);
-          main.people.push(res.data);
-          main.newPerson = {};
+        .then((res) => {
+          main.people.push(res.data.data);
+          main.newPerson = null;
         }, (error) => console.log(error));
     };
 
     main.removePerson = function(person) {
-      console.log('client : ' + person);
-      $http.delete(route + '/' + person)
-        .then(function(res) {
-          main.people = main.people.filter((p) => p._id != person._id);
+      $http.delete(route + '/' + person._id)
+        .then((res) => {
+          console.log('delete getting hit');
+          main.people = main.people.filter((p) => p._id != person._id)
         }, (error) => console.log(error));
     };
 
     main.updatePerson = function(person) {
-      main.edit = false;
-      $http.put(route + '/' + person._id, data)
-        .then(function(res) {
-          console.log('person editted');
+      $http.put(route + '/' + person._id, person)
+        .then((res) => {
+          person.editing = false;
         }, (error) => console.log(error));
     };
 
+    main.toggleForm = function(person) {
+      if(!person.editing) {
+        person.newName = person.name;
+        person.editing = true;
+      } else {
+        person.name = person.newName;
+        person.editing = false;
+      }
+    }
 }])
 
 .controller('AnimalController', ['$http', function($http) {
     const route = 'http://localhost:3000/api/animals';
-    this.animals = [];
-    this.edit = null;
-    this.getAnimal = function() {
+    const main = this;
+    main.animals = [];
+
+    main.getAnimal = function() {
       $http.get(route)
         .then((result) => {
-          this.animals = result.data.data;
+          main.animals = result.data.data;
         }, function(error) {
           console.log(error);
         })
     };
-    this.createAnimal = function(animal) {
+    main.createAnimal = function(animal) {
       $http.post(route, animal)
         .then((res) => {
-          this.animals.push(animal);
-          this.animal = {};
+          main.animals.push(res.data.data);
+          main.newAnimal = null;
         }, function(error) {
           console.log(error);
         })
     };
-    this.removeAnimal = function(animal) {
+    main.removeAnimal = function(animal) {
       $http.delete(route + '/' + animal._id)
         .then((res) => {
-          this.animals = this.animals.filter((p) => p._id != animal._id);
-        })
+          main.animals = main.animals.filter((p) => p._id != animal._id)
+        }, (error) => console.log(error));
     };
-    this.updateAnimal = function(animal, data) {
-      this.edit = false;
-      $http.put(route + '/' + animal._id, data)
+    main.updateAnimal = function(animal) {
+      $http.put(route + '/' + animal._id, animal)
         .then((res) => {
-          console.log('person edited');
+          animal.editing = false;
         }, function(error) {
           console.log(error);
         })
-    }
+    };
+
+    main.toggleForm = function(animal) {
+      if(!animal.editing) {
+        animal.newName = animal.name;
+        animal.editing = true;
+      } else {
+        animal.name = animal.newName;
+        animal.editing = false;
+      }
+    };
 
 }]);

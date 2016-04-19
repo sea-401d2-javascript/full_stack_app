@@ -4,7 +4,7 @@ let People = require(__dirname + '/../models/people_model');
 module.exports = (apiRouter) => {
   apiRouter.route('/people')
     .get((req, res) => {
-      People.find({}).populate('pets', 'name').exec((err, people) => {
+      People.find({}, (err, people) => {
         res.json({
           status: 200,
           data: people
@@ -39,7 +39,6 @@ module.exports = (apiRouter) => {
       })
     })
     .delete((req, res) => {
-      console.log('this is an ID: ', req.params.id);
       People.findByIdAndRemove(req.params.id, (err, person) => {
         res.json({
           status: 200,
