@@ -11,9 +11,9 @@
 
         <ul>
           <li ng-repeat="person in peoplectrl.people">
-            <p>The person's name is: {{person.name}}.</p>
-            <p>{{person.name}}'s favorite food is: {{person.favoriteFood}}.</p>
-            <p>{{person.name}} is {{person.age}} years old.</p>
+            <p id="person-name">The person's name is: {{person.name}}.</p>
+            <p id="person-favorite-food">{{person.name}}'s favorite food is: {{person.favoriteFood}}.</p>
+            <p id="person-age">{{person.name}} is {{person.age}} years old.</p>
             <button ng-click="peoplectrl.removePerson(person)">Delete</button>
             <button ng-click="peoplectrl.toggleForm(person)">Edit</button>
             <form ng-if="person.editing" ng-submit="peoplectrl.updatePerson(person)">

@@ -17,6 +17,7 @@ angular.module('TwoResourceApp', [])
     main.createPerson = function(person) {
       $http.post(route, person)
         .then((res) => {
+          console.log('create person');
           main.people.push(res.data.data);
           main.newPerson = null;
         }, (error) => console.log(error));
@@ -33,6 +34,7 @@ angular.module('TwoResourceApp', [])
     main.updatePerson = function(person) {
       $http.put(route + '/' + person._id, person)
         .then((res) => {
+          console.log('update person');
           person.editing = false;
         }, (error) => console.log(error));
     };

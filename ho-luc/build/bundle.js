@@ -63,7 +63,6 @@
 	    main.createPerson = function(person) {
 	      $http.post(route, person)
 	        .then((res) => {
-	          console.log(res);
 	          main.people.push(res.data.data);
 	          main.newPerson = null;
 	        }, (error) => console.log(error));
@@ -72,6 +71,7 @@
 	    main.removePerson = function(person) {
 	      $http.delete(route + '/' + person._id)
 	        .then((res) => {
+	          console.log('delete getting hit');
 	          main.people = main.people.filter((p) => p._id != person._id)
 	        }, (error) => console.log(error));
 	    };
