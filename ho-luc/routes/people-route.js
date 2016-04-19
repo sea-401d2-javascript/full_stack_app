@@ -4,12 +4,11 @@ let People = require(__dirname + '/../models/people_model');
 module.exports = (apiRouter) => {
   apiRouter.route('/people')
     .get((req, res) => {
-      People.find({}).populate('pets', 'name').exec((err, people) => {
+      People.find({}, (err, people) => {
         res.json({
           status: 200,
           data: people
         })
-        res.end();
       })
     })
     .post((req, res) => {
@@ -19,7 +18,6 @@ module.exports = (apiRouter) => {
           status: 200,
           data: person
         })
-        res.end();
       })
     })
 
@@ -30,7 +28,6 @@ module.exports = (apiRouter) => {
           status: 200,
           data: person
         })
-        res.end();
       })
     })
     .put((req, res) => {
@@ -39,17 +36,13 @@ module.exports = (apiRouter) => {
           status: 200,
           data: req.body
         })
-        res.end();
       })
     })
     .delete((req, res) => {
-      People.findById(req.params.id, (err, person) => {
-        person.remove((err, person) => {
-          res.json({
-            status: 200,
-            message: 'person removed'
-          })
-          res.end();
+      People.findByIdAndRemove(req.params.id, (err, person) => {
+        res.json({
+          status: 200,
+          message: 'person removed'
         })
       })
     })
