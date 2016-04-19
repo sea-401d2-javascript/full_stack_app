@@ -39,7 +39,7 @@
 
     </main>
 
-    <main class="ng-cloak" data-ng-controller="TreesController as treesCtrl" data-ng-init="treesCtrl.read()">
+    <main id="trees" class="ng-cloak" data-ng-controller="TreesController as treesCtrl" data-ng-init="treesCtrl.read()">
     <h1>{{treesCtrl.resource.toUpperCase()}}</h1>
 
     <ul>
@@ -60,7 +60,7 @@
       </li>
     </ul>
 
-    <form data-ng-submit="treesCtrl.create(tree)">
+    <form id="create-tree" data-ng-submit="treesCtrl.create(tree)">
       species:<input type="text" data-ng-model="tree.species"></br>
       lat:<input type="text" data-ng-model="tree.lat"></br>
       lng:<input type="text" data-ng-model="tree.lng"></br>

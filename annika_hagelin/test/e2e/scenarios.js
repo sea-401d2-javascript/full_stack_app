@@ -93,8 +93,11 @@ describe('end to end testing', function() {
         });
     });
 
+    it('create a tree', function() {
+      var createForm = $('#trees').$('#create-tree')
+      createForm.element(by.model('tree.species')).clear().sendKeys('mcgardius');
+    });
 
-    
 
   });
 
