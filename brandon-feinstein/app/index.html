@@ -11,7 +11,7 @@
   <title>Document</title>
 </head>
 <body data-ng-app="UserApp">
-  <h1 id="title">Angular Crud for Two Resource API</h1>
+  <apptitle id="title"></apptitle>
   <main data-ng-cloak data-ng-init="userctrl.getUser()" data-ng-controller="UserController as userctrl">
     <ul>
       <li data-ng-repeat="user in userctrl.user">{{user.name}}
@@ -26,7 +26,7 @@
       </li>
     </ul>
     <form data-ng-submit="userctrl.createUser(newUser)">
-      <input type="text" data-ng-model="newUser.name"/>
+      <forminput></forminput>
       <button class="btn" type="submit">New User</button>
     </form>
   </main>

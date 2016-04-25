@@ -61,14 +61,14 @@
 	        console.log('this is an error');
 	      });
 	  };
-	    this.createUser = function(user) {
-	      $http.post(mainRoute, user)
-	        .then((res) => {
-	          console.log(res);
-	          this.user.push(res.data);
-	          this.newUser = {};
-	        });
-	    };
+	  this.createUser = function(user) {
+	    $http.post(mainRoute, user)
+	      .then((res) => {
+	        console.log(res);
+	        this.user.push(res.data);
+	        this.newUser = {};
+	      });
+	  };
 	  this.removeUser = function(user) {
 	    $http.delete(mainRoute + '/' + user._id)
 	      .then((res) => {
@@ -91,6 +91,22 @@
 	  };
 
 	}]);
+
+	app.directive('forminput', function() {
+	  return {
+	      restrict: 'E',
+	      replace: 'true',
+	      template: '<input bold type="text" data-ng-model="newUser.name"/>'
+	  };
+	});
+
+	app.directive('apptitle', function() {
+	  return {
+	      restrict: 'E',
+	      replace: 'true',
+	      template: '<h1>Angular Crud for Two Resource API</h1>'
+	  };
+	});
 
 
 /***/ },
