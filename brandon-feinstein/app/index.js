@@ -2,7 +2,19 @@ const angular = require('angular');
 require("!style!css!./../style.css");
 
 const app = angular.module('UserApp', []);
-app.controller('UserController', ['$http', function($http) {
+
+app.factory('service', function() {
+  return {
+    firstUser: function (array){
+      console.log('first user is ' + array[0].name) ;
+    },
+    lastUser: function(array){
+      console.log('last user is ' + array[array.length -1].name);
+    }
+  };
+});
+
+app.controller('UserController', ['$http', 'service', function($http, service) {
   const mainRoute = 'http://localhost:3000/users';
   this.smokeTest = 'SMOKE TEST';
   this.user = ['user'];
@@ -10,6 +22,8 @@ app.controller('UserController', ['$http', function($http) {
     $http.get(mainRoute)
       .then((result) => {
         this.user = result.data.data;
+        service.firstUser(this.user);
+        service.lastUser(this.user);
         console.log(result.data.data);
       }, function(error) {
         console.log('this is an error');
