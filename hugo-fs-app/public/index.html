@@ -12,9 +12,7 @@
     </header>
     <main class="container">
       <main ng-init="custctrl.getCustomers()" ng-controller="CustomerController as custctrl" ng-cloak>
-        <section class="header-and-button">
-          <h2>Customers!</h2>
-          <button class="lime-button" type="button" ng-click="custctrl.createCustomer.rendered = customer._id">Create customer</button>
+        <section customer-header class="header-and-button">
         </section>
 
         <form name="cust-form" class="animated flipInX" ng-show="custctrl.createCustomer.rendered === customer._id" ng-submit="custctrl.createCustomer.rendered = null">
@@ -44,9 +42,7 @@
         </section>
       </main>
       <main ng-init="prodctrl.getProducts()" ng-controller="ProductController as prodctrl" ng-cloak>
-        <section class="header-and-button">
-          <h2>Products!</h2>
-          <button class="lime-button" type="button" ng-click="prodctrl.createProduct.rendered = product._id">Create product</button>
+        <section product-header class="header-and-button">
         </section>
 
         <form class="animated flipInX" ng-show="prodctrl.createProduct.rendered === product._id" ng-submit="prodctrl.createProduct.rendered = null">

@@ -13,8 +13,7 @@
     <main class="container">
       <main ng-init="custctrl.getCustomers()" ng-controller="CustomerController as custctrl" ng-cloak>
         <section class="header-and-button">
-          <h2>Customers!</h2>
-          <button class="lime-button" type="button" ng-click="custctrl.createCustomer.rendered = customer._id">Create customer</button>
+          <customer-header></customer-header>
         </section>
 
         <form name="cust-form" class="animated flipInX" ng-show="custctrl.createCustomer.rendered === customer._id" ng-submit="custctrl.createCustomer.rendered = null">
@@ -27,7 +26,7 @@
 
         <section ng-repeat="customer in custctrl.customers" ng-cloak>
           <ul>
-            <li class="info-line"><span>Name: </span>{{customer.name}}</li><br>
+            <li class="info-line" ng-bind:><span>Name: </span>{{customer.name}}</li><br>
             <li class="info-line"><span>Age: </span>{{customer.age}}</li><br>
             <li class="info-line"><span>Email: </span>{{customer.email}}</li><br>
           </ul>
