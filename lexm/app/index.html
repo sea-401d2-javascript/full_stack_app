@@ -17,25 +17,14 @@
       <li data-ng-repeat="movie in moviectrl.movies" data-ng-init="movEdit._id=movie._id">
         <p>Movie Title: {{movie.name}}</p>
         <p>Release Date: {{movie.release_date | amDateFormat:'MMMM Do YYYY'}}</p>
-        <section data-ng-hide="!movie.showEdit">
-          <form data-ng-submit="moviectrl.putMovie(movEdit)">
-            <input type="text" data-ng-model="movEdit.name" id="mname_{{movie._id}}" data-ng-init="movEdit.name=movie.name">
-            <input type="text" data-ng-model="movEdit.release_date" id="mrd_{{movie._id}}" data-ng-init="movEdit.release_date=movie.release_date">
-            <button type="submit">Submit Edit</button>
-            <button ng-click="moviectrl.cancelEdit(movEdit, movie)">Cancel Edit</button>
-          </form>
-        </section>
+        <edit-movie></edit-movie>
         <p>
           <button data-ng-click="moviectrl.removeMovie(movie)">Delete</button>
           <button data-ng-click="moviectrl.showEditFlip(movie)">Edit</button>
         </p>
       </li>
     </ul>
-    <form data-ng-submit="moviectrl.createMovie(newMovie)">
-      <input type="text" data-ng-model="newMovie.name" required>
-      <input type="date" data-ng-model="newMovie.release_date">
-      <button type="submit">New Movie</button>
-    </form>
+    <create-movie></create-movie>
   </section>
 
   <section data-ng-init="dirctrl.getDirectors()" data-ng-controller="DirectorController as dirctrl">
@@ -44,25 +33,14 @@
       <li data-ng-repeat="director in dirctrl.directors" data-ng-init="dirEdit._id=director._id">
         <p>Director Name: {{director.name}}</p>
         <p>Date of Birth: {{director.date_of_birth | amDateFormat:'MMMM Do YYYY'}}</p>
-        <section data-ng-hide="!director.showEdit">
-          <form data-ng-submit="dirctrl.putDirector(dirEdit)">
-            <input type="text" data-ng-model="dirEdit.name" data-ng-init="dirEdit.name=director.name">
-            <input type="text" data-ng-model="dirEdit.date_of_birth" data-ng-init="dirEdit.date_of_birth=director.date_of_birth">
-            <button type="submit">Submit Edit</button>
-            <button ng-click="dirctrl.cancelEdit(dirEdit, director)">Cancel Edit</button>
-          </form>
-        </section>
+        <edit-director></edit-director>
         <p>
           <button data-ng-click="dirctrl.removeDirector(director)">Delete</button>
           <button data-ng-click="dirctrl.showEditFlip(director)">Edit</button>
         </p>
       </li>
     </ul>
-    <form data-ng-submit="dirctrl.createDirector(newDirector)">
-      <input type="text" data-ng-model="newDirector.name" required>
-      <input type="date" data-ng-model="newDirector.date_of_birth">
-      <button type="submit">New Director</button>
-    </form>
+    <create-director></create-director>
   </section>
 
 </main>

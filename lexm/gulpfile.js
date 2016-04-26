@@ -69,6 +69,8 @@ gulp.task('mocha', function(){
 gulp.task('build:html', function() {
   gulp.src('app/*.html')
   .pipe(gulp.dest('public/'));
+  gulp.src('app/html/*.html')
+  .pipe(gulp.dest('public/html'));
 });
 
 gulp.task('build:css', function() {

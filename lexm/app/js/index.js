@@ -2,7 +2,9 @@ const angular = require('angular');
 const moment = require('moment');
 const angularMoment = require('angular-moment');
 
-const app = angular.module('MovieApp', ['angularMoment']);
+var directives = require('./directives');
+
+const app = angular.module('MovieApp', ['angularMoment', 'directives']);
 
 require('./movieController')(app);
 require('./directorController')(app);
