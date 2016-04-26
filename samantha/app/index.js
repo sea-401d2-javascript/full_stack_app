@@ -4,11 +4,11 @@ const angular = require('angular');
 const app = angular.module('ChefApp', []);
 
 require('./services/http_service')(app);
+require('./directives/directives')(app);
 
 app.controller('ChefController', ['$http', 'ResourceService',
 function($http, ResourceService) {
 
-  // const mainRoute = 'http://localhost:3000/chefs';
   const vm = this;
   const chefResource = ResourceService('chefs');
 
@@ -60,7 +60,6 @@ function($http, ResourceService) {
 app.controller('RecipeController', ['$http', 'ResourceService',
 function($http, ResourceService) {
 
-  // const mainRecipesRoute = 'http://localhost:3000/recipes';
   const recipeResource = ResourceService('recipes');
   const vm = this;
 
