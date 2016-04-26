@@ -8,14 +8,14 @@ require('./services/http_service')(app);
 app.controller('ChefController', ['$http', 'ResourceService',
 function($http, ResourceService) {
 
-  const mainRoute = 'http://localhost:3000/chefs';
+  // const mainRoute = 'http://localhost:3000/chefs';
   const vm = this;
   const chefResource = ResourceService('chefs');
 
   vm.chefs = ['chef'];
 
   vm.getChefs = function() {
-    chefResource.get(mainRoute)
+    chefResource.getAll()
     .then((result) => {
       vm.chefs = result.data.data;
     }, function (error) {
@@ -23,7 +23,7 @@ function($http, ResourceService) {
     });
   };
   vm.createChef = function(chef) {
-    chefResource.post(mainRoute, chef)
+    chefResource.post(chef)
     .then((res) => {
       vm.chefs.push(res.data);
       vm.newChef = {};
@@ -31,7 +31,7 @@ function($http, ResourceService) {
   };
 
   vm.updateChef = function(chef) {
-    chefResource.put(mainRoute + '/' + chef._id, chef)
+    chefResource.put(chef)
     .catch((err) => {
       console.log(err);
     });
@@ -39,7 +39,7 @@ function($http, ResourceService) {
   };
 
   vm.resetChef = function(chef) {
-    chefResource.get(mainRoute + '/' + chef._id)
+    chefResource.get()
     .then((res) => {
       vm.chefs[vm.chefs.indexOf(chef)] = res.data;
     })
@@ -49,7 +49,7 @@ function($http, ResourceService) {
   };
 
   vm.removeChef = function(chef) {
-    chefResource.delete(mainRoute + '/' + chef._id)
+    chefResource.delete()
     .then((res) => {
       vm.chefs = vm.chefs.filter((c) => c._id != chef._id);
     });
@@ -60,14 +60,14 @@ function($http, ResourceService) {
 app.controller('RecipeController', ['$http', 'ResourceService',
 function($http, ResourceService) {
 
-  const mainRecipesRoute = 'http://localhost:3000/recipes';
+  // const mainRecipesRoute = 'http://localhost:3000/recipes';
   const recipeResource = ResourceService('recipes');
   const vm = this;
 
   vm.recipes = ['recipe'];
 
   vm.getRecipes = function() {
-    recipeResource.get(mainRecipesRoute)
+    recipeResource.getAll()
     .then((result) => {
       vm.recipes = result.data.data;
     }, function (error) {
@@ -76,7 +76,7 @@ function($http, ResourceService) {
     });
   };
   vm.createRecipe = function(recipe) {
-    recipeResource.post(mainRecipesRoute, recipe)
+    recipeResource.post(recipe)
     .then((res) => {
       vm.recipes.push(res.data);
       vm.newRecipe = {};
@@ -84,7 +84,7 @@ function($http, ResourceService) {
   };
 
   vm.updateRecipe = function(recipe) {
-    recipeResource.put(mainRecipesRoute + '/' + recipe._id, recipe)
+    recipeResource.put(recipe)
     .catch((err) => {
       console.log(err);
     });
@@ -92,7 +92,7 @@ function($http, ResourceService) {
   };
 
   vm.resetRecipe = function(recipe) {
-    recipeResource.get(mainRecipesRoute + '/' + recipe._id)
+    recipeResource.get()
       .then((res) => {
         vm.recipes[vm.recipes.indexOf(recipe)] = res.data;
       })
@@ -102,7 +102,7 @@ function($http, ResourceService) {
   };
 
   vm.removeRecipe = function(recipe) {
-    recipeResource.delete(mainRecipesRoute + '/' + recipe._id)
+    recipeResource.delete()
     .then((res) => {
       vm.recipes = vm.recipes.filter((r) => r._id != recipe._id);
     });
