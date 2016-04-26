@@ -1,6 +1,12 @@
 (function() {
   angular.module('products')
-  .controller('ProductController', ['$http', ProductController]);
+  .controller('ProductController', ['$http', ProductController])
+  .directive('productHeader', function() {
+    return {
+      restrict: 'A',
+      templateUrl: './templates/product-header.html'
+    }
+  })
 
   function ProductController ($http) {
     const productsRoute = 'http://localhost:3000/products';

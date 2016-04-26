@@ -1,6 +1,12 @@
 (function() {
   angular.module('customers')
-  .controller('CustomerController', ['$http', CustomerController]);
+  .controller('CustomerController', ['$http', CustomerController])
+  .directive('customerHeader', function() {
+    return {
+      restrict: 'A',
+      templateUrl: './templates/customer-header.html'
+    };
+  });
 
   function CustomerController ($http) {
     const customersRoute = 'http://localhost:3000/customers';
@@ -54,5 +60,6 @@
       });
     };
   }
+
 
 })();
