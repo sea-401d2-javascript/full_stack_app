@@ -1,5 +1,6 @@
 module.exports = (app) => {
-  app.controller('MovieController', ['$http', function($http) {
+  app.controller('MovieController', ['$http', 'movieSvc', MovieController]);
+  function MovieController($http, movieSvc) {
     const movieRoute = 'http://localhost:3000/movies';
     this.movies = ['movie'];
     this.getMovies = function() {
@@ -34,17 +35,11 @@ module.exports = (app) => {
       }
       return oldMovie;
     };
+
     this.showEditFlip = function(movie) {
-      var oldMovie;
-      if(movie.showEdit === undefined) {
-        oldMovie = this.saveOldMovie(movie, oldMovie);
-        movie.showEdit = true;
-      } else if (!movie.showEdit) {
-        movie.showEdit = true;
-      } else {
-        movie.showEdit = false;
-      }
+      return movieSvc.showEditFlip(movie);
     };
+
     this.putMovie = function(movEdit) {
       if(movEdit._id) {
         $http.put(movieRoute + '/' + movEdit._id, movEdit)
@@ -64,5 +59,5 @@ module.exports = (app) => {
       movEdit.name = movie.name;
       movEdit.release_date = movie.release_date;
     };
-  }]);
+  }
 };

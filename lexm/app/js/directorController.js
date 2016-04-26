@@ -1,5 +1,6 @@
 module.exports = (app) => {
-  app.controller('DirectorController', ['$http', function($http) {
+  app.controller('DirectorController', ['$http', 'movieSvc', DirectorController]);
+  function DirectorController($http, movieSvc) {
     const directorRoute = 'http://localhost:3000/directors';
     this.directors = ['director'];
     this.getDirectors = function() {
@@ -33,17 +34,12 @@ module.exports = (app) => {
       }
       return oldDirector;
     };
+
     this.showEditFlip = function(director) {
-      var oldDirector;
-      if(director.showEdit === undefined) {
-        oldDirector = this.saveOldDirector(director, oldDirector);
-        director.showEdit = true;
-      } else if (!director.showEdit) {
-        director.showEdit = true;
-      } else {
-        director.showEdit = false;
-      }
+      return movieSvc.showEditFlip(director);
     };
+
+
     this.putDirector = function(direcEdit) {
       if(direcEdit._id) {
         $http.put(directorRoute + '/' + direcEdit._id, direcEdit)
@@ -65,6 +61,6 @@ module.exports = (app) => {
       direcEdit.name = director.name;
       direcEdit.date_of_birth = director.date_of_birth;
     };
-  }]);
+  }
 
 };
