@@ -9,28 +9,28 @@
     </style>
   </head>
   <body data-ng-app="TreeApp">
-    <main id='speciess' class="ng-cloak" data-ng-controller="SpeciessController as speciessCtrl" data-ng-init="speciessCtrl.read()" >
+    <main id='speciess' class="ng-cloak" data-ng-controller="SpeciessController as speciessCtrl" data-ng-init="speciessCtrl.resource.read()" >
     <h1>{{speciessCtrl.resource.toUpperCase()}}</h1>
 
     <ul>
       <li data-ng-repeat="species in speciessCtrl.speciess">
         <big>{{species.genus}} {{species.species}}</big> <small>commonly</small> <big>{{species.cmnName}}</big> <small>[id:{{species._id}}]</small>
 
-          <button type="submit" data-ng-click="speciessCtrl.update.displayed = species._id">update</button>
+          <button type="submit" data-ng-click="speciessCtrl.resource.update.displayed = species._id">update</button>
 
-          <button type="submit" data-ng-click="speciessCtrl.delete(species)">delete</button>
+          <button type="submit" data-ng-click="speciessCtrl.resource.delete(species)">delete</button>
 
-        <form data-ng-show="speciessCtrl.update.displayed === species._id" data-ng-submit="speciessCtrl.update(species); speciessCtrl.update.displayed = null">
+        <form data-ng-show="speciessCtrl.resource.update.displayed === species._id" data-ng-submit="speciessCtrl.resource.update(species); speciessCtrl.resource.update.displayed = null">
           genus:<input type="text" data-ng-model="species.genus"></br>
           species:<input type="text" data-ng-model="species.species"></br>
           cmnName:<input type="text" data-ng-model="species.cmnName"></br>
           <button type="submit">ok</button>
-          <button type="reset" data-ng-click="speciessCtrl.reset(species); speciessCtrl.update.displayed = null">cancel</button>
+          <button type="reset" data-ng-click="speciessCtrl.resource.reset(species); speciessCtrl.resource.update.displayed = null">cancel</button>
         </form>
       </li>
     </ul>
 
-    <form id='create-species' data-ng-submit="speciessCtrl.create(species)">
+    <form id='create-species' data-ng-submit="speciessCtrl.resource.create(species)">
       genus:<input type="text" data-ng-model="species.genus"></br>
       species:<input type="text" data-ng-model="species.species"></br>
       cmnName:<input type="text" data-ng-model="species.cmnName"></br>

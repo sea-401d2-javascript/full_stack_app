@@ -49,45 +49,53 @@
 	const serverPath = __webpack_require__(3).serverPath;
 	__webpack_require__(4);
 
-	angular.module('TreeApp', [])
-	  .controller('SpeciessController', ['$http', function($http) {
+	const app = angular.module('TreeApp', []);
+
+	__webpack_require__(8)(app);
+
+	  app.controller('SpeciessController', ['ResourceService', function(ResourceService) {
 	    this.plz = 'plz respond';
 
-	    this.resource = 'speciess';
-	    this.path = `${serverPath}/${this.resource}`;
-	    this.speciess = [];
+	    this.speciess = ["plz"];
+	    this.resource = new ResourceService('speciess', this.speciess);
 
-	    this.read = function() {
-	      $http.get(this.path)
-	        .then(res => this.speciess = res.data)
-	        .catch(err => console.log(err));
-	    };
 
-	    this.reset = function(species) {
-	      console.log('reset species');
-	      $http.get(this.path +'/'+ species._id)
-	        .then(res => this.speciess[this.speciess.indexOf(species)] = res.data)
-	        .catch(err => console.log(err));
-	    };
 
-	    this.create = function(species) {
-	      $http.post(this.path, species)
-	        .then(res => this.speciess.push(res.data))
-	        .catch(err => console.log(err));
-	    };
-
-	    this.delete = function(species) {
-	      $http.delete(this.path+'/'+species._id)
-	        .then(res => this.speciess.splice(this.speciess.indexOf(species), 1))
-	        .catch(err => console.log(err));
-	    };
-
-	    this.update = function(species) {
-	      $http.put(this.path + '/' + species._id, species)
-	        .then(res => console.log(res.data))
-	        .catch(err => console.log(err));
-	    };
-	    this.update.displayed = null;
+	    // this.resource = 'speciess';
+	    // this.path = `${serverPath}/${this.resource}`;
+	    // this.speciess = [];
+	    //
+	    // this.read = function() {
+	    //   $http.get(this.path)
+	    //     .then(res => this.speciess = res.data)
+	    //     .catch(err => console.log(err));
+	    // };
+	    //
+	    // this.reset = function(species) {
+	    //   console.log('reset species');
+	    //   $http.get(this.path +'/'+ species._id)
+	    //     .then(res => this.speciess[this.speciess.indexOf(species)] = res.data)
+	    //     .catch(err => console.log(err));
+	    // };
+	    //
+	    // this.create = function(species) {
+	    //   $http.post(this.path, species)
+	    //     .then(res => this.speciess.push(res.data))
+	    //     .catch(err => console.log(err));
+	    // };
+	    //
+	    // this.delete = function(species) {
+	    //   $http.delete(this.path+'/'+species._id)
+	    //     .then(res => this.speciess.splice(this.speciess.indexOf(species), 1))
+	    //     .catch(err => console.log(err));
+	    // };
+	    //
+	    // this.update = function(species) {
+	    //   $http.put(this.path + '/' + species._id, species)
+	    //     .then(res => console.log(res.data))
+	    //     .catch(err => console.log(err));
+	    // };
+	    // this.update.displayed = null;
 
 	  }])
 	  .controller('TreesController', ['$http', function($http) {
@@ -127,8 +135,6 @@
 	        .catch(err => console.log(err));
 	    };
 	    this.update.displayed = null;
-
-
 
 	  }])
 
@@ -31217,6 +31223,75 @@
 		if(oldSrc)
 			URL.revokeObjectURL(oldSrc);
 	}
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(app) {
+	  __webpack_require__(9)(app);
+
+	};
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(app) {
+	  app.factory('ResourceService', ['$http', function($http) {
+	    var mainRoute = __webpack_require__(3).serverPath;
+	    console.log('make resource service');
+
+	    function Resource(resource, data) {
+	      this.resource = resource;
+	      this.path = mainRoute + '/' + resource;
+	      console.log(this.path);
+	      this.data = data;
+	    }
+
+
+	    Resource.prototype.read = function() {
+	      console.log('read');
+	      console.log(this.data);
+	      $http.get(this.path)
+	        .then(res => {this.data.splice(0, this.data.length); Array.prototype.push.apply(this.data, res.data);})
+	        .catch(err => console.log(err));
+	    };
+
+	    Resource.prototype.reset = function(data) {
+	      console.log(data);
+	      $http.get(this.path +'/'+ data._id)
+	        .then(res => this.data[this.data.indexOf(data)] = res.data)
+	        .catch(err => console.log(err));
+	    };
+
+	    Resource.prototype.create = function(data) {
+	      $http.post(this.path, data)
+	        .then(res => this.data.push(res.data))
+	        .catch(err => console.log(err));
+	    };
+
+	    Resource.prototype.delete = function(data) {
+	      $http.delete(this.path+'/'+data._id)
+	        .then(res => this.data.splice(this.data.indexOf(data), 1))
+	        .catch(err => console.log(err));
+	    };
+
+	    Resource.prototype.update = function(data) {
+	      $http.put(this.path + '/' + data._id, data)
+	        .then(res => console.log(res.data))
+	        .catch(err => console.log(err));
+	    };
+	    Resource.prototype.update.displayed = null;
+
+	    return function(resource, data) {
+	      return new Resource(resource, data);
+	    }
+
+	  }]);
+	};
 
 
 /***/ }
