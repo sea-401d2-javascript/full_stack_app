@@ -3,9 +3,10 @@ describe('movie section', function() {
   var newMovieReleaseDate = element(by.model('newMovie.release_date'));
   var newMovieButton = element(by.buttonText('New Movie'));
   var deleteButton = element(by.buttonText('Delete'));
-  var editButton = element(by.buttonText('Edit'));
-  var editMovieName = element(by.model('movEdit.name'));
-  var editMovieReleaseDate = element(by.model('movEdit.release_date'));
+  // var editButton = element(by.buttonText('Edit'));
+  var movieList = element.all(by.repeater('movie in moviectrl.movies'));
+  var editMovieName;
+  var editMovieReleaseDate;
 
   beforeEach(function() {
     browser.get('http://127.0.0.1:8080');
@@ -30,7 +31,14 @@ describe('movie section', function() {
   });
 
   it('should be able to bring up the edit window', function() {
-    editButton.click();
+    movieList.then(function(moviectrl.movies) {
+      var movListLen = moviectrl.movies.length;
+      var lastMovie = moviectrl.movies[movListLen - 1];
+      var lastEditBtn = lastMovie.element(by.buttonText('Edit'));
+      lastEditBtn.click();
+      editMovieName = lastMovie.element(by.model('movEdit.name'));
+      editMovieReleaseDate = lastMovie.element(by.model('movEdit.release_date'));
+    })
     expect(editMovieName.getAttribute('value')).toEqual('');
     expect(editMovieReleaseDate.getAttribute('value')).toEqual('');
   });
