@@ -1,5 +1,5 @@
 // start all servers (client-server and server) in terminal
-// along with mongod (for testdb) and selenium 
+// along with mongod (for testdb) and selenium
 
 process.env.MONGOLAB_URI = 'mongodb://localhost/testdb';
 
@@ -9,7 +9,7 @@ describe('first e2e tests for full stack angular app', function(){
 
   beforeEach(function() {
     // browser.get('http://127.0.0.1:8080');
-    browser.get('http://localhost:8080')
+    browser.get('http://localhost:8080');
   });
 
   it('should have a correct title', function(){

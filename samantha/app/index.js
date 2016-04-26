@@ -2,96 +2,109 @@
 const angular = require('angular');
 
 const app = angular.module('ChefApp', []);
-app.controller('ChefController', ['$http', function($http) {
+
+require('./services/http_service')(app);
+
+app.controller('ChefController', ['$http', 'ResourceService',
+function($http, ResourceService) {
+
   const mainRoute = 'http://localhost:3000/chefs';
-  this.chefs = {};
-  this.chefs = ['chef'];
-  this.getChefs = function() {
-    $http.get(mainRoute)
+  const vm = this;
+  const chefResource = ResourceService('chefs');
+
+  vm.chefs = ['chef'];
+
+  vm.getChefs = function() {
+    chefResource.get(mainRoute)
     .then((result) => {
-      this.chefs = result.data.data;
+      vm.chefs = result.data.data;
     }, function (error) {
       console.log(error);
     });
   };
-  this.createChef = function(chef) {
-    $http.post(mainRoute, chef)
+  vm.createChef = function(chef) {
+    chefResource.post(mainRoute, chef)
     .then((res) => {
-      this.chefs.push(res.data);
-      this.newChef = {};
+      vm.chefs.push(res.data);
+      vm.newChef = {};
     });
   };
 
-  this.updateChef = function(chef) {
-    $http.put(mainRoute + '/' + chef._id, chef)
+  vm.updateChef = function(chef) {
+    chefResource.put(mainRoute + '/' + chef._id, chef)
     .catch((err) => {
       console.log(err);
     });
-    this.updateChef.displayed = null;
+    vm.updateChef.displayed = null;
   };
-  
-  this.resetChef = function(chef) {
-    $http.get(mainRoute + '/' + chef._id)
+
+  vm.resetChef = function(chef) {
+    chefResource.get(mainRoute + '/' + chef._id)
     .then((res) => {
-      this.chefs[this.chefs.indexOf(chef)] = res.data;
+      vm.chefs[vm.chefs.indexOf(chef)] = res.data;
     })
     .catch((err) => {
       console.log(err);
     });
   };
 
-  this.removeChef = function(chef) {
-    $http.delete(mainRoute + '/' + chef._id)
+  vm.removeChef = function(chef) {
+    chefResource.delete(mainRoute + '/' + chef._id)
     .then((res) => {
-      this.chefs = this.chefs.filter((c) => c._id != chef._id);
+      vm.chefs = vm.chefs.filter((c) => c._id != chef._id);
     });
 
   };
 }]);
 
-app.controller('RecipeController', ['$http', function($http) {
+app.controller('RecipeController', ['$http', 'ResourceService',
+function($http, ResourceService) {
+
   const mainRecipesRoute = 'http://localhost:3000/recipes';
-  this.recipes = {};
-  this.recipes = ['recipe'];
-  this.getRecipes = function() {
-    $http.get(mainRecipesRoute)
+  const recipeResource = ResourceService('recipes');
+  const vm = this;
+
+  vm.recipes = ['recipe'];
+
+  vm.getRecipes = function() {
+    recipeResource.get(mainRecipesRoute)
     .then((result) => {
-      this.recipes = result.data.data;
+      vm.recipes = result.data.data;
     }, function (error) {
       console.log(error);
 
     });
   };
-  this.createRecipe = function(recipe) {
-    $http.post(mainRecipesRoute, recipe)
+  vm.createRecipe = function(recipe) {
+    recipeResource.post(mainRecipesRoute, recipe)
     .then((res) => {
-      this.recipes.push(res.data);
-      this.newRecipe = {};
+      vm.recipes.push(res.data);
+      vm.newRecipe = {};
     });
   };
 
-  this.updateRecipe = function(recipe) {
-    $http.put(mainRecipesRoute + '/' + recipe._id, recipe)
+  vm.updateRecipe = function(recipe) {
+    recipeResource.put(mainRecipesRoute + '/' + recipe._id, recipe)
     .catch((err) => {
       console.log(err);
     });
-    this.updateRecipe.displayed = null;
+    vm.updateRecipe.displayed = null;
   };
 
-  this.resetRecipe = function(recipe) {
-    $http.get(mainRecipesRoute + '/' + recipe._id)
+  vm.resetRecipe = function(recipe) {
+    recipeResource.get(mainRecipesRoute + '/' + recipe._id)
       .then((res) => {
-        this.recipes[this.recipes.indexOf(recipe)] = res.data;
+        vm.recipes[vm.recipes.indexOf(recipe)] = res.data;
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  this.removeRecipe = function(recipe) {
-    $http.delete(mainRecipesRoute + '/' + recipe._id)
+  vm.removeRecipe = function(recipe) {
+    recipeResource.delete(mainRecipesRoute + '/' + recipe._id)
     .then((res) => {
-      this.recipes = this.recipes.filter((r) => r._id != recipe._id);
+      vm.recipes = vm.recipes.filter((r) => r._id != recipe._id);
     });
 
   };
