@@ -7,7 +7,7 @@ var webpack = require('webpack-stream');
 var paths = ['*.js', 'test/*.js'];
 
 const sources = {
-  html: __dirname +'/build/index.html',
+  html: __dirname +'/app/index.html',
   js:   __dirname + '/app/index.js',
   test: __dirname + '/test/unit/*-spec.js'
 };

@@ -48,96 +48,108 @@
 	const angular = __webpack_require__(1);
 
 	const app = angular.module('ChefApp', []);
-	app.controller('ChefController', ['$http', function($http) {
-	  const mainRoute = 'http://localhost:3000/chefs';
-	  this.chefs = {};
-	  this.chefs = ['chef'];
-	  this.getChefs = function() {
-	    $http.get(mainRoute)
+
+	__webpack_require__(3)(app);
+	__webpack_require__(4)(app);
+
+	app.controller('ChefController', ['$http', 'ResourceService',
+	function($http, ResourceService) {
+
+	  const vm = this;
+	  const chefResource = ResourceService('chefs');
+
+	  vm.chefs = ['chef'];
+
+	  vm.getChefs = function() {
+	    chefResource.getAll()
 	    .then((result) => {
-	      this.chefs = result.data.data;
+	      vm.chefs = result.data.data;
 	    }, function (error) {
 	      console.log(error);
 	    });
 	  };
-	  this.createChef = function(chef) {
-	    $http.post(mainRoute, chef)
+	  vm.createChef = function(chef) {
+	    chefResource.post(chef)
 	    .then((res) => {
-	      this.chefs.push(res.data);
-	      this.newChef = {};
+	      vm.chefs.push(res.data);
+	      vm.newChef = {};
 	    });
 	  };
 
-	  this.updateChef = function(chef) {
-	    $http.put(mainRoute + '/' + chef._id, chef)
+	  vm.updateChef = function(chef) {
+	    chefResource.put(chef)
 	    .catch((err) => {
 	      console.log(err);
 	    });
-	    this.updateChef.displayed = null;
+	    vm.updateChef.displayed = null;
 	  };
-	  
-	  this.resetChef = function(chef) {
-	    $http.get(mainRoute + '/' + chef._id)
+
+	  vm.resetChef = function(chef) {
+	    chefResource.get()
 	    .then((res) => {
-	      this.chefs[this.chefs.indexOf(chef)] = res.data;
+	      vm.chefs[vm.chefs.indexOf(chef)] = res.data;
 	    })
 	    .catch((err) => {
 	      console.log(err);
 	    });
 	  };
 
-	  this.removeChef = function(chef) {
-	    $http.delete(mainRoute + '/' + chef._id)
+	  vm.removeChef = function(chef) {
+	    chefResource.delete()
 	    .then((res) => {
-	      this.chefs = this.chefs.filter((c) => c._id != chef._id);
+	      vm.chefs = vm.chefs.filter((c) => c._id != chef._id);
 	    });
 
 	  };
 	}]);
 
-	app.controller('RecipeController', ['$http', function($http) {
-	  const mainRecipesRoute = 'http://localhost:3000/recipes';
-	  this.recipes = {};
-	  this.recipes = ['recipe'];
-	  this.getRecipes = function() {
-	    $http.get(mainRecipesRoute)
+	app.controller('RecipeController', ['$http', 'ResourceService',
+	function($http, ResourceService) {
+
+	  const recipeResource = ResourceService('recipes');
+	  const vm = this;
+
+	  vm.recipes = ['recipe'];
+
+	  vm.getRecipes = function() {
+	    recipeResource.getAll()
 	    .then((result) => {
-	      this.recipes = result.data.data;
+	      vm.recipes = result.data.data;
 	    }, function (error) {
 	      console.log(error);
 
 	    });
 	  };
-	  this.createRecipe = function(recipe) {
-	    $http.post(mainRecipesRoute, recipe)
+	  vm.createRecipe = function(recipe) {
+	    recipeResource.post(recipe)
 	    .then((res) => {
-	      this.recipes.push(res.data);
-	      this.newRecipe = {};
+	      vm.recipes.push(res.data);
+	      vm.newRecipe = {};
 	    });
 	  };
 
-	  this.updateRecipe = function(recipe) {
-	    $http.put(mainRecipesRoute + '/' + recipe._id, recipe)
+	  vm.updateRecipe = function(recipe) {
+	    recipeResource.put(recipe)
 	    .catch((err) => {
 	      console.log(err);
 	    });
-	    this.updateRecipe.displayed = null;
+	    vm.updateRecipe.displayed = null;
 	  };
 
-	  this.resetRecipe = function(recipe) {
-	    $http.get(mainRecipesRoute + '/' + recipe._id)
+	  vm.resetRecipe = function(recipe) {
+	    recipeResource.get()
 	      .then((res) => {
-	        this.recipes[this.recipes.indexOf(recipe)] = res.data;
+	        vm.recipes[vm.recipes.indexOf(recipe)] = res.data;
 	      })
 	      .catch((err) => {
 	        console.log(err);
 	      });
 	  };
 
-	  this.removeRecipe = function(recipe) {
-	    $http.delete(mainRecipesRoute + '/' + recipe._id)
+	  vm.removeRecipe = function(recipe) {
+	    recipeResource.delete()
 	    .then((res) => {
-	      this.recipes = this.recipes.filter((r) => r._id != recipe._id);
+	      vm.recipes = vm.recipes.filter((r) => r._id != recipe._id);
 	    });
 
 	  };
@@ -30870,6 +30882,78 @@
 	})(window, document);
 
 	!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	module.exports = function(ChefApp) {
+	  ChefApp.factory('ResourceService', ['$http', function($http) {
+	    const mainRoute = 'http://localhost:3000/';
+
+	    function Resource(resourceName) {
+	      this.resourceName = resourceName;
+	    }
+
+	    Resource.prototype.getAll = function() {
+	      return $http.get(mainRoute + this.resourceName);
+	    };
+
+	    Resource.prototype.create = function(data) {
+	      return $http.post(mainRoute + this.resourceName, data);
+	    };
+
+	    Resource.prototype.update = function(data) {
+	      return $http.put(mainRoute + this.resourceName + '/' + data._id, data);
+	    };
+
+	    Resource.prototype.delete = function(data) {
+	      return $http.delete(mainRoute + this.resourceName + '/' + data._id);
+	    };
+
+	    return function(resourceName) {
+	      return new Resource(resourceName);
+	    };
+	  }]);
+	};
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	// var app = angular.module('ChefApp', []);
+	module.exports = function(ChefApp) {
+
+	  ChefApp.directive('myFooter', function(){
+	    return {
+	      restrict: 'E',
+	      scope: {
+	        year: '='
+	      },
+	      replace: true,
+	      template: '<footer> &copy Samantha Prince | {{year}} </footer>'
+	    };
+	  });
+
+	  ChefApp.directive('browniesEaten', function() {
+	    return {
+	      restrict: 'E',
+	      scope: {
+	        total: '='
+	      },
+	      replace: true,
+	      template: '<section> How many brownies have you eaten today? {{total}} <button ng-click="plusOne()"> add 1 </button></section>',
+	      controller: function($scope) {
+	        $scope.plusOne = function() {
+	          $scope.total += 1;
+	        };
+	      }
+	    };
+	  });
+
+	};
+
 
 /***/ }
 /******/ ]);
