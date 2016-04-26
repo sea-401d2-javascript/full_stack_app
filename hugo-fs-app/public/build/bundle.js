@@ -54,6 +54,7 @@
 	__webpack_require__(11);
 	__webpack_require__(12);
 	__webpack_require__(13);
+	__webpack_require__(14);
 
 	(function() {
 	  angular.module('app', [
@@ -31225,7 +31226,7 @@
 
 	(function() {
 	  angular.module('customers')
-	  .controller('CustomerController', ['$http', CustomerController])
+	  .controller('CustomerController', ['$http', 'ResourceService', CustomerController])
 	  .directive('customerHeader', function() {
 	    return {
 	      restrict: 'A',
@@ -31233,15 +31234,14 @@
 	    };
 	  });
 
-	  function CustomerController ($http) {
+	  function CustomerController ($http, ResourceService) {
 	    const customersRoute = 'http://localhost:3000/customers';
-	    const customerOneRoute = 'http://localhost:3000/customers/:id';
+	    const customerResource = ResourceService('customers')
 	    this.customers = [];
-	    this.products = [];
 	  //customer routes
 	    //get customers route
 	    this.getCustomers = function() {
-	      $http.get(customersRoute)
+	      customerResource.getAll()
 	      .then((result) => {
 	        console.log(result.data);
 	        this.customers = result.data;
@@ -31260,7 +31260,7 @@
 	    };
 	    //post customers route
 	    this.createCustomer = function(customer) {
-	      $http.post(customersRoute, customer)
+	      customerResource.create(customer)
 	      .then((res) => {
 	        this.customers.push(customer);
 	        this.newCustomer = {};
@@ -31272,14 +31272,14 @@
 	    //put route
 	    this.updateCustomer = function(customer) {
 	      console.log(customer);
-	      $http.put(customersRoute + '/' + customer._id, customer)
+	      customerResource.update(customer)
 	      .then(res => console.log(res.data))
 	      .catch(err => console.log(err));
 	    };
 	    this.updateCustomer.rendered = null;
 	    //delete customers route
 	    this.removeCustomer = function(customer) {
-	      $http.delete(customersRoute + '/' + customer._id)
+	      customerResource.remove(customer)
 	      .then((res) => {
 	        this.customers = this.customers.filter((c) => c._id != customer._id);
 	      });
@@ -31305,7 +31305,7 @@
 
 	(function() {
 	  angular.module('products')
-	  .controller('ProductController', ['$http', ProductController])
+	  .controller('ProductController', ['$http', 'ResourceService', ProductController])
 	  .directive('productHeader', function() {
 	    return {
 	      restrict: 'A',
@@ -31313,14 +31313,14 @@
 	    }
 	  })
 
-	  function ProductController ($http) {
+	  function ProductController ($http, ResourceService) {
 	    const productsRoute = 'http://localhost:3000/products';
-	    const productOneRoute = 'http://localhost:3000/products/:id';
+	    const productResource = ResourceService('products')
 	    this.products = [];
 	    //product routes
 	      //get products route
 	    this.getProducts = function() {
-	      $http.get(productsRoute)
+	      productResource.getAll()
 	        .then((result) => {
 	          console.log(result.data);
 	          this.products = result.data;
@@ -31338,7 +31338,7 @@
 	    };
 	      //post product route
 	    this.createProduct = function(product) {
-	      $http.post(productsRoute, product)
+	      productResource.create(customer)
 	        .then((res) => {
 	          this.products.push(product);
 	          this.newProduct = {};
@@ -31348,7 +31348,7 @@
 	    this.createProduct.rendered = null;
 
 	    this.updateProduct = function(product) {
-	      $http.put(productsRoute + '/' + product._id, product)
+	      productResource.update(product)
 	        .then(res => console.log(res.data))
 	        .catch(err => console.log(err));
 	    };
@@ -31356,12 +31356,49 @@
 	    this.updateProduct.rendered = null;
 	      //delete product route
 	    this.deleteProduct = function(product) {
-	      $http.delete(productsRoute + '/' + product._id)
+	      productResource.delete(product)
 	      .then((res) => {
 	        this.products = this.products.filter((p) => p._id != product._id);
 	      });
 	    };
 	  }
+	})();
+
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	(function(app) {
+	  angular.module('customers')
+	  .factory('ResourceService', ['$http', function($http) {
+	    const mainRoute = 'http://localhost:3000/';
+
+	    function Resource(resourceName) {
+	      this.resourceName = resourceName;
+	    }
+
+	    Resource.prototype.getAll = function() {
+	      return $http.get(mainRoute + this.resourceName);
+	    };
+
+	    Resource.prototype.create = function(data) {
+	      return $http.post(mainRoute + this.resourceName, data);
+	    };
+
+	    Resource.prototype.update = function(data) {
+	      return $http.put(mainRoute + this.resourceName + '/' + data._id, data);
+	    };
+
+	    Resource.prototype.remove = function(data) {
+	      return $http.delete(mainRoute + this.resourceName + '/' + data._id);
+	    };
+
+	    return function(resourceName) {
+	      return new Resource(resourceName);
+	    };
+
+	  }]);
 	})();
 
 
