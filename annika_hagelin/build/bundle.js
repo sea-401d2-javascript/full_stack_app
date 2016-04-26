@@ -56,8 +56,10 @@
 	  app.controller('SpeciessController', ['ResourceService', function(ResourceService) {
 	    this.plz = 'plz respond';
 
-	    this.speciess = ["plz"];
-	    this.resource = new ResourceService('speciess', this.speciess);
+	    var speciess = [];
+	    var vm = new ResourceService('speciess', speciess);
+	    vm.speciess = speciess;
+	    return vm;
 
 
 
@@ -98,43 +100,49 @@
 	    // this.update.displayed = null;
 
 	  }])
-	  .controller('TreesController', ['$http', function($http) {
-	    this.plz = 'plz respond';
+	  .controller('TreesController', ['ResourceService', function(ResourceService) {
 
-	    this.resource = 'trees'
-	    this.path = `${serverPath}/${this.resource}`;
-	    this.trees = [];
+	    var trees = [];
+	    var vm = new ResourceService('trees', trees);
+	    vm.trees = trees;
+	    return vm;
 
-	    this.read = function() {
-	      $http.get(this.path)
-	        .then(res => this.trees = res.data)
-	        .catch(err => console.log(err));
-	    };
-
-	    this.reset = function(tree) {
-	      $http.get(this.path +'/'+ tree._id)
-	        .then(res => this.trees[this.trees.indexOf(tree)] = res.data)
-	        .catch(err => console.log(err));
-	    };
-
-	    this.create = function(tree) {
-	      $http.post(this.path, tree)
-	        .then(res => this.trees.push(res.data))
-	        .catch(err => console.log(err));
-	    };
-
-	    this.delete = function(tree) {
-	      $http.delete(this.path+'/'+tree._id)
-	        .then(res => this.trees.splice(this.trees.indexOf(tree), 1))
-	        .catch(err => console.log(err));
-	    };
-
-	    this.update = function(tree) {
-	      $http.put(this.path + '/' + tree._id, tree)
-	        .then(res => console.log(res.data))
-	        .catch(err => console.log(err));
-	    };
-	    this.update.displayed = null;
+	    // this.plz = 'plz respond';
+	    //
+	    // this.resource = 'trees'
+	    // this.path = `${serverPath}/${this.resource}`;
+	    // this.trees = [];
+	    //
+	    // this.read = function() {
+	    //   $http.get(this.path)
+	    //     .then(res => this.trees = res.data)
+	    //     .catch(err => console.log(err));
+	    // };
+	    //
+	    // this.reset = function(tree) {
+	    //   $http.get(this.path +'/'+ tree._id)
+	    //     .then(res => this.trees[this.trees.indexOf(tree)] = res.data)
+	    //     .catch(err => console.log(err));
+	    // };
+	    //
+	    // this.create = function(tree) {
+	    //   $http.post(this.path, tree)
+	    //     .then(res => this.trees.push(res.data))
+	    //     .catch(err => console.log(err));
+	    // };
+	    //
+	    // this.delete = function(tree) {
+	    //   $http.delete(this.path+'/'+tree._id)
+	    //     .then(res => this.trees.splice(this.trees.indexOf(tree), 1))
+	    //     .catch(err => console.log(err));
+	    // };
+	    //
+	    // this.update = function(tree) {
+	    //   $http.put(this.path + '/' + tree._id, tree)
+	    //     .then(res => console.log(res.data))
+	    //     .catch(err => console.log(err));
+	    // };
+	    // this.update.displayed = null;
 
 	  }])
 
