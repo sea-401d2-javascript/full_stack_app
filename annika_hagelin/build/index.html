@@ -14,7 +14,8 @@
 
     <ul>
       <li data-ng-repeat="species in speciessCtrl.speciess">
-        <big>{{species.genus}} {{species.species}}</big> <small>commonly</small> <big>{{species.cmnName}}</big> <small>[id:{{species._id}}]</small>
+        <species species={species} />
+        <!-- <big>{{species.genus}} {{species.species}}</big> <small>commonly</small> <big>{{species.cmnName}}</big> <small>[id:{{species._id}}]</small>
 
           <button type="submit" data-ng-click="speciessCtrl.update.displayed = species._id">update</button>
 
@@ -26,7 +27,7 @@
           cmnName:<input type="text" data-ng-model="species.cmnName"></br>
           <button type="submit">ok</button>
           <button type="reset" data-ng-click="speciessCtrl.reset(species); speciessCtrl.update.displayed = null">cancel</button>
-        </form>
+        </form> -->
       </li>
     </ul>
 

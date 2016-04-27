@@ -31312,6 +31312,7 @@
 	module.exports = function(app) {
 
 	__webpack_require__(13)(app);
+	__webpack_require__(14)(app);
 
 	}
 
@@ -31327,6 +31328,23 @@
 	      restrict: 'E',
 	      replace: true,
 	      templateUrl: './templates/tree.html'
+	    }
+	  });
+
+	}
+
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+
+	  app.directive('species', function() {
+	    return {
+	      restrict: 'E',
+	      replace: true,
+	      templateUrl: './templates/species.html'
 	    }
 	  });
 
