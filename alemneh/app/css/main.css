@@ -1,0 +1,22 @@
+.ng-cloak {
+  display: none !important;
+}
+
+button {
+  width: 300px;
+}
+
+input {
+  width: 300px;
+}
+
+.user {
+  border: 3px dotted;
+  padding: 5px;
+}
+
+.login {
+  background-color: goldenrod;
+  padding: 15px;
+  border-radius: 5px;
+}

@@ -23,7 +23,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', ideasRouter);
+app.use('/students', ideasRouter);
 app.use('/', loginRouter);
 app.use('/', studentsRouter);
 

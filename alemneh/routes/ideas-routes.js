@@ -7,8 +7,6 @@ module.exports = (ideaRouter, db) => {
 
   ideaRouter.route('/:student/ideas')
     .get((req, res) => {
-      console.log(req.body);
-      console.log(req.params.student);
       if(!req.params.student) {
         return res.json({data: 'No Ideas'})
       }
@@ -20,9 +18,8 @@ module.exports = (ideaRouter, db) => {
          });
     })
     .post((req, res) => {
-
+      console.log(req.body);
       Student.findById(req.params.student, (err, student) => {
-        console.log(student);
         var newIdea = new Idea(req.body);
         newIdea._owner.push(student.name);
         student.ideas.push(newIdea._id);
@@ -37,6 +34,7 @@ module.exports = (ideaRouter, db) => {
 
   ideaRouter.route('/:student/ideas/:idea')
     .get((req, res) => {
+
       Idea.findById(req.params.idea, (err, idea) =>{
         if(err) throw err;
         res.json({
@@ -46,14 +44,12 @@ module.exports = (ideaRouter, db) => {
       });
     })
     .put((req, res) => {
-      console.log(req.body);
       Idea.findByIdAndUpdate(req.params.idea, req.body, (err, idea) =>{
         if(err) return res.send(err);
         res.json({msg: 'successfully updated!'});
       });
     })
     .delete((req, res) => {
-      console.log(req.params.idea);
       Idea.findById(req.params.idea, (err, idea) =>{
         idea.remove((err, idea) => {
           Student.findById(req.params.student, (err, student) => {

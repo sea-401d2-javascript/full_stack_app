@@ -44,7 +44,7 @@ describe('it should test something', () => {
       expect(studentController.newStudent).toBeNull();
     })
     it('should delete a student', () => {
-      $httpBackend.expectDELETE('http://localhost:3000/5')
+      $httpBackend.expectDELETE('http://localhost:3000/students/5')
         .respond(200, 'deleted');
       studentController.students.push({name: 'test person', _id: 5});
       studentController.removeStudent({name: 'test person', _id: 5});
@@ -54,7 +54,7 @@ describe('it should test something', () => {
     })
     it('should update a student', () => {
       var updateStudent = {name: 'test person', _id: 5};
-      $httpBackend.expectPUT('http://localhost:3000/5')
+      $httpBackend.expectPUT('http://localhost:3000/students/5')
         .respond(200, 'updated');
       studentController.students.push(updateStudent);
       studentController.updateStudent(updateStudent);
@@ -63,7 +63,7 @@ describe('it should test something', () => {
     })
     it('should create idea for a student', () => {
       var student = {name:'test student', _id: 5, ideas:[]};
-      $httpBackend.expectPOST('http://localhost:3000/5/ideas', {sector: 'sports'})
+      $httpBackend.expectPOST('http://localhost:3000/students/5/ideas', {sector: 'sports'})
         .respond(200, {data: [{sector: 'sports'}]});
       studentController.createNewIdea(student, {sector: 'sports'});
       $httpBackend.flush();
@@ -72,7 +72,7 @@ describe('it should test something', () => {
     })
     it('should get idea for a student', () => {
       var student = {name:'test student', _id: 5, ideas:[]};
-      $httpBackend.expectGET('http://localhost:3000/5/ideas')
+      $httpBackend.expectGET('http://localhost:3000/students/5/ideas')
         .respond(200, {data: [{sector: 'sports'}]});
       studentController.getStudentIdeas(student);
       $httpBackend.flush();
@@ -82,7 +82,7 @@ describe('it should test something', () => {
     it('should update idea', () => {
       var student = {name:'test student', _id: 5, ideas:[]};
       var idea = {sector:'sports', _id: 6};
-      $httpBackend.expectPUT('http://localhost:3000/5/ideas/6', idea)
+      $httpBackend.expectPUT('http://localhost:3000/students/5/ideas/6', idea)
         .respond(200, 'updated');
       studentController.updateIdea(student, idea);
       $httpBackend.flush();
@@ -91,7 +91,7 @@ describe('it should test something', () => {
     it('should delete an idea of a student', () => {
       var student = {name:'test student', _id: 5, ideas:[{sector:'sports'}]};
       var idea = {sector:'sports', _id: 6};
-      $httpBackend.expectDELETE('http://localhost:3000/5/ideas/6')
+      $httpBackend.expectDELETE('http://localhost:3000/students/5/ideas/6')
         .respond(200, 'deleted')
       // student.ideas.push({})
       studentController.removeIdea(student, idea);

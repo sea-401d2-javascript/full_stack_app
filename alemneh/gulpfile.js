@@ -12,7 +12,8 @@ var temp = [__dirname + '/test/*_spec.js',  __dirname + '/app/js/index.js', __di
 const sources = {
   html: __dirname + '/app/index.html',
   js: __dirname + '/app/js/index.js',
-  test: __dirname + '/test/*_spec.js'
+  test: __dirname + '/test/*_spec.js',
+  views: __dirname + '/views/*.html'
 };
 //Run mocha for tests
 gulp.task('mocha', function() {
@@ -66,13 +67,18 @@ gulp.task('lint', function() {
 });
 
 gulp.task('build:html', function() {
-  gulp.src('app/*.html')
+  gulp.src('app/index.html')
   .pipe(gulp.dest('build/'));
 });
 
 gulp.task('build:css', function() {
   gulp.src('app/css/*.css')
   .pipe(gulp.dest('build/css/'));
+});
+
+gulp.task('build:views', function() {
+  gulp.src('app/views/**')
+  .pipe(gulp.dest('build/views/'));
 });
 
 gulp.task('bundle:test', () => {
@@ -88,8 +94,8 @@ gulp.task('webpack', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(temp, files, ['webpack', 'build:html', 'build:css', 'bundle:test']);
-})
-gulp.task('build',['build:html', 'build:css', 'bundle:test', 'webpack']);
+  gulp.watch(temp, files, ['webpack', 'build:html', 'build:css', 'bundle:test', 'build:views']);
+});
+gulp.task('build',['build:html', 'build:css', 'bundle:test', 'build:views', 'webpack']);
 //Run tasks on changes to files
 gulp.task('default',['mocha', 'lint']);

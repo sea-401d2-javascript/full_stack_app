@@ -32,7 +32,7 @@ module.exports = (studentsRouter, db) => {
     })
 
 
-  studentsRouter.route('/:student')
+  studentsRouter.route('/students/:student')
     .get((req, res) => {
       Student.findById(req.params.student, (err, student) =>{
         res.json({data: student});

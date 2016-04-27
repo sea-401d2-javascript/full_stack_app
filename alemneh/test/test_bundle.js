@@ -45,8 +45,16 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	const angular = __webpack_require__(2);
-	__webpack_require__(4);
+	module.exports = __webpack_require__(9);
+
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(2);
+	const angular = __webpack_require__(3);
+	__webpack_require__(8);
 
 
 	describe('it should test something', () => {
@@ -90,7 +98,7 @@
 	      expect(studentController.newStudent).toBeNull();
 	    })
 	    it('should delete a student', () => {
-	      $httpBackend.expectDELETE('http://localhost:3000/5')
+	      $httpBackend.expectDELETE('http://localhost:3000/students/5')
 	        .respond(200, 'deleted');
 	      studentController.students.push({name: 'test person', _id: 5});
 	      studentController.removeStudent({name: 'test person', _id: 5});
@@ -100,7 +108,7 @@
 	    })
 	    it('should update a student', () => {
 	      var updateStudent = {name: 'test person', _id: 5};
-	      $httpBackend.expectPUT('http://localhost:3000/5')
+	      $httpBackend.expectPUT('http://localhost:3000/students/5')
 	        .respond(200, 'updated');
 	      studentController.students.push(updateStudent);
 	      studentController.updateStudent(updateStudent);
@@ -109,7 +117,7 @@
 	    })
 	    it('should create idea for a student', () => {
 	      var student = {name:'test student', _id: 5, ideas:[]};
-	      $httpBackend.expectPOST('http://localhost:3000/5/ideas', {sector: 'sports'})
+	      $httpBackend.expectPOST('http://localhost:3000/students/5/ideas', {sector: 'sports'})
 	        .respond(200, {data: [{sector: 'sports'}]});
 	      studentController.createNewIdea(student, {sector: 'sports'});
 	      $httpBackend.flush();
@@ -118,7 +126,7 @@
 	    })
 	    it('should get idea for a student', () => {
 	      var student = {name:'test student', _id: 5, ideas:[]};
-	      $httpBackend.expectGET('http://localhost:3000/5/ideas')
+	      $httpBackend.expectGET('http://localhost:3000/students/5/ideas')
 	        .respond(200, {data: [{sector: 'sports'}]});
 	      studentController.getStudentIdeas(student);
 	      $httpBackend.flush();
@@ -128,7 +136,7 @@
 	    it('should update idea', () => {
 	      var student = {name:'test student', _id: 5, ideas:[]};
 	      var idea = {sector:'sports', _id: 6};
-	      $httpBackend.expectPUT('http://localhost:3000/5/ideas/6', idea)
+	      $httpBackend.expectPUT('http://localhost:3000/students/5/ideas/6', idea)
 	        .respond(200, 'updated');
 	      studentController.updateIdea(student, idea);
 	      $httpBackend.flush();
@@ -137,7 +145,7 @@
 	    it('should delete an idea of a student', () => {
 	      var student = {name:'test student', _id: 5, ideas:[{sector:'sports'}]};
 	      var idea = {sector:'sports', _id: 6};
-	      $httpBackend.expectDELETE('http://localhost:3000/5/ideas/6')
+	      $httpBackend.expectDELETE('http://localhost:3000/students/5/ideas/6')
 	        .respond(200, 'deleted')
 	      // student.ideas.push({})
 	      studentController.removeIdea(student, idea);
@@ -152,55 +160,64 @@
 
 
 /***/ },
-/* 1 */
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(2);
+	__webpack_require__(3);
 
 	const app = angular.module('IdeaApp', []);
-	app.controller('StudentController', ['$http', function($http) {
+
+	__webpack_require__(5)(app);
+	__webpack_require__(6)(app);
+	__webpack_require__(7)(app);
+	app.controller('StudentController', ['$http', 'EndpointService',
+	  function($http, EndpointService) {
+
 	  const route = 'http://localhost:3000';
+	  const studentEndpoint = EndpointService('students');
+	  const signUpEndpoint = EndpointService('signup');
+	  const ideaEndpoint = EndpointService('students', 'ideas');
 	  const vm = this;
 	  vm.students = ['student'];
 	  var oldIdea = {};
-	  var oldStudent = {}
+	  var oldStudent = {};
 	  vm.setStudent = function (student) {
 	    oldStudent = {
 	      name: student.name,
 	      track: student.track
 	    };
-	  }
+	  };
 	  vm.cancelStudent = function(student) {
 
 	    student.name = oldStudent.name;
 	    student.track = oldStudent.track;
-	  }
+	  };
 	  vm.setIdea = function (idea) {
 	    oldIdea = {
 	      sector: idea.sector,
 	      lang: idea.lang,
 	      teamSize: idea.teamSize
 	    };
-	  }
+	  };
 	  vm.cancelIdea = function(idea) {
 
 	    idea.sector = oldIdea.sector;
 	    idea.lang = oldIdea.lang;
 	    idea.teamSize = oldIdea.teamSize;
-	  }
+	  };
 
 	  vm.getStudents = function() {
-	    $http.get(route+'/students')
+	    studentEndpoint.summon()
 	      .then((res) => {
 	        console.log(res.data.data);
 
 	        vm.students = res.data.data;
 	      }, function(error) {
 	        console.error(error);
-	      })
-	  }
+	      });
+	  };
 	  vm.createStudent = function(newStudent) {
-	    $http.post(route+'/signup', newStudent)
+	    signUpEndpoint.assemble(newStudent)
 	      .then((res) => {
 	        console.log(res);
 
@@ -208,28 +225,28 @@
 	        vm.newStudent = null;
 	      }, function(error) {
 	        console.log(error);
-	      })
-	  }
+	      });
+	  };
 	  vm.removeStudent = function(student) {
-	    $http.delete(route+'/'+student._id)
+	    studentEndpoint.destroy(student)
 	      .then((res) => {
 	        console.log(res);
 
 	        vm.students = vm.students.filter((s) => s._id != student._id);
 	      }, function(error) {
 	        console.log(error);
-	      })
-	  }
+	      });
+	  };
 	  vm.updateStudent = function(updateStudent) {
 	    console.log(updateStudent._id);
-	    $http.put(route + '/' + updateStudent._id, updateStudent)
+	    studentEndpoint.update(updateStudent)
 	      .then((res) => {
 	        console.log(res);
 	        updateStudent.editing = false;
 	      }, function(error) {
 	        console.log(error);
-	      })
-	  }
+	      });
+	  };
 	  vm.getStudentIdeas = function(student) {
 	    if(!student._id) {
 	      return;
@@ -238,7 +255,7 @@
 	    if(typeof student == 'string' || student._id == 'undefined') {
 	      return;
 	    }
-	    $http.get(route + '/' + student._id + '/ideas')
+	    ideaEndpoint.summonSub(student)
 	      .then((res) => {
 	        student.showIdeas = false;
 	        student.addIdea = false;
@@ -247,47 +264,62 @@
 	        }
 	      }, function(error) {
 	        console.log(error);
-	      })
-	  }
+	      });
+	  };
 	  vm.createNewIdea = function(student, newIdea) {
-	    $http.post(route+ '/' + student._id + '/ideas', newIdea)
+	    console.log(newIdea);
+	    ideaEndpoint.assembleSub(student, newIdea)
 	      .then((res) => {
-	        console.log(res)
+	        console.log(res);
 	        student.ideas.push(newIdea);
-	      })
-	  }
+	      });
+	  };
 	  vm.removeIdea = function(student, idea) {
 	    console.log(student._id);
-	    $http.delete(route + '/' + student._id + '/ideas/' + idea._id)
+	    ideaEndpoint.destroySub(student, idea)
 	      .then((res) => {
 	        console.log(res);
 	        student.ideas = student.ideas.filter((s) => s._id != idea._id);
 	      }, function(error) {
 	        console.log(error);
-	      })
-	  }
+	      });
+	  };
 	  vm.updateIdea = function(student, idea) {
-	    $http.put(route + '/' + student._id + '/ideas/' + idea._id, idea)
+	    ideaEndpoint.updateSub(student, idea)
 	      .then((res) => {
 	        console.log(res);
 	        student.ideaEditing = false;
 	      }, function(error) {
 	        console.log(error);
-	      })
-	  }
-	}])
+	      });
+	  };
+	}]);
 
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(3);
-	module.exports = angular;
+	// app.directive('student', function() {
+	//   return {
+	//     return: 'E',
+	//     templateUrl: './views/student-view.html'
+	//   };
+	// });
+	//
+	// app.directive('addStudent', function() {
+	//   return {
+	//     return: 'E',
+	//     templateUrl: './views/add-student.html'
+	//   };
+	// });
 
 
 /***/ },
 /* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(4);
+	module.exports = angular;
+
+
+/***/ },
+/* 4 */
 /***/ function(module, exports) {
 
 	/**
@@ -31006,7 +31038,93 @@
 	!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ },
-/* 4 */
+/* 5 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+
+	  app.factory('EndpointService', ['$http', function($http) {
+	    const mainEndpoint = 'http://localhost:3000/';
+
+	    function Endpoint(endpointName, endpointName2) {
+	      this.endpointName = endpointName;
+	      this.endpointName2 = endpointName2;
+	    }
+
+	    Endpoint.prototype.summon = function() {
+	      return $http.get(mainEndpoint + this.endpointName);
+	    };
+
+	    Endpoint.prototype.assemble = function(data) {
+	      return $http.post(mainEndpoint + this.endpointName, data);
+	    };
+
+	    Endpoint.prototype.destroy =  function(data) {
+	      return $http.delete(mainEndpoint + this.endpointName + '/' + data._id);
+	    };
+
+	    Endpoint.prototype.update = function(data) {
+	      return $http.put(mainEndpoint + this.endpointName + '/' + data._id, data);
+	    };
+
+	    Endpoint.prototype.summonSub = function(data) {
+	      return $http.get(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2);
+	    };
+
+	    Endpoint.prototype.assembleSub = function(data, data2) {
+	      return $http.post(mainEndpoint + this.endpointName + '/' + data._id +  '/' + this.endpointName2, data2);
+	    };
+
+	    Endpoint.prototype.destroySub = function(data, data2) {
+	      return $http.delete(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2 + '/' + data2._id);
+	    };
+
+	    Endpoint.prototype.updateSub = function(data, data2) {
+	      return $http.put(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2 + '/' + data2._id, data2);
+	    };
+
+	    return function(endpointName, endpointName2) {
+	      return new Endpoint(endpointName, endpointName2);
+	    };
+
+	  }]);
+	};
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+
+	  app.directive('addStudent', function() {
+	    return {
+	      return: 'E',
+	      templateUrl: './views/add-student.html'
+	    };
+	  });
+
+	}
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+
+	  app.directive('student', function() {
+	    return {
+	      return: 'E',
+	      templateUrl: './views/student-view.html'
+	    };
+	  });
+
+	}
+
+
+/***/ },
+/* 8 */
 /***/ function(module, exports) {
 
 	/**
@@ -33983,6 +34101,34 @@
 
 
 	})(window, window.angular);
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	__webpack_require__(2);
+	const angular = __webpack_require__(3);
+	__webpack_require__(8);
+
+	describe('http tests', function() {
+	  var EndpointService;
+	  beforeEach(angular.mock.module('IdeaApp'));
+	  beforeEach(angular.mock.inject(function(_EndpointService_) {
+	    EndpointService = _EndpointService_;
+	  }));
+
+	  it('should be a service', function() {
+	    expect(typeof EndpointService).toBe('function');
+	  });
+
+	  it('should return a endpoint object', function() {
+	    var testEndpoint = EndpointService('test');
+	    expect(typeof testEndpoint).toBe('object');
+	    expect(testEndpoint.endpointName).toBe('test');
+	  });
+	});
 
 
 /***/ }

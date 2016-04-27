@@ -1,0 +1,52 @@
+<div class="row user" data-ng-repeat="student in studentctrl.students" data-ng-init="studentctrl.getStudentIdeas(student)">
+  <div class="col-md-3">
+
+
+  <h3>Username: {{student.name}}</h3>
+  <h3>Language: {{student.track}}</h3>
+    <div  data-ng-repeat="idea in student.ideas" data-ng-if="student.showIdeas">
+      <h3>Ideas:</h3>
+      <p>Sector: {{idea.sector}}</p>
+      <p>Language: {{idea.lang}}</p>
+      <p>Team Size: {{idea.teamSize}}</p>
+      <button class="btn btn-default" data-ng-click="studentctrl.removeIdea(student, idea)">Delete Idea</button>
+      <button class="btn btn-default" data-ng-click="student.ideaEditing = true; setIdea(idea)">Edit Idea</button>
+      <form data-ng-if="student.ideaEditing" data-ng-submit="studentctrl.updateIdea(student, idea)">
+        <label for="">Sector: </label>
+        <input type="text"  data-ng-model="idea.sector" />
+        <label for="">Track: </label>
+        <input type="text" data-ng-model="idea.lang" />
+        <button class="btn btn-default" data-ng-click="student.ideaEditing = false; studentctrl.cancelIdea(idea)">Cancel</button>
+        <button class="btn btn-default" type="submit">Update Idea</button>
+      </form>
+    </div>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-default" data-ng-click="student.showIdeas = true">Show Ideas</button><br>
+      <button class="btn btn-default" data-ng-click="student.showIdeas = false">Hide Ideas</button><br>
+      <button class="btn btn-default" data-ng-click="studentctrl.removeStudent(student)">Delete Student</button><br>
+      <button class="btn btn-default" data-ng-click="student.editing = true; studentctrl.setStudent(student)">Edit Student</button><br>
+      <button class="btn btn-default" data-ng-click="student.addIdea = true">Create Idea</button><br>
+    </div>
+    <div class="col-md-3 col-md-offset-2">
+      <form data-ng-if="student.addIdea" data-ng-submit="studentctrl.createNewIdea(student, newIdea)">
+        <label for="">Sector: </label>
+        <input type="text" name="sector" value="" data-ng-model="newIdea.sector"/><br />
+        <label for="">Language: </label>
+        <input type="text" name="lang" value="" data-ng-model="newIdea.lang"/><br />
+        <label for="">Team Size: </label>
+        <input type="text" name="teamSize" value="" data-ng-model="newIdea.teamSize"/><br />
+        <button class="btn btn-default" type="submit">Add Idea</button>
+        <button class="btn btn-default" data-ng-click="student.addIdea = false">Cancel</button>
+      </form>
+      <form data-ng-if="student.editing" data-ng-submit="studentctrl.updateStudent(student)">
+        <label for="name">Name:</label>
+        <input type="text" data-ng-model="student.name" />
+        <label for="track">Track:</label>
+        <input type="text" data-ng-model="student.track" />
+        <button class="btn btn-default" data-ng-click="student.editing = false; studentctrl.cancelStudent(student)">Cancel</button>
+        <button class="btn btn-default" type="submit">Update Student</button>
+      </form>
+    </div>
+
+</div>

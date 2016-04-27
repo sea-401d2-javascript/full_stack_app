@@ -47,49 +47,58 @@
 	__webpack_require__(1);
 
 	const app = angular.module('IdeaApp', []);
-	app.controller('StudentController', ['$http', function($http) {
+
+	__webpack_require__(3)(app);
+	__webpack_require__(4)(app);
+	__webpack_require__(5)(app);
+	app.controller('StudentController', ['$http', 'EndpointService',
+	  function($http, EndpointService) {
+
 	  const route = 'http://localhost:3000';
+	  const studentEndpoint = EndpointService('students');
+	  const signUpEndpoint = EndpointService('signup');
+	  const ideaEndpoint = EndpointService('students', 'ideas');
 	  const vm = this;
 	  vm.students = ['student'];
 	  var oldIdea = {};
-	  var oldStudent = {}
+	  var oldStudent = {};
 	  vm.setStudent = function (student) {
 	    oldStudent = {
 	      name: student.name,
 	      track: student.track
 	    };
-	  }
+	  };
 	  vm.cancelStudent = function(student) {
 
 	    student.name = oldStudent.name;
 	    student.track = oldStudent.track;
-	  }
+	  };
 	  vm.setIdea = function (idea) {
 	    oldIdea = {
 	      sector: idea.sector,
 	      lang: idea.lang,
 	      teamSize: idea.teamSize
 	    };
-	  }
+	  };
 	  vm.cancelIdea = function(idea) {
 
 	    idea.sector = oldIdea.sector;
 	    idea.lang = oldIdea.lang;
 	    idea.teamSize = oldIdea.teamSize;
-	  }
+	  };
 
 	  vm.getStudents = function() {
-	    $http.get(route+'/students')
+	    studentEndpoint.summon()
 	      .then((res) => {
 	        console.log(res.data.data);
 
 	        vm.students = res.data.data;
 	      }, function(error) {
 	        console.error(error);
-	      })
-	  }
+	      });
+	  };
 	  vm.createStudent = function(newStudent) {
-	    $http.post(route+'/signup', newStudent)
+	    signUpEndpoint.assemble(newStudent)
 	      .then((res) => {
 	        console.log(res);
 
@@ -97,28 +106,28 @@
 	        vm.newStudent = null;
 	      }, function(error) {
 	        console.log(error);
-	      })
-	  }
+	      });
+	  };
 	  vm.removeStudent = function(student) {
-	    $http.delete(route+'/'+student._id)
+	    studentEndpoint.destroy(student)
 	      .then((res) => {
 	        console.log(res);
 
 	        vm.students = vm.students.filter((s) => s._id != student._id);
 	      }, function(error) {
 	        console.log(error);
-	      })
-	  }
+	      });
+	  };
 	  vm.updateStudent = function(updateStudent) {
 	    console.log(updateStudent._id);
-	    $http.put(route + '/' + updateStudent._id, updateStudent)
+	    studentEndpoint.update(updateStudent)
 	      .then((res) => {
 	        console.log(res);
 	        updateStudent.editing = false;
 	      }, function(error) {
 	        console.log(error);
-	      })
-	  }
+	      });
+	  };
 	  vm.getStudentIdeas = function(student) {
 	    if(!student._id) {
 	      return;
@@ -127,7 +136,7 @@
 	    if(typeof student == 'string' || student._id == 'undefined') {
 	      return;
 	    }
-	    $http.get(route + '/' + student._id + '/ideas')
+	    ideaEndpoint.summonSub(student)
 	      .then((res) => {
 	        student.showIdeas = false;
 	        student.addIdea = false;
@@ -136,35 +145,50 @@
 	        }
 	      }, function(error) {
 	        console.log(error);
-	      })
-	  }
+	      });
+	  };
 	  vm.createNewIdea = function(student, newIdea) {
-	    $http.post(route+ '/' + student._id + '/ideas', newIdea)
+	    console.log(newIdea);
+	    ideaEndpoint.assembleSub(student, newIdea)
 	      .then((res) => {
-	        console.log(res)
+	        console.log(res);
 	        student.ideas.push(newIdea);
-	      })
-	  }
+	      });
+	  };
 	  vm.removeIdea = function(student, idea) {
 	    console.log(student._id);
-	    $http.delete(route + '/' + student._id + '/ideas/' + idea._id)
+	    ideaEndpoint.destroySub(student, idea)
 	      .then((res) => {
 	        console.log(res);
 	        student.ideas = student.ideas.filter((s) => s._id != idea._id);
 	      }, function(error) {
 	        console.log(error);
-	      })
-	  }
+	      });
+	  };
 	  vm.updateIdea = function(student, idea) {
-	    $http.put(route + '/' + student._id + '/ideas/' + idea._id, idea)
+	    ideaEndpoint.updateSub(student, idea)
 	      .then((res) => {
 	        console.log(res);
 	        student.ideaEditing = false;
 	      }, function(error) {
 	        console.log(error);
-	      })
-	  }
-	}])
+	      });
+	  };
+	}]);
+
+	// app.directive('student', function() {
+	//   return {
+	//     return: 'E',
+	//     templateUrl: './views/student-view.html'
+	//   };
+	// });
+	//
+	// app.directive('addStudent', function() {
+	//   return {
+	//     return: 'E',
+	//     templateUrl: './views/add-student.html'
+	//   };
+	// });
 
 
 /***/ },
@@ -30893,6 +30917,92 @@
 	})(window, document);
 
 	!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+
+	  app.factory('EndpointService', ['$http', function($http) {
+	    const mainEndpoint = 'http://localhost:3000/';
+
+	    function Endpoint(endpointName, endpointName2) {
+	      this.endpointName = endpointName;
+	      this.endpointName2 = endpointName2;
+	    }
+
+	    Endpoint.prototype.summon = function() {
+	      return $http.get(mainEndpoint + this.endpointName);
+	    };
+
+	    Endpoint.prototype.assemble = function(data) {
+	      return $http.post(mainEndpoint + this.endpointName, data);
+	    };
+
+	    Endpoint.prototype.destroy =  function(data) {
+	      return $http.delete(mainEndpoint + this.endpointName + '/' + data._id);
+	    };
+
+	    Endpoint.prototype.update = function(data) {
+	      return $http.put(mainEndpoint + this.endpointName + '/' + data._id, data);
+	    };
+
+	    Endpoint.prototype.summonSub = function(data) {
+	      return $http.get(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2);
+	    };
+
+	    Endpoint.prototype.assembleSub = function(data, data2) {
+	      return $http.post(mainEndpoint + this.endpointName + '/' + data._id +  '/' + this.endpointName2, data2);
+	    };
+
+	    Endpoint.prototype.destroySub = function(data, data2) {
+	      return $http.delete(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2 + '/' + data2._id);
+	    };
+
+	    Endpoint.prototype.updateSub = function(data, data2) {
+	      return $http.put(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2 + '/' + data2._id, data2);
+	    };
+
+	    return function(endpointName, endpointName2) {
+	      return new Endpoint(endpointName, endpointName2);
+	    };
+
+	  }]);
+	};
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+
+	  app.directive('addStudent', function() {
+	    return {
+	      return: 'E',
+	      templateUrl: './views/add-student.html'
+	    };
+	  });
+
+	}
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+
+	  app.directive('student', function() {
+	    return {
+	      return: 'E',
+	      templateUrl: './views/student-view.html'
+	    };
+	  });
+
+	}
+
 
 /***/ }
 /******/ ]);
