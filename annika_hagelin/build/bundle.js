@@ -52,6 +52,7 @@
 	const app = angular.module('TreeApp', []);
 
 	__webpack_require__(8)(app);
+	__webpack_require__(12)(app);
 
 	  app.controller('SpeciessController', ['ResourceService', function(ResourceService) {
 	    this.plz = 'plz respond';
@@ -31300,6 +31301,36 @@
 
 	  }]);
 	};
+
+
+/***/ },
+/* 10 */,
+/* 11 */,
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(app) {
+
+	__webpack_require__(13)(app);
+
+	}
+
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+
+	  app.directive('tree', function() {
+	    return {
+	      restrict: 'E',
+	      replace: true,
+	      templateUrl: './templates/tree.html'
+	    }
+	  });
+
+	}
 
 
 /***/ }

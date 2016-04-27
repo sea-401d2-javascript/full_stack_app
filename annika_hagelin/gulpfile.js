@@ -9,7 +9,8 @@ const fs = require('fs');
 const paths = ['*.js', 'test/*.js'];
 
 const sources = {
-  test: __dirname + '/test/unit/*.js'
+  test: __dirname + '/test/unit/*.js',
+  templates: __dirname + '/src/directives/templates/*.html'
 };
 
 gulp.task('default', ['build']);
@@ -23,6 +24,11 @@ gulp.task('lint', () => {
 gulp.task('test', () => {
   return gulp.src(['test/*.js'], {read: false})
     .pipe(mocha({reporter:'nyan'}));
+});
+
+gulp.task('copy', () => {
+  return gulp.src(sources.templates)
+    .pipe(gulp.dest('./build/templates'))
 });
 
 gulp.task('build', () => {
@@ -44,3 +50,5 @@ gulp.task('bundle:test', () => {
     .pipe(webpack({output: {filename: 'test_bundle.js'}}))
     .pipe(gulp.dest('./test'));
 });
+
+gulp.task('default', ['copy']);

@@ -44,6 +44,9 @@
 
     <ul>
       <li data-ng-repeat="tree in treesCtrl.trees">
+        <tree tree={tree} />
+      </li>
+      <!-- <li data-ng-repeat="tree in treesCtrl.trees">
         <big>{{tree.species.genus}} {{tree.species.species}}</big> <small>at</small> latitude:<big>{{tree.lat}}</big> <small>and</small> longitude:<big>{{tree.lng}}</big> <small>[id:{{tree._id}}]</small>
 
           <button type="submit" data-ng-click="treesCtrl.update.displayed = tree._id">update</button>
@@ -57,7 +60,7 @@
           <button type="submit">ok</button>
           <button type="reset" data-ng-click="treesCtrl.reset(tree); treesCtrl.update.displayed = null">cancel</button>
         </form>
-      </li>
+      </li> -->
     </ul>
 
     <form id="create-tree" data-ng-submit="treesCtrl.create(tree)">

@@ -6,6 +6,7 @@ require('style!css!./styles/mystyle.css');
 const app = angular.module('TreeApp', []);
 
 require('./services/index.js')(app);
+require('./directives/index.js')(app);
 
   app.controller('SpeciessController', ['ResourceService', function(ResourceService) {
     this.plz = 'plz respond';
