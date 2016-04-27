@@ -11,11 +11,13 @@
   </head>
   <body data-ng-app="app">
     <h2>Two Resource Full Stack App</h2>
-    <div data-ng-controller="BeersController as beersctrl" data-ng-init="beersctrl.getBeers()">
+    <nav-bar></nav-bar>
+
+    <div id="beers" class="tab-content" data-ng-controller="BeersController as beersctrl" data-ng-init="beersctrl.getBeers()">
       <h3>Beer Resource Data Array:</h3>
       <h4 id="beerarray" class="ng-cloak" ng-cloak>{{beersctrl.beers}}</h4>
       <ul id="beerlist">
-        <li class="ng-cloak" ng-cloak data-ng-repeat="beer in beersctrl.beers">{{beer.name}}
+        <li class="ng-cloak" ng-cloak data-ng-repeat="beer in beersctrl.beers" highlight>{{beer.name}}
           <button type"submit" ng-click="beersctrl.removeBeer(beer)">Delete Beer</button>
           <button type="submit" ng-click="beersctrl.updateBeer.displayed = beer._id">Edit Beer</button>
           <form id="beerupdate" class="form" data-ng-show="beersctrl.updateBeer.displayed == beer._id" data-ng-submit="beersctrl.updateBeer(beer); beersctrl.updateBeer.displayed = null">
@@ -37,11 +39,11 @@
         <button type="submit">Add New Beer</button>
       </form>
     </div>
-    <div data-ng-controller="UsersController as usersctrl" data-ng-init="usersctrl.getUsers()">
+    <div id="users" class="tab-content" data-ng-controller="UsersController as usersctrl" data-ng-init="usersctrl.getUsers()">
       <h3>User Resource Data Array:</h3>
       <h4 id="userarray" class="ng-cloak" ng-cloak>{{usersctrl.users}}</h4>
       <ul id="userlist">
-        <li class="ng-cloak" data-ng-repeat="user in usersctrl.users">{{user.firstName}}
+        <li class="ng-cloak" data-ng-repeat="user in usersctrl.users" highlight>{{user.firstName}}
         <button type="submit" data-ng-click="usersctrl.removeUser(user)">Delete User</button>
         <button type="submit" data-ng-click="usersctrl.updateUser.displayed = user._id">Update User</button>
         <form id="userupdate" class="form" data-ng-show="usersctrl.updateUser.displayed == user._id" data-ng-submit="usersctrl.updateUser(user); usersctrl.updateUser.displayed = null">

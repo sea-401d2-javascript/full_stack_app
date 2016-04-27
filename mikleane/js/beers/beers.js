@@ -1,50 +1,56 @@
 (function(){
+'use strict';
 
-angular.module('beers')
-  .controller('BeersController',['$http', function($http) {
-    let mainRoute = 'http://localhost:3000/beers';
-      this.beers = {};
-      this.beers = ['beer'];
-      this.getBeers = function() {
-        $http.get(mainRoute)
+var app = angular.module('beers')
+
+require(__dirname + '/../services/http_service')(app);
+
+  app.controller('BeersController',['$http', 'ResourceService', function($http, ResourceService) {
+    var vm = this;
+    const beersResource = ResourceService('beers');
+
+      vm.beers = {};
+      vm.beers = ['beer'];
+      vm.getBeers = function() {
+        beersResource.getAll()
         .then((result) => {
-          this.beers = result.data.beers;
+          vm.beers = result.data.beers;
         }), function(error) {
         };
       };
 
-    this.createBeer = function(beer) {
-      $http.post(mainRoute, beer)
+    vm.createBeer = function(beer) {
+      beersResource.create(beer)
       .then((res) => {
-        this.beers.push(res.data);
-        this.newBeer = {};
+        vm.beers.push(res.data);
+        vm.newBeer = {};
       })
     }
 
-    this.updateBeer = function(beer) {
-      $http.put(mainRoute + '/' + beer._id, beer)
+    vm.updateBeer = function(beer) {
+      beersResource.update(beer)
       .then((res) => {
       })
       .catch((err) => {
         console.log(err);
     });
-    this.updateBeer.displayed = null;
+    vm.updateBeer.displayed = null;
   };
 
-    this.resetBeer = function(beer) {
-      $http.get(mainRoute +'/'+ beer._id)
+    vm.resetBeer = function(beer) {
+      beersResource.reset(beer)
         .then((res) => {
-          this.beers[this.beers.indexOf(beer)] = res.data
+          vm.beers[vm.beers.indexOf(beer)] = res.data
         })
         .catch((err) => {
           console.log(err)
     });
   };
 
-    this.removeBeer = function(beer) {
-      $http.delete(mainRoute + '/' + beer._id)
-      .then((res) => {
-        this.beers = this.beers.filter((b) => b._id != beer._id)
+    vm.removeBeer = function(beer) {
+      beersResource.remove(beer)
+       .then((res) => {
+        vm.beers = vm.beers.filter((b) => b._id != beer._id)
       })
     }
 }]);

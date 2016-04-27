@@ -1,50 +1,58 @@
 (function() {
-  angular.module('users')
-    .controller('UsersController', ['$http', function($http) {
-      let userRoute = 'http://localhost:3000/users';
-        this.users = {};
-        this.users = ['user'];
-        this.getUsers = function() {
-          $http.get(userRoute)
+'use strict';
+
+var app = angular.module('users');
+
+require(__dirname + '/../services/http_service')(app);
+
+app.controller('UsersController', ['$http', 'ResourceService', function($http, ResourceService) {
+      var vm = this;
+      const usersResource = ResourceService('users');
+
+        vm.users = {};
+        vm.users = ['user'];
+        vm.getUsers = function() {
+          usersResource.getAll()
           .then((result) => {
-            this.users = result.data.users;
+            vm.users = result.data.users;
           }), function(error) {
           };
         };
 
-        this.createUser = function(user) {
-          $http.post(userRoute, user)
+        vm.createUser = function(user) {
+          usersResource.create(user)
           .then((res) => {
-            this.users.push(res.data);
-            this.newUser = {};
+            vm.users.push(res.data);
+            vm.newUser = {};
           })
         }
 
-        this.updateUser = function(user) {
-          $http.put(userRoute + '/' + user._id, user)
+        vm.updateUser = function(user) {
+          usersResource.update(user)
           .then((res) => {
           })
           .catch((err) => {
             console.log(err);
         });
-        this.updateUser.displayed = null;
+        vm.updateUser.displayed = null;
 
       };
 
-        this.resetUser = function(user) {
-          $http.get(userRoute +'/'+ user._id)
+        vm.resetUser = function(user) {
+          usersResource.reset(user)
             .then((res) => {
-              this.users[this.users.indexOf(user)] = res.data
+              vm.users[vm.users.indexOf(user)] = res.data
             })
             .catch((err) => {
               console.log(err)
         });
+        vm.resetUser.displayed = null;
       };
 
-        this.removeUser = function(user) {
-          $http.delete(userRoute + '/' + user._id)
+        vm.removeUser = function(user) {
+          usersResource.remove(user)
           .then((res) => {
-            this.users = this.users.filter((u) => u._id != user._id)
+            vm.users = vm.users.filter((u) => u._id != user._id)
           })
         }
       }]);

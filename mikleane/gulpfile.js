@@ -6,7 +6,7 @@ var webpack = require('webpack-stream');
 
 
 var sources = {
-  html: __dirname + '/build/index.html',
+  html: __dirname + '/build/*.html',
   js: __dirname + '/js/index.js',
   test: __dirname + '/test/*_spec.js'
 };
