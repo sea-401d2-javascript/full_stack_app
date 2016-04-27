@@ -1,8 +1,8 @@
 require('../js/index.js');
-let angular = require('angular');
+require('angular');
 require('angular-mocks');
 
-describe('it should test something', ()=> {
+describe('it should test something', () => {
   var beerController;
   it('should have a test', () => {
     expect(false).toBe(false);
@@ -51,7 +51,7 @@ describe('it should test something', ()=> {
         $httpBackend.flush();
         expect(beerController.beers.length).toBe(2);
         expect(beerController.beers.every((b) => b._id=3)).toBe(true);
-      
+
     })
     it('should delete a beer', () => {
       $httpBackend.expectDELETE('http://localhost:3000/beers/5')

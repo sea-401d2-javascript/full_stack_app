@@ -1,5 +1,5 @@
 require('../js/index.js');
-let angular = require('angular');
+require('angular');
 require('angular-mocks');
 
 describe('it should test something', ()=> {
@@ -52,7 +52,7 @@ describe('it should test something', ()=> {
         $httpBackend.flush();
         expect(userController.users.length).toBe(3);
         expect(userController.users.every((b) => b._id=7)).toBe(true);
-        
+
     })
     it('should delete a user', () => {
       $httpBackend.expectDELETE('http://localhost:3000/users/5')

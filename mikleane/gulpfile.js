@@ -6,12 +6,13 @@ var webpack = require('webpack-stream');
 
 
 var sources = {
-  html: __dirname + '/build/*.html',
-  js: __dirname + '/js/index.js',
-  test: __dirname + '/test/*_spec.js'
+  html: __dirname + '/app/layout/*.html',
+  js: __dirname + '/app/index.js',
+  test: __dirname + '/test/*_spec.js',
+  css: __dirname + '/app/style/*.css'
 };
 
-var paths = ['*.js', 'test/*.js', 'routes/*.js', 'models/*.js', 'js/beers/*.js', 'js/users/*.js'];
+var paths = ['*.js', 'test/*.js', 'routes/*.js', 'models/*.js', 'app/beers/*.js', 'app/users/*.js'];
 
 gulp.task('eslint', function() {
   return gulp.src(paths)
@@ -20,7 +21,7 @@ gulp.task('eslint', function() {
 });
 
 gulp.task('webpack', function() {
-  return gulp.src(__dirname + '/js/index.js')
+  return gulp.src(__dirname + '/app/index.js')
   .pipe(webpack({
     watch: true,
     module: {
@@ -48,10 +49,15 @@ gulp.task('copy', function () {
   .pipe(gulp.dest('./build'))
 });
 
+gulp.task('copycss', function () {
+  return gulp.src(sources.css)
+  .pipe(gulp.dest('./build'))
+});
+
 gulp.task('bundle:test', () => {
   return gulp.src(sources.test)
   .pipe(webpack({output: {filename:'test_bundle.js'}}))
   .pipe(gulp.dest('./test'))
 });
 
-gulp.task('default', ['eslint', 'webpack', 'bundle:dev', 'copy']);
+gulp.task('default', ['eslint', 'webpack', 'bundle:dev', 'copy', 'copycss']);
