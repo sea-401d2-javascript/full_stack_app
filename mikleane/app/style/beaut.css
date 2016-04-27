@@ -1,0 +1,22 @@
+
+.form {
+  background-color: #D1E6E3;
+  max-width: 900px;
+}
+
+input {
+  font-size: 13px;
+}
+
+footer {
+  height: 30px;
+}
+
+#userarray, #beerarray {
+  background-color: #6BA099;
+  max-width: 900px;
+}
+#userlist, #beerlist {
+  background-color: #9FC6C1;
+  max-width: 860px;
+}
