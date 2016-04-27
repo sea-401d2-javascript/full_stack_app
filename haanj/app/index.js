@@ -3,9 +3,8 @@ const angular = require('angular');
 const app = angular.module('SnackApp', []);
 
 app.controller('SnackController', ['$http', function($http) {
+  this.active = null;
   this.edit = false;
-
-
   this.snacks = [];
   $http.get('http://localhost:3000/snacks')
     .then((result) => {
@@ -16,7 +15,6 @@ app.controller('SnackController', ['$http', function($http) {
       console.log(err); 
     });
 
-  this.active = null;
 
   this.isActive = function(snack) {
     return snack == this.active;
@@ -24,7 +22,7 @@ app.controller('SnackController', ['$http', function($http) {
 
   this.toggleEdit = function(){
     this.edit = !this.edit; 
-  }
+  };
 
   this.makeActive = function(snack) {
     if (this.active == snack) return this.active = null;
@@ -79,3 +77,46 @@ app.controller('SnackController', ['$http', function($http) {
   };
 }]);
 
+app.directive('snackList', function() {
+  return {
+    restrict: 'E',
+    template: '\
+      <div data-ng-repeat="snack in snackctrl.snacks">\
+        <h1 data-ng-click="snackctrl.makeActive(snack._id)">{{snack.name}}</h1>\
+        <button data-ng-click="snackctrl.deleteSnack(snack._id)">DELETE</button>\
+        <ul data-ng-show="snackctrl.isActive(snack._id)" data-ng-repeat="ingredient in snack.ingredients">\
+          <li>{{ingredient}}</li>\
+        </ul>\
+        <button data-ng-show="snackctrl.isActive(snack._id)" data-ng-click="snackctrl.toggleEdit()">Edit</button>\
+      </div>'
+  };
+});
+
+app.directive('newSnackForm', function() {
+  return {
+    restrict: 'E',
+    template: '\
+      <edit-snack-form></edit-snack-form>\
+      <h1 id="addSnack" data-ng-click="snackctrl.makeActive(\'new\')">Add New Snack</h1>\
+      <div data-ng-show="snackctrl.isActive(\'new\')">\
+        <input id="newName" data-ng-model="newName" placeholder="Snack Name"></br>\
+        <input id="newIngredients" data-ng-model="newIngredients" placeholder="Ingredients, separated by comma"></br>\
+        <input id="newTags" data-ng-model="newTags" placeholder="Tags, separated by comma"></br>\
+        <button data-ng-click="snackctrl.addSnack(newName, newIngredients, newTags)">Add Snack</button>\
+      </div>'
+  };
+});
+
+app.directivve('editSnackForm', function() {
+  return {
+    restrict: 'E',
+    template: '\
+      <div data-ng-show="snackctrl.edit == true">\
+        <input data-ng-model="newName" placeholder="Snack Name"></br>\
+        <input data-ng-model="newIngredients" placeholder="Ingredients, separated by comma"></br>\
+        <input data-ng-model="newTags" placeholder="Tags, separated by comma"></br>\
+        <button data-ng-click="snackctrl.updateSnack(newName, newIngredients, newTags)">Save Changes</button>\
+        <button data-ng-click="snackctrl.toggleEdit()">Cancel</button>\
+      </div>'
+  };
+});
