@@ -48,7 +48,7 @@
 	const angular = __webpack_require__(1);
 	const app = angular.module('SnackApp', []);
 
-	app.controller('SnackController', ['$http', function($http) {
+	app.controller('SnackController', ['$http', 'EditService', function($http, EditService) {
 	  this.active = null;
 	  this.edit = false;
 	  this.snacks = [];
@@ -93,7 +93,6 @@
 	        console.log(err);
 	      });
 	  };
-	  
 
 	  this.deleteSnack = function(snack) {
 	    $http.delete('http://localhost:3000/snacks/' + snack)
@@ -127,6 +126,7 @@
 	  return {
 	    restrict: 'E',
 	    template: '\
+	      <edit-snack-form></edit-snack-form>\
 	      <div data-ng-repeat="snack in snackctrl.snacks">\
 	        <h1 data-ng-click="snackctrl.makeActive(snack._id)">{{snack.name}}</h1>\
 	        <button data-ng-click="snackctrl.deleteSnack(snack._id)">DELETE</button>\
@@ -142,7 +142,6 @@
 	  return {
 	    restrict: 'E',
 	    template: '\
-	      <edit-snack-form></edit-snack-form>\
 	      <h1 id="addSnack" data-ng-click="snackctrl.makeActive(\'new\')">Add New Snack</h1>\
 	      <div data-ng-show="snackctrl.isActive(\'new\')">\
 	        <input id="newName" data-ng-model="newName" placeholder="Snack Name"></br>\
@@ -153,7 +152,7 @@
 	  };
 	});
 
-	app.directivve('editSnackForm', function() {
+	app.directive('editSnackForm', function() {
 	  return {
 	    restrict: 'E',
 	    template: '\
@@ -166,6 +165,43 @@
 	      </div>'
 	  };
 	});
+
+	app.factory('EditService', function() {
+	  var myService = {};
+	  var edit = false;
+
+	  myService.status = function() {
+	    return edit;
+	  };
+
+	  myService.toggle = function() {
+	    edit = !edit; 
+	  };
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /***/ },
