@@ -131,6 +131,8 @@ app.factory('EditService', function() {
   myService.toggle = function() {
     edit = !edit; 
   };
+
+  return myService;
 });
 
 

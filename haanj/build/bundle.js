@@ -177,6 +177,8 @@
 	  myService.toggle = function() {
 	    edit = !edit; 
 	  };
+
+	  return myService;
 	});
 
 
