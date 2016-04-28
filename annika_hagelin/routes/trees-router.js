@@ -15,15 +15,9 @@ module.exports = (router, models) => {
       return res.status(200).send(trees);
     });
 
-    // Tree.find({}, (err, trees) => {
-    //   if (err) return res.status(500).send('error reading trees').end();
-    //   return res.status(200).json(trees).end();
-    // });
   })
-  .post((req, res) => {
+  .post(jwtAuth, (req, res) => {
     console.log(req.body.species);
-    // req.body.species = models.Species.findById(req.body.species);
-    // console.log(req.body.species);
     var newTree = new Tree(req.body);
     newTree.save((err, tree) => {
       if (err) {
@@ -40,26 +34,21 @@ module.exports = (router, models) => {
   });
 
   router.route('/trees/:id')
-  .get((req, res) => {
+  .get(jwtAuth, (req, res) => {
     Tree.findById(req.params.id)
     .populate('species')
     .exec((err, tree) => {
       if (err) return res.sendStatus(500);
       return res.status(200).send(tree);
     });
-
-    // Tree.findById(req.params.id, (err, tree) => {
-    //   if (err) return res.status(500).send('error reading tree with id  '+req.params.id).end();
-    //   return res.status(200).json(tree).end();
-    // });
   })
-  .put((req, res) => {
+  .put(jwtAuth, (req, res) => {
     Tree.findByIdAndUpdate(req.params.id, req.body, (err, tree) => {
       if (err) return res.status(500).send('error updating tree with id '+req.params.id).end();
       return res.status(200).json(tree).end();
     });
   })
-  .delete((req, res) => {
+  .delete(jwtAuth, (req, res) => {
     Tree.findByIdAndRemove(req.params.id, (err) => {
       if (err) return res.status(500).send('error deleting tree with id '+req.params.id);
       return res.sendStatus(200);

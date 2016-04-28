@@ -31,19 +31,31 @@ module.exports = function(app) {
     };
 
     Resource.prototype.create = function(data) {
-      $http.post(this.path, data)
+      $http.post(this.path, data, {
+        headers: {
+          token: AuthService.getToken()
+        }
+      })
         .then(res => this.data.push(res.data))
         .catch(err => console.log(err));
     };
 
     Resource.prototype.delete = function(data) {
-      $http.delete(this.path+'/'+data._id)
+      $http.delete(this.path+'/'+data._id, {
+        headers: {
+          token: AuthService.getToken()
+        }
+      })
         .then(res => this.data.splice(this.data.indexOf(data), 1))
         .catch(err => console.log(err));
     };
 
     Resource.prototype.update = function(data) {
-      $http.put(this.path + '/' + data._id, data)
+      $http.put(this.path + '/' + data._id, data, {
+        headers: {
+          token: AuthService.getToken()
+        }
+      })
         .then(res => console.log(res.data))
         .catch(err => console.log(err));
     };
