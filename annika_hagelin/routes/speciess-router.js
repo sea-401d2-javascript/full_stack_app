@@ -1,4 +1,5 @@
 'use strict';
+const jwtAuth = require(__dirname+'/../lib/jwt_auth.js');
 module.exports = (router, models) => {
   // const express = require('express');
   // const router = module.exports = new express.Router();
@@ -6,7 +7,7 @@ module.exports = (router, models) => {
   let Species = models.Species;
 
   router.route('/speciess')
-  .get((req, res) => {
+  .get(jwtAuth, (req, res) => {
     // Species.find({})
     // .populate('trees')
     // .exec((err, speciess) => {

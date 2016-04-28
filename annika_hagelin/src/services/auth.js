@@ -13,6 +13,9 @@ module.exports = function(app) {
           }, err => {
             cb(err);
           });
+      },
+      getToken() {
+        return token || $window.localStorage.token;
       }
     }
     return auth;
