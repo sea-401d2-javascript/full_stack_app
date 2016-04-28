@@ -29,6 +29,8 @@ require(__dirname + '/routes/speciess-router.js')(router, models);
 require(__dirname + '/routes/trees-router.js')(router, models);
 
 app.use(router);
+var authRouter = require(__dirname + '/routes/auth-router.js');
+app.use(authRouter);
 
 // app.use('/speciess', require(__dirname + '/routes/speciess-router.js'));
 
