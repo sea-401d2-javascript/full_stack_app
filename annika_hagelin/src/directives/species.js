@@ -4,7 +4,7 @@ module.exports = function(app) {
     return {
       restrict: 'E',
       replace: true,
-      templateUrl: './templates/species.html'
+      templateUrl: './directives/templates/species.html'
     }
   });
 

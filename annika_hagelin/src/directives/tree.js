@@ -4,7 +4,7 @@ module.exports = function(app) {
     return {
       restrict: 'E',
       replace: true,
-      templateUrl: './templates/tree.html'
+      templateUrl: './directives/templates/tree.html'
     }
   });
 
