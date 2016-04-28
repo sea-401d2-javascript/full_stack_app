@@ -1,9 +1,10 @@
 'use strict';
 const angular = require('angular');
+require('angular-route');
 const serverPath = require('../config.js').serverPath;
 require('style!css!./styles/mystyle.css');
 
-const app = angular.module('TreeApp', []);
+const app = angular.module('TreeApp', ['ngRoute']);
 
 require('./services/index.js')(app);
 require('./directives/index.js')(app);
@@ -25,6 +26,7 @@ require('./directives/index.js')(app);
     return vm;
 
   }])
+  .controller('ResourcesController', function() {})
   .controller('UserController', ['AuthService', '$location', function(AuthService, $location) {
     var vm = this;
 
@@ -34,4 +36,18 @@ require('./directives/index.js')(app);
 
     return vm;
 
-  }])
+  }]);
+
+  app.config(['$routeProvider', function(router) {
+    router
+      .when('/signup', {
+        controller: 'UserController',
+        controllerAs: 'userCtrl',
+        templateUrl: './views/signup_in.html'
+      })
+      .when('/home', {
+        controller: 'ResourcesController',
+        controllerAs: 'resourcesCtrl',
+        templateUrl: './views/resources.html'
+      })
+  }]);

@@ -1,0 +1,9 @@
+<!-- signup -->
+<section data-ng-controller="UserController as userCtrl">
+  <form ng-submit="userCtrl.signUp(newUser)">
+    <input type="text" placeholder="email" ng-model="newUser.email">
+    <input type="text" placeholder="username" ng-model="newUser.username">
+    <input type="password" placeholder="password" ng-model="newUser.password">
+    <button type="submit">sign up</button>
+  </form>
+</section>
