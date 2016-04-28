@@ -4,7 +4,12 @@ module.exports = function(app) {
 
     var token;
     var auth = {
-      
+      createUser(user) {
+        $http.post(url+'/signup', user)
+          .then(res => {
+            token = $window.localStorage.token = res.data.token;
+          });
+      }
     }
     return auth;
   }]);
