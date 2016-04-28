@@ -1,0 +1,30 @@
+<main ng-init="custctrl.getCustomers()" ng-controller="CustomerController as custctrl" ng-cloak>
+  <section customer-header class="header-and-button">
+  </section>
+
+  <form name="cust-form" class="animated flipInX" ng-show="custctrl.createCustomer.rendered === customer._id" ng-submit="custctrl.createCustomer.rendered = null">
+    <span>Name:</span><input type="text" ng-model="customer.name" ng-model-options="{debounce: 500}" ng-minlength="3" ng-maxlength="15" required><br>
+    <span>Age:</span><input type="number" ng-model="customer.age" ng-model-options="{debounce: 500}" required><br>
+    <span>Email:</span><input type="email" ng-model="customer.email" ng-model-options="{debounce: 500}" required><span ng-show="cust-form.email.$dirty &&  cust-form.email.$error.email">Must be valid email!</span><br>
+    <button class="save-button" type="submit" ng-click="custctrl.createCustomer(customer)">Save Changes</button>
+    <button class="discard-button" type="reset" ng-click="custctrl.createCustomer.rendered = null">Discard Changes</button>
+  </form>
+
+  <section ng-repeat="customer in custctrl.customers" ng-cloak>
+    <ul>
+      <li class="info-line" ng-bind:><span>Name: </span>{{customer.name}}</li><br>
+      <li class="info-line"><span>Age: </span>{{customer.age}}</li><br>
+      <li class="info-line"><span>Email: </span>{{customer.email}}</li><br>
+    </ul>
+    <button class="green-button" type="submit" ng-click="custctrl.updateCustomer.rendered = customer._id">update record</button>
+    <button class="red-button" type="button" ng-click="custctrl.removeCustomer(customer)">delete record</button>
+
+    <form name="cust-form" class="animated flipInX" ng-show="custctrl.updateCustomer.rendered === customer._id" ng-submit="custctrl.updateCustomer.rendered = null">
+      <span>Name:</span><input type="text" ng-model="customer.name" ng-model-options="{debounce: 500}" ng-minlength="3" ng-maxlength="15" required><br>
+      <span>Age:</span><input type="number" ng-model="customer.age" ng-model-options="{debounce: 500}" required><br>
+      <span>Email:</span><input type="email" ng-model="customer.email" ng-model-options="{debounce: 500}" required><span ng-show="cust-form.email.$dirty &&  cust-form.email.$error.email">Must be valid email!</span><br>
+      <button class="save-button" type="submit" ng-click="custctrl.updateCustomer(customer)">Save Changes</button>
+      <button class="discard-button" type="reset" ng-click="custctrl.resetCustomer(customer); custctrl.updateCustomer.rendered = null">Discard Changes</button>
+    </form>
+  </section>
+</main>

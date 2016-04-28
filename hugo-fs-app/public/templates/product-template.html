@@ -1,0 +1,29 @@
+<main ng-init="prodctrl.getProducts()" ng-controller="ProductController as prodctrl" ng-cloak>
+  <section product-header class="header-and-button">
+  </section>
+
+  <form class="animated flipInX" ng-show="prodctrl.createProduct.rendered === product._id" ng-submit="prodctrl.createProduct.rendered = null">
+    <span>Name:</span><input type="text" ng-model="product.name" ng-model-options="{debounce: 500}" minlength="3" required><br>
+    <span>UPC:</span><input type="text" ng-model="product.upc" ng-model-options="{debounce: 500}" required><br>
+    <span>Stock Count:</span><input type="number" ng-model="product.stock" ng-model-options="{debounce: 500}" required><br>
+    <button class="save-button" type="submit" ng-click="prodctrl.createProduct(product)">Save Changes</button>
+    <button class="discard-button" type="reset" ng-click="prodctrl.createProduct.rendered = null">Discard Changes</button>
+  </form>
+
+  <section ng-repeat="product in prodctrl.products" ng-cloak>
+    <ul>
+      <li class="info-line"><span>Name: </span>{{product.name}}</li><br>
+      <li class="info-line"><span>UPC: </span>{{product.upc}}</li><br>
+      <li class="info-line"><span>Stock Count: </span>{{product.stock}}</li><br>
+    </ul>
+    <button class="green-button" type="submit" ng-click="prodctrl.updateProduct.rendered = product._id">Update Record</button>
+    <button class="red-button" type="submit" ng-click="prodctrl.deleteProduct(product)">Delete Record</button>
+    <form class="animated flipInX" ng-show="prodctrl.updateProduct.rendered === product._id" ng-submit="prodctrl.updateProduct.rendered = null">
+      <span>Name:</span><input type="text" ng-model="product.name" ng-model-options="{debounce: 500}" minlength="3" required><br>
+      <span>UPC:</span><input type="text" ng-model="product.upc" ng-model-options="{debounce: 500}" required><br>
+      <span>Stock Count:</span><input type="number" ng-model="product.stock" ng-model-options="{debounce: 500}" required><br>
+      <button class="save-button" type="submit" ng-click="prodctrl.updateProduct(product)">Save Changes</button>
+      <button class="discard-button" type="reset" ng-click="prodctrl.resetProduct(product); prodctrl.updateProduct.rendered = null">Discard Changes</button>
+    </form>
+  </section>
+</main>
