@@ -77,7 +77,10 @@
 	    var vm = this;
 
 	    vm.signUp = function(user) {
-	      AuthService.createUser(user);
+	      AuthService.createUser(user, function(err, res) {
+	        if (err) return console.log(err);
+	        $location.path('/home')
+	      });
 	    }
 
 	    return vm;
@@ -32303,10 +32306,14 @@
 
 	    var token;
 	    var auth = {
-	      createUser(user) {
+	      createUser(user, cb) {
+	        cb || function() {}
 	        $http.post(url+'/signup', user)
 	          .then(res => {
 	            token = $window.localStorage.token = res.data.token;
+	            cb(null, res);
+	          }, err => {
+	            cb(err);
 	          });
 	      }
 	    }

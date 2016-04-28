@@ -31,7 +31,10 @@ require('./directives/index.js')(app);
     var vm = this;
 
     vm.signUp = function(user) {
-      AuthService.createUser(user);
+      AuthService.createUser(user, function(err, res) {
+        if (err) return console.log(err);
+        $location.path('/home')
+      });
     }
 
     return vm;
