@@ -1,5 +1,6 @@
 module.exports = function(app) {
-  app.factory('ResourceService', ['$http', 'AuthService', function($http, AuthService) {
+  app.factory('ResourceService', ['$http', '$location','AuthService', 'ErrorService',
+   function($http, $location, AuthService, ErrorService) {
     var mainRoute = require('../../config.js').serverPath;
     console.log('make resource service');
 
@@ -8,19 +9,23 @@ module.exports = function(app) {
       this.path = mainRoute + '/' + resource;
       console.log(this.path);
       this.data = data;
+      this.error = ErrorService();
     }
 
 
     Resource.prototype.read = function() {
-      console.log('read');
-      console.log(this.data);
       $http.get(this.path, {
         headers: {
           token: AuthService.getToken()
         }
       })
-        .then(res => {this.data.splice(0, this.data.length); Array.prototype.push.apply(this.data, res.data);})
-        .catch(err => console.log(err));
+        .then(res => {
+          this.data.splice(0, this.data.length);
+          Array.prototype.push.apply(this.data, res.data);
+        }).catch( err => {
+          this.error = ErrorService('plz sign in');
+          $location.path('/signup')
+        });
     };
 
     Resource.prototype.reset = function(data) {

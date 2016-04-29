@@ -53,7 +53,7 @@
 	const app = angular.module('TreeApp', ['ngRoute']);
 
 	__webpack_require__(10)(app);
-	__webpack_require__(13)(app);
+	__webpack_require__(14)(app);
 
 	  app.controller('SpeciessController', ['ResourceService', function(ResourceService) {
 	    this.plz = 'plz respond';
@@ -73,8 +73,9 @@
 
 	  }])
 	  .controller('ResourcesController', function() {})
-	  .controller('UserController', ['AuthService', '$location', function(AuthService, $location) {
+	  .controller('UserController', ['AuthService', '$location', 'ErrorService', function(AuthService, $location, ErrorService) {
 	    var vm = this;
+	    vm.error = ErrorService();
 
 	    vm.signUp = function(user) {
 	      AuthService.createUser(user, function(err, res) {
@@ -89,6 +90,10 @@
 	        $location.path('/home');
 	      })
 	    };
+
+	    vm.getFreshError = function() {
+	      return vm.error = ErrorService();
+	    }
 
 	    return vm;
 
@@ -32241,82 +32246,25 @@
 	module.exports = function(app) {
 	  __webpack_require__(11)(app);
 	  __webpack_require__(12)(app);
+	  __webpack_require__(13)(app);
 	};
 
 
 /***/ },
 /* 11 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = function(app) {
-	  app.factory('ResourceService', ['$http', 'AuthService', function($http, AuthService) {
-	    var mainRoute = __webpack_require__(5).serverPath;
-	    console.log('make resource service');
 
-	    function Resource(resource, data) {
-	      this.resource = resource;
-	      this.path = mainRoute + '/' + resource;
-	      console.log(this.path);
-	      this.data = data;
+	  app.factory('ErrorService', function() {
+	    var error;
+	    return function(newError) {
+	      if (newError === undefined) return error;
+	      return error = newError;
 	    }
+	  });
 
-
-	    Resource.prototype.read = function() {
-	      console.log('read');
-	      console.log(this.data);
-	      $http.get(this.path, {
-	        headers: {
-	          token: AuthService.getToken()
-	        }
-	      })
-	        .then(res => {this.data.splice(0, this.data.length); Array.prototype.push.apply(this.data, res.data);})
-	        .catch(err => console.log(err));
-	    };
-
-	    Resource.prototype.reset = function(data) {
-	      console.log(data);
-	      $http.get(this.path +'/'+ data._id)
-	        .then(res => this.data[this.data.indexOf(data)] = res.data)
-	        .catch(err => console.log(err));
-	    };
-
-	    Resource.prototype.create = function(data) {
-	      $http.post(this.path, data, {
-	        headers: {
-	          token: AuthService.getToken()
-	        }
-	      })
-	        .then(res => this.data.push(res.data))
-	        .catch(err => console.log(err));
-	    };
-
-	    Resource.prototype.delete = function(data) {
-	      $http.delete(this.path+'/'+data._id, {
-	        headers: {
-	          token: AuthService.getToken()
-	        }
-	      })
-	        .then(res => this.data.splice(this.data.indexOf(data), 1))
-	        .catch(err => console.log(err));
-	    };
-
-	    Resource.prototype.update = function(data) {
-	      $http.put(this.path + '/' + data._id, data, {
-	        headers: {
-	          token: AuthService.getToken()
-	        }
-	      })
-	        .then(res => console.log(res.data))
-	        .catch(err => console.log(err));
-	    };
-	    Resource.prototype.update.displayed = null;
-
-	    return function(resource, data) {
-	      return new Resource(resource, data);
-	    }
-
-	  }]);
-	};
+	}
 
 
 /***/ },
@@ -32366,15 +32314,95 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(app) {
+	  app.factory('ResourceService', ['$http', '$location','AuthService', 'ErrorService',
+	   function($http, $location, AuthService, ErrorService) {
+	    var mainRoute = __webpack_require__(5).serverPath;
+	    console.log('make resource service');
 
-	__webpack_require__(14)(app);
+	    function Resource(resource, data) {
+	      this.resource = resource;
+	      this.path = mainRoute + '/' + resource;
+	      console.log(this.path);
+	      this.data = data;
+	      this.error = ErrorService();
+	    }
+
+
+	    Resource.prototype.read = function() {
+	      $http.get(this.path, {
+	        headers: {
+	          token: AuthService.getToken()
+	        }
+	      })
+	        .then(res => {
+	          this.data.splice(0, this.data.length);
+	          Array.prototype.push.apply(this.data, res.data);
+	        }).catch( err => {
+	          this.error = ErrorService('plz sign in');
+	          $location.path('/signup')
+	        });
+	    };
+
+	    Resource.prototype.reset = function(data) {
+	      console.log(data);
+	      $http.get(this.path +'/'+ data._id)
+	        .then(res => this.data[this.data.indexOf(data)] = res.data)
+	        .catch(err => console.log(err));
+	    };
+
+	    Resource.prototype.create = function(data) {
+	      $http.post(this.path, data, {
+	        headers: {
+	          token: AuthService.getToken()
+	        }
+	      })
+	        .then(res => this.data.push(res.data))
+	        .catch(err => console.log(err));
+	    };
+
+	    Resource.prototype.delete = function(data) {
+	      $http.delete(this.path+'/'+data._id, {
+	        headers: {
+	          token: AuthService.getToken()
+	        }
+	      })
+	        .then(res => this.data.splice(this.data.indexOf(data), 1))
+	        .catch(err => console.log(err));
+	    };
+
+	    Resource.prototype.update = function(data) {
+	      $http.put(this.path + '/' + data._id, data, {
+	        headers: {
+	          token: AuthService.getToken()
+	        }
+	      })
+	        .then(res => console.log(res.data))
+	        .catch(err => console.log(err));
+	    };
+	    Resource.prototype.update.displayed = null;
+
+	    return function(resource, data) {
+	      return new Resource(resource, data);
+	    }
+
+	  }]);
+	};
+
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(app) {
+
 	__webpack_require__(15)(app);
+	__webpack_require__(16)(app);
 
 	}
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
@@ -32391,7 +32419,7 @@
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {

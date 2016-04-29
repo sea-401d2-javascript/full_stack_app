@@ -27,8 +27,9 @@ require('./directives/index.js')(app);
 
   }])
   .controller('ResourcesController', function() {})
-  .controller('UserController', ['AuthService', '$location', function(AuthService, $location) {
+  .controller('UserController', ['AuthService', '$location', 'ErrorService', function(AuthService, $location, ErrorService) {
     var vm = this;
+    vm.error = ErrorService();
 
     vm.signUp = function(user) {
       AuthService.createUser(user, function(err, res) {
@@ -43,6 +44,10 @@ require('./directives/index.js')(app);
         $location.path('/home');
       })
     };
+
+    vm.getFreshError = function() {
+      return vm.error = ErrorService();
+    }
 
     return vm;
 
