@@ -1,5 +1,6 @@
 (function(){
 'use strict';
+require('angular-route')
 
 var app = angular.module('beers')
 

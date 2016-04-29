@@ -14,7 +14,11 @@
     <h2>Two Resource Full Stack App</h2>
     <nav-bar></nav-bar>
 
-    <div id="beers" class="tab-content" data-ng-controller="BeersController as beersctrl" data-ng-init="beersctrl.getBeers()">
+    <main ng-view>
+      PROCESSING
+    </main>
+
+    <!-- <div id="beers" class="tab-content" data-ng-controller="BeersController as beersctrl" data-ng-init="beersctrl.getBeers()">
       <h3>Beer Resource Data Array:</h3>
       <h4 id="beerarray" class="ng-cloak" ng-cloak>{{beersctrl.beers}}</h4>
       <ul id="beerlist">
@@ -55,15 +59,15 @@
           <button type="reset" data-ng-click="usersctrl.resetUser(user); usersctrl.updateUser.displayed = null">Cancel Changes</button>
         </form>
         </li>
-      </ul>
-      <form class="form" data-ng-submit="usersctrl.createUser(newUser)">
+      </ul> -->
+      <!-- <form class="form" data-ng-submit="usersctrl.createUser(newUser)">
         <input type="text" placeholder="first name" data-ng-required="true" data-ng-model="newUser.firstName"/>
         <input type="text" placeholder="last name" data-ng-model="newUser.lastName"/>
         <input type="text" placeholder="favorite beers" data-ng-model="newUser.favBeers"/>
         <input type="reset"/>
         <button type="submit">Add New User</button>
-      </form>
-    </div>
+      </form> -->
+    <!-- </div> -->
     <footer></footer>
     <script src="./bundle.js"></script>
   </body>

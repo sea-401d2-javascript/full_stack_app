@@ -1,0 +1,16 @@
+<section data-ng-controller="UsersController as usersctrl">
+  <h1 ng-if="usersctrl.error">{{usersctrl.error}}</h1>
+  <form ng-submit="usersctrl.signUp(newUser)">
+    <input type="text" placeholder="first name" data-ng-required="true" data-ng-model="newUser.firstName"/>
+    <input type="text" placeholder="last name" data-ng-model="newUser.lastName"/>
+    <input type="text" placeholder="favorite beers" data-ng-model="newUser.favBeers"/>
+    <input type="text" placeholder="email" ng-model="newUser.email">
+    <input type="password" placeholder="password" ng-model="newUser.password">
+    <button type="submit">Sign Up</button>
+  </form>
+  <form ng-submit="usersctrl.signIn(user)">
+    <input type="text" placeholder="email" ng-model="user.email">
+    <input type="password" placeholder="password" ng-model="user.password">
+    <button type="submit">Sign In</button>
+  </form>
+</section>

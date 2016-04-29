@@ -1,5 +1,8 @@
 module.exports = function(app) {
-  app.factory('ResourceService', ['$http', function($http) {
+
+require(__dirname + '/auth_service')(app);
+
+  app.factory('ResourceService', ['$http', 'AuthService', function($http, AuthService) {
     const mainRoute = 'http://localhost:3000/';
 
 
@@ -9,6 +12,11 @@ module.exports = function(app) {
 
     Resource.prototype.getAll = function() {
       return $http.get(mainRoute + this.resourceName)
+      //  , {
+      //   headers: {
+      //     token: AuthService.getToken()
+      //   }
+      // })
     }
 
     Resource.prototype.create = function(data) {
@@ -16,15 +24,27 @@ module.exports = function(app) {
     }
 
     Resource.prototype.remove = function(data) {
-      return $http.delete(mainRoute + this.resourceName + '/' + data._id);
+      return $http.delete(mainRoute + this.resourceName + '/' + data._id, {
+        headers: {
+          token: AuthService.getToken()
+        }
+      });
     }
 
     Resource.prototype.reset = function(data) {
-      return $http.get(mainRoute + this.resourceName + '/' + data._id, data);
+      return $http.get(mainRoute + this.resourceName + '/' + data._id, data, {
+        headers: {
+          token: AuthService.getToken()
+        }
+      });
     }
 
     Resource.prototype.update = function(data) {
-      return $http.put(mainRoute + this.resourceName + '/' + data._id, data);
+      return $http.put(mainRoute + this.resourceName + '/' + data._id, data, {
+        headers: {
+          token: AuthService.getToken()
+        }
+      });
     }
 
     return function(resourceName) {

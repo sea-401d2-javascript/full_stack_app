@@ -18,13 +18,16 @@
   "author": "Mikleane Chouinard",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^0.8.6",
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
+    "jsonwebtoken": "^6.1.0",
     "mongoose": "^4.4.11"
   },
   "devDependencies": {
     "angular": "^1.5.3",
     "angular-mocks": "^1.5.3",
+    "angular-route": "^1.5.5",
     "css-loader": "^0.23.1",
     "gulp": "^3.9.1",
     "gulp-eslint": "^2.0.0",

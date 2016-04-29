@@ -4,8 +4,10 @@
 var app = angular.module('users');
 
 require(__dirname + '/../services/http_service')(app);
+require(__dirname + '/../services/auth_service')(app);
+require(__dirname + '/../services/error_service')(app);
 
-app.controller('UsersController', ['$http', 'ResourceService', function($http, ResourceService) {
+app.controller('UsersController', ['$http', 'ResourceService', 'AuthService', '$location', 'ErrorService', function($http, ResourceService, AuthService, $location, ErrorService) {
       var vm = this;
       const usersResource = ResourceService('users');
 
@@ -55,5 +57,31 @@ app.controller('UsersController', ['$http', 'ResourceService', function($http, R
             vm.users = vm.users.filter((u) => u._id != user._id)
           })
         }
+        vm.signUp = function(user) {
+        AuthService.createUser(user, function(err, res){
+          if (err) return vm.error = ErrorService('Problem Creating User');
+          vm.error = ErrorService(null);
+          $location.path('/home');
+          });
+        }
+        vm.signOut = function() {
+          AuthService.signOut(() => {
+            $location.path('/signup');
+          });
+        }
+        vm.signIn = function(user) {
+          AuthService.signIn(user, (err,res) => {
+            if (err) return vm.error = ErrorService('Problem Signing In');
+            vm.error = ErrorService(null);
+            $location.path('/home');
+          })
+        }
+
+
       }]);
+
+
+
+
+
 })()
