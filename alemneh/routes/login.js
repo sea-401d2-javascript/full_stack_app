@@ -3,7 +3,8 @@ module.exports = (loginRouter, db) => {
   let Student = db.Student;
 
   loginRouter.route('/login')
-    .post((req, res) => {
+    .get((req, res) => {
+      console.log(req.headers);
       let authorizationArray = req.headers.authorization.split(' ');
       let method = authorizationArray[0];
       let base64ed = authorizationArray[1];

@@ -45,7 +45,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(9);
+	module.exports = __webpack_require__(14);
 
 
 /***/ },
@@ -54,7 +54,7 @@
 
 	__webpack_require__(2);
 	const angular = __webpack_require__(3);
-	__webpack_require__(8);
+	__webpack_require__(13);
 
 
 	describe('it should test something', () => {
@@ -165,149 +165,180 @@
 
 	__webpack_require__(3);
 
-	const app = angular.module('IdeaApp', []);
+	const app = angular.module('IdeaApp', ['ngRoute']);
 
 	__webpack_require__(5)(app);
 	__webpack_require__(6)(app);
 	__webpack_require__(7)(app);
-	app.controller('StudentController', ['$http', 'EndpointService',
-	  function($http, EndpointService) {
+	__webpack_require__(8)(app);
+	__webpack_require__(9)(app);
+	__webpack_require__(10)(app);
+	__webpack_require__(11)(app);
+	__webpack_require__(12)(app);
 
-	  const route = 'http://localhost:3000';
-	  const studentEndpoint = EndpointService('students');
-	  const signUpEndpoint = EndpointService('signup');
-	  const ideaEndpoint = EndpointService('students', 'ideas');
-	  const vm = this;
-	  vm.students = ['student'];
-	  var oldIdea = {};
-	  var oldStudent = {};
-	  vm.setStudent = function (student) {
-	    oldStudent = {
-	      name: student.name,
-	      track: student.track
+	app.run(['$rootScope', '$location', '$route', '$window', function($rootScope, $location, $route, $window) {
+
+	  $rootScope.$on('$locationChangeStart', function(event) {
+	    var nextRoute = $route.routes[$location.path()];
+	    if(nextRoute.requireLogin) {
+	      if(!JSON.parse($window.localStorage.token)) {
+	        event.preventDefault();
+	        $location.path('/signin');
+	      }
+	    }
+	  })
+	}]).controller('StudentController', [
+	  'AuthService','$http', '$location', 'EndpointService', 'ErrorService',
+	  function(AuthService, $http, $location, EndpointService, ErrorService) {
+
+	    const studentEndpoint = EndpointService('students');
+	    const signUpEndpoint = EndpointService('signup');
+	    const ideaEndpoint = EndpointService('students', 'ideas');
+	    const vm = this;
+	    vm.students = ['student'];
+	    vm.error = ErrorService();
+	    vm.loggedIn = false;
+	    vm.loggedOut = true;
+	    var oldIdea = {};
+	    var oldStudent = {};
+
+	    vm.go = function(path) {
+	      $location.path(path);
 	    };
-	  };
-	  vm.cancelStudent = function(student) {
-
-	    student.name = oldStudent.name;
-	    student.track = oldStudent.track;
-	  };
-	  vm.setIdea = function (idea) {
-	    oldIdea = {
-	      sector: idea.sector,
-	      lang: idea.lang,
-	      teamSize: idea.teamSize
+	    vm.setStudent = function (student) {
+	      oldStudent = {
+	        name: student.name,
+	        track: student.track
+	      };
 	    };
-	  };
-	  vm.cancelIdea = function(idea) {
+	    vm.cancelStudent = function(student) {
 
-	    idea.sector = oldIdea.sector;
-	    idea.lang = oldIdea.lang;
-	    idea.teamSize = oldIdea.teamSize;
-	  };
+	      student.name = oldStudent.name;
+	      student.track = oldStudent.track;
+	    };
+	    vm.setIdea = function (idea) {
+	      oldIdea = {
+	        sector: idea.sector,
+	        lang: idea.lang,
+	        teamSize: idea.teamSize
+	      };
+	    };
+	    vm.cancelIdea = function(idea) {
 
-	  vm.getStudents = function() {
-	    studentEndpoint.summon()
-	      .then((res) => {
-	        console.log(res.data.data);
+	      idea.sector = oldIdea.sector;
+	      idea.lang = oldIdea.lang;
+	      idea.teamSize = oldIdea.teamSize;
+	    };
 
-	        vm.students = res.data.data;
-	      }, function(error) {
-	        console.error(error);
-	      });
-	  };
-	  vm.createStudent = function(newStudent) {
-	    signUpEndpoint.assemble(newStudent)
-	      .then((res) => {
-	        console.log(res);
 
-	        vm.students.push(newStudent);
-	        vm.newStudent = null;
-	      }, function(error) {
-	        console.log(error);
-	      });
-	  };
-	  vm.removeStudent = function(student) {
-	    studentEndpoint.destroy(student)
-	      .then((res) => {
-	        console.log(res);
 
-	        vm.students = vm.students.filter((s) => s._id != student._id);
-	      }, function(error) {
-	        console.log(error);
-	      });
-	  };
-	  vm.updateStudent = function(updateStudent) {
-	    console.log(updateStudent._id);
-	    studentEndpoint.update(updateStudent)
-	      .then((res) => {
-	        console.log(res);
-	        updateStudent.editing = false;
-	      }, function(error) {
-	        console.log(error);
-	      });
-	  };
-	  vm.getStudentIdeas = function(student) {
-	    if(!student._id) {
-	      return;
+	    vm.getStudents = function() {
+	      studentEndpoint.summon(AuthService.getToken())
+	        .then((res) => {
+	          console.log(res.data);
+	          vm.students = res.data.data;
+	        }, function(error) {
+	          $location.path('/signin');
+	          console.error(error.data);
+	        });
+	    };
+	    vm.signUp = function(user) {
+	      AuthService.createUser(user, function(err, res) {
+	        if(err) return vm.error = ErrorService('Problem Creating User');
+	        vm.error = ErrorService(null);
+	        $location.path('/home');
+	        vm.loggedIn = true;
+	        vm.loggedOut = false;
+	      })
 	    }
 
-	    if(typeof student == 'string' || student._id == 'undefined') {
-	      return;
+	    vm.signOut = function() {
+	      AuthService.signOut(() => {
+	        $location.path('/signin');
+	        vm.loggedIn = false;
+	        vm.loggedOut = true;
+	        console.log(vm.loggedIn);
+	      });
 	    }
-	    ideaEndpoint.summonSub(student)
-	      .then((res) => {
-	        student.showIdeas = false;
-	        student.addIdea = false;
-	        if(res.data.data.length > 0) {
-	          student.ideas = res.data.data;
-	        }
-	      }, function(error) {
-	        console.log(error);
-	      });
-	  };
-	  vm.createNewIdea = function(student, newIdea) {
-	    console.log(newIdea);
-	    ideaEndpoint.assembleSub(student, newIdea)
-	      .then((res) => {
-	        console.log(res);
-	        student.ideas.push(newIdea);
-	      });
-	  };
-	  vm.removeIdea = function(student, idea) {
-	    console.log(student._id);
-	    ideaEndpoint.destroySub(student, idea)
-	      .then((res) => {
-	        console.log(res);
-	        student.ideas = student.ideas.filter((s) => s._id != idea._id);
-	      }, function(error) {
-	        console.log(error);
-	      });
-	  };
-	  vm.updateIdea = function(student, idea) {
-	    ideaEndpoint.updateSub(student, idea)
-	      .then((res) => {
-	        console.log(res);
-	        student.ideaEditing = false;
-	      }, function(error) {
-	        console.log(error);
-	      });
-	  };
-	}]);
 
-	// app.directive('student', function() {
-	//   return {
-	//     return: 'E',
-	//     templateUrl: './views/student-view.html'
-	//   };
-	// });
-	//
-	// app.directive('addStudent', function() {
-	//   return {
-	//     return: 'E',
-	//     templateUrl: './views/add-student.html'
-	//   };
-	// });
+	    vm.signIn = function(user) {
+	      AuthService.signIn(user, (err, res) => {
+	        if(err) return vm.error = ErrorService('Problem Signing In');
+	        vm.error = ErrorService(null);
+	        $location.path('/home');
+	        vm.loggedIn = true;
+	        vm.loggedOut = false;
+	        console.log(vm.loggedIn);
+	      })
+	    }
+
+	    vm.removeStudent = function(student) {
+	      studentEndpoint.destroy(student, AuthService.getToken())
+	        .then((res) => {
+	          console.log(res);
+
+	          vm.students = vm.students.filter((s) => s._id != student._id);
+	        }, function(error) {
+	          console.log(error);
+	        });
+	    };
+	    vm.updateStudent = function(updateStudent) {
+	      console.log(updateStudent._id);
+	      studentEndpoint.update(updateStudent, AuthService.getToken())
+	        .then((res) => {
+	          console.log(res);
+	          updateStudent.editing = false;
+	        }, function(error) {
+	          console.log(error);
+	        });
+	    };
+	    vm.getStudentIdeas = function(student) {
+	      if(!student._id) {
+	        return;
+	      }
+
+	      if(typeof student == 'string' || student._id == 'undefined') {
+	        return;
+	      }
+	      ideaEndpoint.summonSub(student, AuthService.getToken())
+	        .then((res) => {
+	          student.showIdeas = false;
+	          student.addIdea = false;
+	          if(res.data.data.length > 0) {
+	            student.ideas = res.data.data;
+	          }
+	        }, function(error) {
+	          console.log(error);
+	        });
+	    };
+	    vm.createNewIdea = function(student, newIdea) {
+	      console.log(newIdea);
+	      ideaEndpoint.assembleSub(student, newIdea, AuthService.getToken())
+	        .then((res) => {
+	          console.log(res);
+	          student.ideas.push(newIdea);
+	        });
+	    };
+	    vm.removeIdea = function(student, idea) {
+	      console.log(student._id);
+	      ideaEndpoint.destroySub(student, idea, AuthService.getToken())
+	        .then((res) => {
+	          console.log(res);
+	          student.ideas = student.ideas.filter((s) => s._id != idea._id);
+	        }, function(error) {
+	          console.log(error);
+	        });
+	    };
+	    vm.updateIdea = function(student, idea) {
+	      ideaEndpoint.updateSub(student, idea, AuthService.getToken())
+	        .then((res) => {
+	          console.log(res);
+	          student.ideaEditing = false;
+	        }, function(error) {
+	          console.log(error);
+	        });
+	    };
+	  }]);
 
 
 /***/ },
@@ -31042,6 +31073,74 @@
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
+	  app.factory('AuthService', ['$http', '$window', function($http, $window) {
+	    var token;
+	    var url = 'http://localhost:3000';
+	    var auth = {
+	      createUser(user, cb) {
+	        cb || function() {};
+	        $http.post(url + '/signup', user)
+	          .then((res) => {
+	            token = $window.localStorage.token = res.data.token;
+	            cb(null, res);
+	          }, (err) => {
+	            cb(err);
+	          });
+	      },
+	      getToken() {
+	        return token || $window.localStorage.token;
+	      },
+	      signOut(cb) {
+	        token = null;
+	        $window.localStorage.token = null;
+	        if (cb) cb();
+	      },
+	      signIn(user, cb) {
+	        cb || function() {};
+	        $http.get(url + '/login', {
+	          headers: {
+	            authorization: 'Basic ' + btoa(user.username + ':' + user.password)
+	          }
+	        }).then((res) => {
+	          token = $window.localStorage.token = res.data.token;
+	          cb(null, res);
+	        }, (err) => {
+	          cb(err);
+	        });
+	      }
+	    };
+	    return auth;
+	  }]);
+	};
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+
+	  app.config(['$routeProvider', function($routeProvider) {
+	    $routeProvider.when('/', {
+	      templateUrl: './views/signin-view.html'
+	    }).when('/signin', {
+	      templateUrl: './views/signin-view.html'
+	    }).when('/signup', {
+	      templateUrl: './views/signup-view.html'
+	    }).when('/home', {
+	      templateUrl: './views/student-view.html',
+	      requireLogin: true
+	    });
+	  }]);
+
+	};
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
 
 	  app.factory('EndpointService', ['$http', function($http) {
 	    const mainEndpoint = 'http://localhost:3000/';
@@ -31051,36 +31150,65 @@
 	      this.endpointName2 = endpointName2;
 	    }
 
-	    Endpoint.prototype.summon = function() {
-	      return $http.get(mainEndpoint + this.endpointName);
+	    Endpoint.prototype.summon = function(token) {
+	      console.log('service');
+	      return $http.get(mainEndpoint + this.endpointName, {
+	        headers: {
+	          token: token
+	        }
+	      });
 	    };
 
 	    Endpoint.prototype.assemble = function(data) {
 	      return $http.post(mainEndpoint + this.endpointName, data);
 	    };
 
-	    Endpoint.prototype.destroy =  function(data) {
-	      return $http.delete(mainEndpoint + this.endpointName + '/' + data._id);
+	    Endpoint.prototype.destroy =  function(data, token) {
+	      return $http.delete(mainEndpoint + this.endpointName + '/' + data._id, {
+	        headers: {
+	          token: token
+	        }
+	      });
 	    };
 
-	    Endpoint.prototype.update = function(data) {
-	      return $http.put(mainEndpoint + this.endpointName + '/' + data._id, data);
+	    Endpoint.prototype.update = function(data, token) {
+	      return $http.put(mainEndpoint + this.endpointName + '/' + data._id, data, {
+	        headers: {
+	          token: token
+	        }
+	      });
 	    };
 
-	    Endpoint.prototype.summonSub = function(data) {
-	      return $http.get(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2);
+	    Endpoint.prototype.summonSub = function(data, token) {
+	      return $http.get(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2, {
+	        headers: {
+	          token: token
+	        }
+	      });
 	    };
 
-	    Endpoint.prototype.assembleSub = function(data, data2) {
-	      return $http.post(mainEndpoint + this.endpointName + '/' + data._id +  '/' + this.endpointName2, data2);
+	    Endpoint.prototype.assembleSub = function(data, data2, token) {
+	      return $http.post(mainEndpoint + this.endpointName + '/' + data._id +  '/' + this.endpointName2, data2, {
+	        headers: {
+	          token: token
+	        }
+	      });
 	    };
 
-	    Endpoint.prototype.destroySub = function(data, data2) {
-	      return $http.delete(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2 + '/' + data2._id);
+	    Endpoint.prototype.destroySub = function(data, data2, token) {
+	      return $http.delete(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2 + '/' + data2._id, {
+	        headers: {
+	          token: token
+	        }
+	      });
 	    };
 
-	    Endpoint.prototype.updateSub = function(data, data2) {
-	      return $http.put(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2 + '/' + data2._id, data2);
+	    Endpoint.prototype.updateSub = function(data, data2, token) {
+	      return $http.put(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2 + '/' + data2._id, data2, {
+	        headers: {
+	          token: token
+	        }
+	      });
 	    };
 
 	    return function(endpointName, endpointName2) {
@@ -31092,12 +31220,60 @@
 
 
 /***/ },
-/* 6 */
+/* 8 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
 
-	  app.directive('addStudent', function() {
+	  app.directive('navBar', function() {
+	    return {
+	      return: 'E',
+	      templateUrl: './views/nav-view.html'
+	    };
+	  });
+
+	};
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+
+	  app.directive('login', function() {
+	    return {
+	      return: 'E',
+	      templateUrl: './views/login-view.html'
+	    };
+	  });
+
+	};
+
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+	  app.factory('ErrorService', function() {
+	    var error;
+	    return function(newError) {
+	      if (newError === null) return error = null;
+	      if(!newError) return error;
+	      return error = newError;
+	    };
+	  });
+	};
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+
+	  app.directive('signUp', function() {
 	    return {
 	      return: 'E',
 	      templateUrl: './views/add-student.html'
@@ -31108,7 +31284,7 @@
 
 
 /***/ },
-/* 7 */
+/* 12 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
@@ -31124,7 +31300,7 @@
 
 
 /***/ },
-/* 8 */
+/* 13 */
 /***/ function(module, exports) {
 
 	/**
@@ -34104,13 +34280,13 @@
 
 
 /***/ },
-/* 9 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	__webpack_require__(2);
 	const angular = __webpack_require__(3);
-	__webpack_require__(8);
+	__webpack_require__(13);
 
 	describe('http tests', function() {
 	  var EndpointService;

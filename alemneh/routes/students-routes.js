@@ -14,7 +14,7 @@ module.exports = (studentsRouter, db) => {
           newStudent.save((err, student) => {
             res.json({
               success: true,
-              data:student
+              token:student.generateToken()
             });
           });
         }else {
@@ -25,25 +25,25 @@ module.exports = (studentsRouter, db) => {
     });
 
   studentsRouter.route('/students')
-    .get((req, res) => {
+    .get( jwtAuth, (req, res) => {
       Student.find({}, (err, student) =>{
         res.json({data: student});
       });
-    })
+    });
 
 
   studentsRouter.route('/students/:student')
-    .get((req, res) => {
+    .get(jwtAuth, (req, res) => {
       Student.findById(req.params.student, (err, student) =>{
         res.json({data: student});
       });
-    }).put((req, res) => {
+    }).put(jwtAuth,(req, res) => {
       console.log(req.body);
       Student.findByIdAndUpdate(req.params.student, req.body, (err, student) =>{
         if(err) return res.send(err);
         res.json(student);
       });
-    }).delete((req, res) => {
+    }).delete(jwtAuth, (req, res) => {
       Student.findById(req.params.student, (err, student) =>{
         student.ideas.forEach((idea) => {
           Idea.findById(idea, (err, data) => {
@@ -51,7 +51,7 @@ module.exports = (studentsRouter, db) => {
             data.remove();
           });
         });
-        student.remove((err, student) => {
+        student.remove(jwtAuth,(err, student) => {
           if(err) throw err;
           res.json({message: 'Student removed'});
         });

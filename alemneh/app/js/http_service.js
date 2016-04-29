@@ -8,36 +8,65 @@ module.exports = function(app) {
       this.endpointName2 = endpointName2;
     }
 
-    Endpoint.prototype.summon = function() {
-      return $http.get(mainEndpoint + this.endpointName);
+    Endpoint.prototype.summon = function(token) {
+      console.log('service');
+      return $http.get(mainEndpoint + this.endpointName, {
+        headers: {
+          token: token
+        }
+      });
     };
 
     Endpoint.prototype.assemble = function(data) {
       return $http.post(mainEndpoint + this.endpointName, data);
     };
 
-    Endpoint.prototype.destroy =  function(data) {
-      return $http.delete(mainEndpoint + this.endpointName + '/' + data._id);
+    Endpoint.prototype.destroy =  function(data, token) {
+      return $http.delete(mainEndpoint + this.endpointName + '/' + data._id, {
+        headers: {
+          token: token
+        }
+      });
     };
 
-    Endpoint.prototype.update = function(data) {
-      return $http.put(mainEndpoint + this.endpointName + '/' + data._id, data);
+    Endpoint.prototype.update = function(data, token) {
+      return $http.put(mainEndpoint + this.endpointName + '/' + data._id, data, {
+        headers: {
+          token: token
+        }
+      });
     };
 
-    Endpoint.prototype.summonSub = function(data) {
-      return $http.get(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2);
+    Endpoint.prototype.summonSub = function(data, token) {
+      return $http.get(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2, {
+        headers: {
+          token: token
+        }
+      });
     };
 
-    Endpoint.prototype.assembleSub = function(data, data2) {
-      return $http.post(mainEndpoint + this.endpointName + '/' + data._id +  '/' + this.endpointName2, data2);
+    Endpoint.prototype.assembleSub = function(data, data2, token) {
+      return $http.post(mainEndpoint + this.endpointName + '/' + data._id +  '/' + this.endpointName2, data2, {
+        headers: {
+          token: token
+        }
+      });
     };
 
-    Endpoint.prototype.destroySub = function(data, data2) {
-      return $http.delete(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2 + '/' + data2._id);
+    Endpoint.prototype.destroySub = function(data, data2, token) {
+      return $http.delete(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2 + '/' + data2._id, {
+        headers: {
+          token: token
+        }
+      });
     };
 
-    Endpoint.prototype.updateSub = function(data, data2) {
-      return $http.put(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2 + '/' + data2._id, data2);
+    Endpoint.prototype.updateSub = function(data, data2, token) {
+      return $http.put(mainEndpoint + this.endpointName + '/' + data._id + '/' + this.endpointName2 + '/' + data2._id, data2, {
+        headers: {
+          token: token
+        }
+      });
     };
 
     return function(endpointName, endpointName2) {

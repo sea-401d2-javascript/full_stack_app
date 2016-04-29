@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
   if(token) {
     jwt.verify(token, 'CHANGE ME', function(err, decoded) {
       if(err) {
-        return res.json({success: false, message: 'Failed to authenticate'});
+        return res.status(401).json({success: false, message: 'Failed to authenticate'});
       } else {
 
         req.decoded = decoded;

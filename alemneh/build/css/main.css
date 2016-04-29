@@ -15,8 +15,11 @@ input {
   padding: 5px;
 }
 
-.login {
-  background-color: goldenrod;
-  padding: 15px;
-  border-radius: 5px;
+#login, #signup {
+  width: 30%;
+  margin: 0 auto;
+}
+
+nav {
+  background-color: cyan;
 }

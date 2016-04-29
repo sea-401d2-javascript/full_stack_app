@@ -6,7 +6,7 @@ module.exports = (ideaRouter, db) => {
   let Student = db.Student;
 
   ideaRouter.route('/:student/ideas')
-    .get((req, res) => {
+    .get(jwtAuth, (req, res) => {
       if(!req.params.student) {
         return res.json({data: 'No Ideas'})
       }
@@ -17,7 +17,7 @@ module.exports = (ideaRouter, db) => {
            res.json({data: student.ideas});
          });
     })
-    .post((req, res) => {
+    .post(jwtAuth, (req, res) => {
       console.log(req.body);
       Student.findById(req.params.student, (err, student) => {
         var newIdea = new Idea(req.body);
@@ -33,7 +33,7 @@ module.exports = (ideaRouter, db) => {
     });
 
   ideaRouter.route('/:student/ideas/:idea')
-    .get((req, res) => {
+    .get(jwtAuth,(req, res) => {
 
       Idea.findById(req.params.idea, (err, idea) =>{
         if(err) throw err;
@@ -43,13 +43,13 @@ module.exports = (ideaRouter, db) => {
         });
       });
     })
-    .put((req, res) => {
+    .put(jwtAuth, (req, res) => {
       Idea.findByIdAndUpdate(req.params.idea, req.body, (err, idea) =>{
         if(err) return res.send(err);
         res.json({msg: 'successfully updated!'});
       });
     })
-    .delete((req, res) => {
+    .delete(jwtAuth, (req, res) => {
       Idea.findById(req.params.idea, (err, idea) =>{
         idea.remove((err, idea) => {
           Student.findById(req.params.student, (err, student) => {
