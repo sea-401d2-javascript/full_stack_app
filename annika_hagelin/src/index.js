@@ -35,7 +35,14 @@ require('./directives/index.js')(app);
         if (err) return console.log(err);
         $location.path('/home')
       });
-    }
+    };
+
+    vm.signIn = function(user) {
+      AuthService.signIn(user, function(err, res) {
+        if (err) return console.log(err);
+        $location.path('/home');
+      })
+    };
 
     return vm;
 

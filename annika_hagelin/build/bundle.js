@@ -81,7 +81,14 @@
 	        if (err) return console.log(err);
 	        $location.path('/home')
 	      });
-	    }
+	    };
+
+	    vm.signIn = function(user) {
+	      AuthService.signIn(user, function(err, res) {
+	        if (err) return console.log(err);
+	        $location.path('/home');
+	      })
+	    };
 
 	    return vm;
 
@@ -32334,8 +32341,21 @@
 	      },
 	      getToken() {
 	        return token || $window.localStorage.token;
+	      },
+	      signIn(user, cb) {
+	        cb || function() {};
+	        $http.get(url+'/signin', {
+	          headers: {
+	            authorization: 'Basic ' + btoa(user.email+':'+user.password)
+	          }
+	        }).then(res => {
+	          token = $window.localStorage.token = res.data.token;
+	          cb(null, res);
+	        }, err => {
+	          cb(err);
+	        });
 	      }
-	    }
+	    };
 	    return auth;
 	  }]);
 	}

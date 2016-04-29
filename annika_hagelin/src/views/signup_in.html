@@ -6,4 +6,12 @@
     <input type="password" placeholder="password" ng-model="newUser.password">
     <button type="submit">sign up</button>
   </form>
+
+  <form ng-submit="userCtrl.signIn(user)">
+    <input type="text" placeholder="email" ng-model="user.email">
+    <input type="text" placeholder="username" ng-model="user.username">
+    <input type="password" placeholder="password" ng-model="user.password">
+    <button type="submit">sign in</button>
+  </form>
+
 </section>
