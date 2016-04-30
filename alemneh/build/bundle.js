@@ -62,15 +62,16 @@
 	  $rootScope.$on('$locationChangeStart', function(event) {
 	    var nextRoute = $route.routes[$location.path()];
 	    if(nextRoute.requireLogin) {
-	      if(!JSON.parse($window.localStorage.token)) {
+	      if(!$window.localStorage.token) {
 	        event.preventDefault();
 	        $location.path('/signin');
 	      }
 	    }
 	  })
 	}]).controller('StudentController', [
-	  'AuthService','$http', '$location', 'EndpointService', 'ErrorService',
-	  function(AuthService, $http, $location, EndpointService, ErrorService) {
+	  'AuthService','$http', '$location', 'EndpointService', 'ErrorService', '$window',
+	  function(AuthService, $http, $location, EndpointService, ErrorService, $window) {
+
 
 	    const studentEndpoint = EndpointService('students');
 	    const signUpEndpoint = EndpointService('signup');
@@ -78,10 +79,17 @@
 	    const vm = this;
 	    vm.students = ['student'];
 	    vm.error = ErrorService();
+
 	    vm.loggedIn = false;
 	    vm.loggedOut = true;
+	    if($window.localStorage.token) {
+	      vm.loggedOut = false;
+	      vm.loggedIn = true;
+	    }
 	    var oldIdea = {};
 	    var oldStudent = {};
+
+
 
 	    vm.go = function(path) {
 	      $location.path(path);
@@ -116,7 +124,6 @@
 	    vm.getStudents = function() {
 	      studentEndpoint.summon(AuthService.getToken())
 	        .then((res) => {
-	          console.log(res.data);
 	          vm.students = res.data.data;
 	        }, function(error) {
 	          $location.path('/signin');
@@ -130,6 +137,7 @@
 	        $location.path('/home');
 	        vm.loggedIn = true;
 	        vm.loggedOut = false;
+	        vm.getStudents();
 	      })
 	    }
 
@@ -138,7 +146,6 @@
 	        $location.path('/signin');
 	        vm.loggedIn = false;
 	        vm.loggedOut = true;
-	        console.log(vm.loggedIn);
 	      });
 	    }
 
@@ -149,7 +156,7 @@
 	        $location.path('/home');
 	        vm.loggedIn = true;
 	        vm.loggedOut = false;
-	        console.log(vm.loggedIn);
+	        vm.getStudents();
 	      })
 	    }
 
@@ -30973,7 +30980,7 @@
 	      },
 	      signOut(cb) {
 	        token = null;
-	        $window.localStorage.token = null;
+	        $window.localStorage.removeItem('token');
 	        if (cb) cb();
 	      },
 	      signIn(user, cb) {
@@ -31032,7 +31039,6 @@
 	    }
 
 	    Endpoint.prototype.summon = function(token) {
-	      console.log('service');
 	      return $http.get(mainEndpoint + this.endpointName, {
 	        headers: {
 	          token: token

@@ -9,7 +9,6 @@ module.exports = function(app) {
     }
 
     Endpoint.prototype.summon = function(token) {
-      console.log('service');
       return $http.get(mainEndpoint + this.endpointName, {
         headers: {
           token: token

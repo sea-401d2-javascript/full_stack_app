@@ -18,7 +18,7 @@ module.exports = function(app) {
       },
       signOut(cb) {
         token = null;
-        $window.localStorage.token = null;
+        $window.localStorage.removeItem('token');
         if (cb) cb();
       },
       signIn(user, cb) {
