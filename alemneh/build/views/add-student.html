@@ -1,0 +1,10 @@
+<form class="login" data-ng-submit="studentctrl.createStudent(newStudent)">
+  <h1>Add New User</h1>
+  <label for="name">Name: </label><br>
+  <input type="text" name="name" value="" data-ng-model="newStudent.name"/><br />
+  <label for="password">Password: </label><br>
+  <input type="password" name="password" value="" data-ng-model="newStudent.password"/><br />
+  <label for="track">Track: </label><br>
+  <input type="text" name="track" value="" data-ng-model="newStudent.track"/><br />
+  <button class="btn btn-default" type="submit">New Student</button>
+</form>

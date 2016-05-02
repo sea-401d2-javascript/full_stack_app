@@ -1,0 +1,25 @@
+.ng-cloak {
+  display: none !important;
+}
+
+button {
+  width: 300px;
+}
+
+input {
+  width: 300px;
+}
+
+.user {
+  border: 3px dotted;
+  padding: 5px;
+}
+
+#login, #signup {
+  width: 30%;
+  margin: 0 auto;
+}
+
+nav {
+  background-color: cyan;
+}

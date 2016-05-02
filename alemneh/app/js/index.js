@@ -1,112 +1,183 @@
 require('angular');
 
-const app = angular.module('IdeaApp', []);
-app.controller('StudentController', ['$scope','$http', function($scope, $http) {
-  const route = 'http://localhost:3000';
-  $scope.students = [];
-  var oldIdea = {};
-  var oldStudent = {}
-  $scope.setStudent = function (student) {
-    oldStudent = {
-      name: student.name,
-      track: student.track
+const app = angular.module('IdeaApp', ['ngRoute']);
+
+require('./auth_service')(app);
+require('./route-config')(app);
+require('./http_service')(app);
+require('./nav-directive')(app);
+require('./login-directive')(app);
+require('./error_service')(app);
+require('./signup-directive')(app);
+require('./student-directive')(app);
+
+app.run(['$rootScope', '$location', '$route', '$window', function($rootScope, $location, $route, $window) {
+
+  $rootScope.$on('$locationChangeStart', function(event) {
+    var nextRoute = $route.routes[$location.path()];
+    if(nextRoute.requireLogin) {
+      if(!$window.localStorage.token) {
+        event.preventDefault();
+        $location.path('/signin');
+      }
+    }
+  })
+}]).controller('StudentController', [
+  'AuthService','$http', '$location', 'EndpointService', 'ErrorService', '$window',
+  function(AuthService, $http, $location, EndpointService, ErrorService, $window) {
+
+
+    const studentEndpoint = EndpointService('students');
+    const signUpEndpoint = EndpointService('signup');
+    const ideaEndpoint = EndpointService('students', 'ideas');
+    const vm = this;
+    vm.students = ['student'];
+    vm.error = ErrorService();
+
+    vm.loggedIn = false;
+    vm.loggedOut = true;
+    if($window.localStorage.token) {
+      vm.loggedOut = false;
+      vm.loggedIn = true;
+    }
+    var oldIdea = {};
+    var oldStudent = {};
+
+
+
+    vm.go = function(path) {
+      $location.path(path);
     };
-  }
-  $scope.cancelStudent = function(student) {
-
-    student.name = oldStudent.name;
-    student.track = oldStudent.track;
-  }
-  $scope.setIdea = function (idea) {
-    oldIdea = {
-      sector: idea.sector,
-      lang: idea.lang,
-      teamSize: idea.teamSize
+    vm.setStudent = function (student) {
+      oldStudent = {
+        name: student.name,
+        track: student.track
+      };
     };
-  }
-  $scope.cancelIdea = function(idea) {
+    vm.cancelStudent = function(student) {
 
-    idea.sector = oldIdea.sector;
-    idea.lang = oldIdea.lang;
-    idea.teamSize = oldIdea.teamSize;
-  }
+      student.name = oldStudent.name;
+      student.track = oldStudent.track;
+    };
+    vm.setIdea = function (idea) {
+      oldIdea = {
+        sector: idea.sector,
+        lang: idea.lang,
+        teamSize: idea.teamSize
+      };
+    };
+    vm.cancelIdea = function(idea) {
 
-  $scope.getStudents = function() {
-    $http.get(route+'/students')
-      .then((res) => {
-        console.log(res.data.data);
+      idea.sector = oldIdea.sector;
+      idea.lang = oldIdea.lang;
+      idea.teamSize = oldIdea.teamSize;
+    };
 
-        $scope.students = res.data.data;
-      }, function(error) {
-        console.error(error);
-      })
-  }
-  $scope.createStudent = function(newStudent) {
-    $http.post(route+'/signup', newStudent)
-      .then((res) => {
-        console.log(res);
 
-        $scope.students.push(newStudent);
-        $scope.newStudent = {};
-      }, function(error) {
-        console.log(error);
-      })
-  }
-  $scope.removeStudent = function(student) {
-    $http.delete(route+'/'+student._id)
-      .then((res) => {
-        console.log(res);
 
-        $scope.students = $scope.students.filter((s) => s._id != student._id);
-      }, function(error) {
-        console.log(error);
+    vm.getStudents = function() {
+      studentEndpoint.summon(AuthService.getToken())
+        .then((res) => {
+          vm.students = res.data.data;
+        }, function(error) {
+          $location.path('/signin');
+          console.error(error.data);
+        });
+    };
+    vm.signUp = function(user) {
+      AuthService.createUser(user, function(err, res) {
+        if(err) return vm.error = ErrorService('Problem Creating User');
+        vm.error = ErrorService(null);
+        $location.path('/home');
+        vm.loggedIn = true;
+        vm.loggedOut = false;
+        vm.getStudents();
       })
-  }
-  $scope.updateStudent = function(student) {
-    console.log(student._id);
-    $http.put(route + '/' + student._id, student)
-      .then((res) => {
-        console.log(res);
-        $scope.editing = false;
-      }, function(error) {
-        console.log(error);
+    }
+
+    vm.signOut = function() {
+      AuthService.signOut(() => {
+        $location.path('/signin');
+        vm.loggedIn = false;
+        vm.loggedOut = true;
+      });
+    }
+
+    vm.signIn = function(user) {
+      AuthService.signIn(user, (err, res) => {
+        if(err) return vm.error = ErrorService('Problem Signing In');
+        vm.error = ErrorService(null);
+        $location.path('/home');
+        vm.loggedIn = true;
+        vm.loggedOut = false;
+        vm.getStudents();
       })
-  }
-  $scope.getStudentIdeas = function(student) {
-    $http.get(route + '/' + student._id + '/ideas')
-      .then((res) => {
-        student.showIdeas = false;
-        student.addIdea = false;
-        if(res.data.data.length > 0) {
-          student.ideas = res.data.data;
-        }
-      }, function(error) {
-        console.log(error);
-      })
-  }
-  $scope.createNewIdea = function(student, newIdea) {
-    $http.post(route+ '/' + student._id + '/ideas', newIdea)
-      .then((res) => {
-        console.log(res)
-        student.ideas.push(newIdea);
-      })
-  }
-  $scope.removeIdea = function(student, idea) {
-    $http.delete(route + '/' + student._id + '/ideas/' + idea._id)
-      .then((res) => {
-        console.log(res);
-        student.ideas = student.ideas.filter((s) => s._id != idea._id);
-      }, function(error) {
-        console.log(error);
-      })
-  }
-  $scope.updateIdea = function(student, idea) {
-    $http.put(route + '/' + student._id + '/ideas/' + idea._id, idea)
-      .then((res) => {
-        console.log(res);
-        student.ideaEditing = false;
-      }, function(error) {
-        console.log(error);
-      })
-  }
-}])
+    }
+
+    vm.removeStudent = function(student) {
+      studentEndpoint.destroy(student, AuthService.getToken())
+        .then((res) => {
+          console.log(res);
+
+          vm.students = vm.students.filter((s) => s._id != student._id);
+        }, function(error) {
+          console.log(error);
+        });
+    };
+    vm.updateStudent = function(updateStudent) {
+      console.log(updateStudent._id);
+      studentEndpoint.update(updateStudent, AuthService.getToken())
+        .then((res) => {
+          console.log(res);
+          updateStudent.editing = false;
+        }, function(error) {
+          console.log(error);
+        });
+    };
+    vm.getStudentIdeas = function(student) {
+      if(!student._id) {
+        return;
+      }
+
+      if(typeof student == 'string' || student._id == 'undefined') {
+        return;
+      }
+      ideaEndpoint.summonSub(student, AuthService.getToken())
+        .then((res) => {
+          student.showIdeas = false;
+          student.addIdea = false;
+          if(res.data.data.length > 0) {
+            student.ideas = res.data.data;
+          }
+        }, function(error) {
+          console.log(error);
+        });
+    };
+    vm.createNewIdea = function(student, newIdea) {
+      console.log(newIdea);
+      ideaEndpoint.assembleSub(student, newIdea, AuthService.getToken())
+        .then((res) => {
+          console.log(res);
+          student.ideas.push(newIdea);
+        });
+    };
+    vm.removeIdea = function(student, idea) {
+      console.log(student._id);
+      ideaEndpoint.destroySub(student, idea, AuthService.getToken())
+        .then((res) => {
+          console.log(res);
+          student.ideas = student.ideas.filter((s) => s._id != idea._id);
+        }, function(error) {
+          console.log(error);
+        });
+    };
+    vm.updateIdea = function(student, idea) {
+      ideaEndpoint.updateSub(student, idea, AuthService.getToken())
+        .then((res) => {
+          console.log(res);
+          student.ideaEditing = false;
+        }, function(error) {
+          console.log(error);
+        });
+    };
+  }]);
