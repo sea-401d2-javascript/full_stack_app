@@ -1,21 +1,23 @@
 'use strict'
 const angular = require('angular')
 
-angular.module('TwoResourceApp', [])
-  .controller('PeopleController', ['$http', function($http) {
-    const route = 'http://localhost:3000/api/people';
+var app = angular.module('TwoResourceApp', []);
+require('./services/http-service')(app)
+
+app.controller('PeopleController', ['ResourceService', function(ResourceService) {
+    const peopleResource = ResourceService('people')
     const main = this;
     main.people = [];
 
     main.getPeople = function() {
-      $http.get(route)
+      peopleResource.getAll()
         .then((result) => {
           main.people = result.data.data;
         }, (error) => console.log(error));
     };
 
     main.createPerson = function(person) {
-      $http.post(route, person)
+      peopleResource.create(person)
         .then((res) => {
           console.log('create person');
           main.people.push(res.data.data);
@@ -24,7 +26,7 @@ angular.module('TwoResourceApp', [])
     };
 
     main.removePerson = function(person) {
-      $http.delete(route + '/' + person._id)
+      peopleResource.delete(person)
         .then((res) => {
           console.log('delete getting hit');
           main.people = main.people.filter((p) => p._id != person._id)
@@ -32,7 +34,7 @@ angular.module('TwoResourceApp', [])
     };
 
     main.updatePerson = function(person) {
-      $http.put(route + '/' + person._id, person)
+      peopleResource.update(person)
         .then((res) => {
           console.log('update person');
           person.editing = false;
@@ -49,14 +51,22 @@ angular.module('TwoResourceApp', [])
       }
     }
 }])
+.directive('peopleDirective', function() {
+  return {
+    restrict: 'E',
+    controller: 'PeopleController',
+    templateUrl: './people.html'
+  }
+})
 
-.controller('AnimalController', ['$http', function($http) {
-    const route = 'http://localhost:3000/api/animals';
+
+app.controller('AnimalController', ['ResourceService', function(ResourceService) {
+    const animalResource = ResourceService('animals');
     const main = this;
     main.animals = [];
 
     main.getAnimal = function() {
-      $http.get(route)
+      animalResource.getAll()
         .then((result) => {
           main.animals = result.data.data;
         }, function(error) {
@@ -64,7 +74,7 @@ angular.module('TwoResourceApp', [])
         })
     };
     main.createAnimal = function(animal) {
-      $http.post(route, animal)
+      animalResource.create(animal)
         .then((res) => {
           main.animals.push(res.data.data);
           main.newAnimal = null;
@@ -73,13 +83,13 @@ angular.module('TwoResourceApp', [])
         })
     };
     main.removeAnimal = function(animal) {
-      $http.delete(route + '/' + animal._id)
+      animalResource.delete(animal)
         .then((res) => {
           main.animals = main.animals.filter((p) => p._id != animal._id)
         }, (error) => console.log(error));
     };
     main.updateAnimal = function(animal) {
-      $http.put(route + '/' + animal._id, animal)
+      animalResource.update(animal)
         .then((res) => {
           animal.editing = false;
         }, function(error) {
@@ -96,5 +106,11 @@ angular.module('TwoResourceApp', [])
         animal.editing = false;
       }
     };
-
-}]);
+}])
+.directive('animalDirective', function() {
+  return {
+    restrict: 'E',
+    controller: 'AnimalController',
+    templateUrl: './animals.html'
+  }
+})

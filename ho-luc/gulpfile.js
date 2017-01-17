@@ -4,7 +4,7 @@ const gulp = require('gulp');
 const webpack = require('webpack-stream');
 
 const sources = {
-  html: __dirname + '/build/index.html',
+  html: __dirname + '/app/*.html',
   js: __dirname + '/app/app.js',
   test: __dirname + '/test/app_spec.js'
 };
@@ -15,8 +15,10 @@ gulp.task('bundle:dev', () => {
   .pipe(gulp.dest('./build'));
 });
 
-gulp.task('copy', () => {
-  return gulp.src(sources.html)
+gulp.task('copy-html', () => {
+  return gulp.src([sources.html,
+    './app/templates/animals.html',
+    './app/templates/people.html'])
     .pipe(gulp.dest('./build'));
 });
 
@@ -26,4 +28,4 @@ gulp.task('bundle:test', () => {
     .pipe(gulp.dest('./test'));
 });
 
-gulp.task('default', ['bundle:dev', 'copy']);
+gulp.task('default', ['bundle:dev', 'copy-html']);
