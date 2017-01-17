@@ -1,0 +1,36 @@
+<section data-ng-controller="ResourcesController as resourcesCtrl">
+  <section id='speciess' class="ng-cloak" data-ng-controller="SpeciessController as speciessCtrl" data-ng-init="speciessCtrl.read()" >
+    <h1>{{speciessCtrl.resource.toUpperCase()}}</h1>
+
+    <ul>
+      <li data-ng-repeat="species in speciessCtrl.speciess">
+        <species species={species} />
+      </li>
+    </ul>
+
+    <form id='create-species' data-ng-submit="speciessCtrl.create(species)">
+      genus:<input type="text" data-ng-model="species.genus"></br>
+      species:<input type="text" data-ng-model="species.species"></br>
+      cmnName:<input type="text" data-ng-model="species.cmnName"></br>
+      <button type="submit">create species</button>
+    </form>
+
+  </section>
+
+  <section id="trees" class="ng-cloak" data-ng-controller="TreesController as treesCtrl" data-ng-init="treesCtrl.read()">
+    <h1>{{treesCtrl.resource.toUpperCase()}}</h1>
+
+    <ul>
+      <li data-ng-repeat="tree in treesCtrl.trees">
+        <tree tree={tree} />
+      </li>
+    </ul>
+
+    <form id="create-tree" data-ng-submit="treesCtrl.create(tree)">
+      species:<input type="text" data-ng-model="tree.species"></br>
+      lat:<input type="text" data-ng-model="tree.lat"></br>
+      lng:<input type="text" data-ng-model="tree.lng"></br>
+      <button type="submit">create tree</button>
+    </form>
+  </section>
+</section>
