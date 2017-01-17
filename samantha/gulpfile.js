@@ -6,6 +6,12 @@ var webpack = require('webpack-stream');
 
 var paths = ['*.js', 'test/*.js'];
 
+const sources = {
+  html: __dirname +'/app/index.html',
+  js:   __dirname + '/app/index.js',
+  test: __dirname + '/test/unit/*-spec.js'
+};
+
 gulp.task('tasks running', function(){
   console.log('gulp is running');
 });
@@ -36,4 +42,21 @@ gulp.task('webpack', function(){
 //   gulp.watch(paths,['eslint']);
 // });
 
-gulp.task('default',['tasks running', 'eslint', 'webpack']);
+gulp.task('bundle:dev', ()=> {
+  return gulp.src(sources.js)
+  .pipe(webpack({output: {filename: 'bundle.js'}}))
+  .pipe(gulp.dest('./build'));
+});
+
+gulp.task('copy', ()=> {
+  return gulp.src(sources.html)
+  .pipe(gulp.dest('./build'));
+});
+
+gulp.task('bundle:test', ()=> {
+  return gulp.src(sources.test)
+  .pipe(webpack({output: {filename: 'test_bundle.js'}}))
+  .pipe(gulp.dest('./test/unit'));
+});
+
+gulp.task('default',['tasks running', 'eslint', 'bundle:dev', 'copy']);
