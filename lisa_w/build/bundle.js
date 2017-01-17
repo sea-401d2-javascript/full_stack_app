@@ -51,6 +51,7 @@
 
 	__webpack_require__(3)(app);
 	__webpack_require__(4)(app);
+	__webpack_require__(5)(app);
 
 
 /***/ },
@@ -30915,6 +30916,26 @@
 	    };
 	  }]);
 	};
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	// 'use strict';
+	// module.exports = (app) => {
+	//
+	//   app.controller('TabController', ['$http', function($http){
+	//   this.tab = 1;
+	//
+	//   this.setTab = function(newValue){
+	//     this.tab = newValue
+	//   }
+	//   this.isSet = function(tabName){
+	//     return this.tab === tabName
+	//   }
+	// }
+	// }
 
 
 /***/ }
